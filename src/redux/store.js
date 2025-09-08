@@ -5,8 +5,9 @@ import themeSlice from "./slices/themeSlice";
 import appSlice from "./slices/appSlice";
 
 import authSlice from "./slices/authSlice";
-import domainSlice from "./slices/domainSlice";
 import dashboardSlice from "./slices/dashboardSlice";
+import domainSlice from "./slices/domainSlice";
+import sectionSlice from "./slices/sectionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     theme: themeSlice,
     // auth: userAuthSlice,
     auth: authSlice,
-    domain: domainSlice,
     dashboard: dashboardSlice,
+    domain: domainSlice,
+    section: sectionSlice,
   },
 });

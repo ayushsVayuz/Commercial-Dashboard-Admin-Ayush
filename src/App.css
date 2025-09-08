@@ -7,6 +7,7 @@
 @import "./css/page-body.scss";
 @import "./css/scrollbar.scss";
 @import "./css/header.scss";
+@import "./css/toggle.css";
 
 :root {
   font-family: Inter, system-ui, -apple-system, "Segoe UI", "Open Sans",

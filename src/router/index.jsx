@@ -1,5 +1,5 @@
 import App from "../App";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ErrorComponent } from "../components/error";
 import HomePage from "../pages/common/HomePage";
 import LoginPage from "../pages/common/LoginPage";
@@ -9,6 +9,10 @@ import DomainAddOrEdit from "../pages/domain/DomainAddOrEdit";
 import ProtectedRoute from "../pages/protectedRoute";
 import DomainViewPage from "../pages/domain/DomainViewPage";
 import { Dashboard } from "../pages/dashboard";
+import SectionListing from "../pages/section/Listing";
+import SectionAddEdit from "../pages/section/AddEdit";
+import SectionDetails from "../pages/section/Details";
+import SectionPreview from "../pages/section/Preview";
 
 const router = createBrowserRouter([
   {
@@ -62,8 +66,34 @@ const router = createBrowserRouter([
                 element: <DomainViewPage />,
               },
 
-             
-            
+              // Section Routes
+              {
+                path: "section",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <SectionListing />,
+                  },
+                  {
+                    path: "add",
+                    element: <SectionAddEdit />,
+                  },
+                  {
+                    path: "edit/:id",
+                    element: <SectionAddEdit />,
+                  },
+                  {
+                    path: "preview",
+                    element: <SectionPreview />,
+                  },
+                  {
+                    path: "detail/:id",
+                    element: <SectionDetails />,
+                  },
+                ],
+              },
+
               // Catch-all for undefined routes
               {
                 path: "*",
