@@ -26,15 +26,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
       id: 1,
       title: "My Data",
       icon: <LuDatabase size={iconSize} />,
-      child: [
-        { title: "Domain", to: "/domain", icon: <GoDotFill /> },
-        { title: "Master Config", to: "/masterConfig", icon: <GoDotFill /> },
-        { title: "Config", to: "/config", icon: <GoDotFill /> },
-        { title: "Regex", to: "/regex", icon: <GoDotFill /> },
-        { title: "Route MF", to: "/routeMF", icon: <GoDotFill /> },
-        { title: "Master Form", to: "/form", icon: <GoDotFill /> },
-        { title: "Helper MF", to: "/helper", icon: <GoDotFill /> },
-      ],
+      child: [{ title: "Domain", to: "/domain", icon: <GoDotFill /> }],
       isPinned: false,
     },
     // {

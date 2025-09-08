@@ -17,6 +17,7 @@ const isTokenValid = (token) => {
 };
 
 const ProtectedRoute = () => {
+    return <Outlet />
     const token = useSelector((state) => state.auth.token) || localStorage.getItem('token');
 
     // If token is not valid, redirect to login page
