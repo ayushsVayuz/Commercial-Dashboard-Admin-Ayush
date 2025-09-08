@@ -1,0 +1,21 @@
+import axios from "axios";
+
+const client = axios.create(
+  {
+    baseURL: "https://anarock-super-admin.vayuz.com/v2",
+  },
+  {
+    withCredentials: true,
+  }
+);
+
+export default client;
+
+export const reCapchaMatching = async (value) => {
+  try {
+    const response = await client.post("/verify-recapcha", value);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

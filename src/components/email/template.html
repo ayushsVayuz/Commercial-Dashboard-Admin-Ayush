@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up OTP</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      a {
+        color: #884ea7;
+      }
+      h2 {
+        margin: 0;
+        color: white;
+        font-weight: 600;
+        font-size: 24px;
+      }
+      h3 {
+        text-align: start;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .container {
+        background-color: white;
+        max-width: 600px;
+        margin: 0 auto;
+        /* padding: 20px; */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        color: white;
+        text-align: center;
+        border-radius: 8px 8px 0 0;
+      }
+      .header-image {
+        width: 100%;
+        height: 109px;
+        background-image: url(/src/components/email/template-header.svg);
+        object-fit: contain;
+      }
+      .header-container {
+        padding: 14px 20px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      @media (max-width: 440px) {
+        .header-container {
+          padding-top: 4px;
+          flex-direction: column-reverse;
+          gap: 10px;
+        }
+        .footer-container {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .w-full {
+          width: 100%;
+        }
+      }
+      .body {
+        padding: 20px;
+      }
+      .otp-cotainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .otp-box {
+        width: fit-content;
+        background-color: #fbf5ff;
+        font-weight: bold;
+        font-size: 2em;
+        color: #884ea7;
+        text-align: center;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 8px;
+      }
+      .footer {
+        background-color: #884ea7;
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+      }
+      .footer-container {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .footer a {
+        color: #884ea7;
+        text-decoration: none;
+      }
+      .download-apps img {
+        width: 140px;
+        /* margin: 10px 5px; */
+      }
+      .social-icons {
+        display: flex;
+        gap: 12px;
+      }
+      .social-icons img {
+        width: 32px;
+        /* margin: 0 5px; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-image">
+          <div class="header-container">
+            <h2>Sign UP OTP</h2>
+            <img
+              width="150px"
+              src="/src/components/email/anarock-logo-dark.svg"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <!-- <img
+          class="header-image"
+          src="/src/components/email/template-header.svg"
+          alt="ANACITY"
+          width="100%"
+        /> -->
+      </div>
+      <section class="body">
+        <h4>Welcome Ishaan!</h4>
+        <p>Use the below OTP to create a new ANACITY account.</p>
+        <div class="otp-cotainer">
+          <div class="otp-box">191442</div>
+        </div>
+        <p>For security reasons, please do not share OTP with anyone.</p>
+        <p>
+          This is a system-generated mail. Please do not reply to this email. If
+          you face any issues with gaining access to your account, please
+          contact our support team at
+          <a href="mailto:support@anacity.com">support@anacity.com</a>.
+        </p>
+      </section>
+      <div class="footer">
+        <div class="footer-container">
+          <div class="w-full download-apps">
+            <h3 class="p-2">Download Anacity App</h3>
+            <div class="flex">
+              <a href="#"
+                ><img
+                  src="/src/components/email/google-play.svg"
+                  alt="Google Play"
+              /></a>
+              <a href="#"
+                ><img src="/src/components/email/app-store.svg" alt="App Store"
+              /></a>
+            </div>
+          </div>
+          <div class="w-full">
+            <h3 class="p-2">Follow us on</h3>
+            <div class="social-icons">
+              <a href="#"
+                ><img src="/src/components/email/tw.svg" alt="Twitter"
+              /></a>
+              <a href="#"
+                ><img src="/src/components/email/ig.svg" alt="Instagram"
+              /></a>
+              <a href="#"
+                ><img src="/src/components/email/fb.svg" alt="Facebook"
+              /></a>
+              <a href="#"
+                ><img src="/src/components/email/li.svg" alt="LinkedIn"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
