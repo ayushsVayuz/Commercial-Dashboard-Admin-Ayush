@@ -22,9 +22,12 @@ const domainSlice = createSlice({
   initialState,
   reducers: {
     sectionPayload: (state, action) => {
-      state.payload = action.payload
+      state.payload = action.payload;
     },
-    resetSection: (state) => {
+    resetSectionPayload: (state) => {
+      state.payload = {};
+    },
+    resetSections: (state) => {
       state.sections = [];
       state.loading = false;
       state.error = null;
@@ -117,5 +120,6 @@ const domainSlice = createSlice({
   },
 });
 
-export const { resetSection } = domainSlice.actions;
+export const { sectionPayload, resetSection, resetSectionPayload } =
+  domainSlice.actions;
 export default domainSlice.reducer;

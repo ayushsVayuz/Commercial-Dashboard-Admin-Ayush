@@ -5,12 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { sectionSchema } from "../../validation/section-validator";
 import { Button } from "../../components/buttons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createSection,
-  readSection,
-  readSingleSection,
-  updateSection,
-} from "../../redux/actions/section-action";
+import { readSingleSection } from "../../redux/actions/section-action";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import { Input } from "../../components/inputs/input";
@@ -19,6 +14,8 @@ import { FormWrapper } from "../../components/wrappers/form";
 import { decrypt, encrypt } from "../../functions";
 import { Selector } from "../../components/select";
 import { Toggle } from "../../components/inputs/toogle";
+import toast from "react-hot-toast";
+import { sectionPayload } from "../../redux/slices/sectionSlice";
 
 const SectionAddEdit = () => {
   const navigate = useNavigate();
@@ -26,7 +23,7 @@ const SectionAddEdit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { sections, singleSection, error, loading } = useSelector(
+  const { payload, singleSection, error, loading } = useSelector(
     (state) => state.section
   );
 
@@ -37,10 +34,12 @@ const SectionAddEdit = () => {
     handleSubmit,
     formState: { errors, isValid },
     reset,
+    trigger,
     setValue,
+    getValues,
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(sectionSchema),
+    resolver: yupResolver(sectionSchema),
     defaultValues: {
       section: "",
       sectionOrder: "",
@@ -50,8 +49,8 @@ const SectionAddEdit = () => {
       borderRadius: "",
       apiEndpoint: "",
       requestMethod: "",
-      refreshInterval: 0,
-      params: "",
+      refreshInterval: "",
+      params: [],
     },
   });
 
@@ -63,60 +62,64 @@ const SectionAddEdit = () => {
     }
   }, [isEditMode, id]);
 
+  console.log(payload, "payload data from add");
+
   useEffect(() => {
     if (isEditMode && singleSection) {
+      const section = singleSection;
       reset({
-        sectionName: singleSection?.name || "",
-        sectionOrder: singleSection?.order_index || "",
-        isCollapsible: singleSection?.is_collapsible || false,
-        backgroundColor: singleSection?.backgroundColor || "",
-        padding: singleSection?.section_config?.padding || "",
-        borderRadius: singleSection?.section_config?.borderRadius || "",
-        apiEndpoint: singleSection?.api_endpoint || "",
-        requestMethod: singleSection?.method
-          ? { label: singleSection.method, value: singleSection.method }
-          : null,
-        refreshInterval: singleSection?.refresh_interval || 0,
-        params: singleSection?.params || "",
+        sectionName: section.name || "",
+        sectionOrder: section.order_index || "",
+        isCollapsible: section.is_collapsible || false,
+        backgroundColor: section.section_config?.backgroundColor || "",
+        padding: section.section_config?.padding || "",
+        borderRadius: section.section_config?.borderRadius || "",
+        apiEndpoint: section.api_endpoint || "",
+        requestMethod: section.method,
+        refreshInterval: section.refresh_interval || 0,
+        params: section.params || [],
+      });
+    } else {
+      const section = payload;
+      reset({
+        sectionName: section.name || "",
+        sectionOrder: section.order_index || "",
+        isCollapsible: section.is_collapsible || false,
+        backgroundColor: section.section_config?.backgroundColor || "",
+        padding: section.section_config?.padding || "",
+        borderRadius: section.section_config?.borderRadius || "",
+        apiEndpoint: section.api_endpoint || "",
+        requestMethod: section.method || {},
+        refreshInterval: section.refresh_interval || 0,
+        params: section.params || [],
       });
     }
-  }, [isEditMode, singleSection, reset]);
+  }, [isEditMode, singleSection, payload, reset]);
 
   const onSubmit = async (data) => {
     console.log(data, "form data");
-    try {
-      const payload = {
-        dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-        name: data?.sectionName,
-        order_index: data?.sectionOrder,
-        is_collapsible: data?.isCollapsible,
-        is_collapsed: data?.isCollapsible,
+    const payload = {
+      dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+      name: data?.sectionName,
+      order_index: data?.sectionOrder,
+      is_collapsible: data?.isCollapsible,
+      is_collapsed: data?.isCollapsible,
+      section_config: {
         backgroundColor: data?.backgroundColor,
-        section_config: {
-          backgroundColor: data?.backgroundColor,
-          padding: data?.backgroundColor,
-          borderRadius: data?.backgroundColor,
-        },
-        api_endpoint: data?.apiEndpoint,
-        method: data?.requestMethod?.value,
-        refresh_interval: data?.refreshInterval,
-        params: {},
-      };
-
-      let res;
-      if (isEditMode) {
-        res = await dispatch(
-          updateSection({ sectionId: id, updatedData: payload })
-        );
-      } else {
-        res = await dispatch(createSection(payload));
-      }
-
-      if (res?.payload?.code === 200 || res?.payload?.code === 201) {
-        navigate("/section");
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
+        padding: data?.padding,
+        borderRadius: data?.borderRadius,
+      },
+      api_endpoint: data?.apiEndpoint,
+      method: data?.requestMethod?.value,
+      refresh_interval: data?.refreshInterval,
+      response_type: "json",
+      params: [],
+    };
+    dispatch(sectionPayload(payload));
+    if (isEditMode) {
+      navigate(`/section/preview/${id}`);
+    } else {
+      navigate("/section/preview");
     }
   };
 
@@ -125,10 +128,34 @@ const SectionAddEdit = () => {
     navigate("/section");
   };
 
-  const isCollapsibleOptions = [
-    { label: "Yes", value: true },
-    { label: "No", value: false },
+  const paramsOptions = [
+    { label: "limit", value: "limit" },
+    { label: "skip", value: "skip" },
+    { label: "page", value: "page" },
+    { label: "perPage", value: "perPage" },
+    { label: "offset", value: "offset" },
+    { label: "sort", value: "sort" },
+    { label: "order", value: "order" },
+    { label: "filter", value: "filter" },
+    { label: "search", value: "search" },
+    { label: "query", value: "query" },
+    { label: "fields", value: "fields" },
+    { label: "include", value: "include" },
+    { label: "exclude", value: "exclude" },
+    { label: "expand", value: "expand" },
+    { label: "select", value: "select" },
+    { label: "populate", value: "populate" },
+    { label: "group", value: "group" },
+    { label: "count", value: "count" },
+    { label: "distinct", value: "distinct" },
   ];
+
+  const methodOptions = [
+    { label: "GET", value: "GET" },
+    { label: "POST", value: "POST" },
+  ];
+
+  console.log(errors, getValues(), "form errors");
 
   return (
     <>
@@ -306,11 +333,17 @@ const SectionAddEdit = () => {
                     <div className="min-w-[210px]">
                       <Selector
                         {...field}
-                        options={[
-                          { label: "GET", value: "GET" },
-                          { label: "POST", value: "POST" },
-                        ]}
                         placeholder="Select Request Method"
+                        options={methodOptions}
+                        value={
+                          methodOptions?.find(
+                            (option) => option.value === field.value
+                          ) || null
+                        }
+                        onChange={(selectedOption) => {
+                          field.onChange(selectedOption.value);
+                          trigger("requestMethod");
+                        }}
                         errorContent={errors?.requestMethod?.message}
                       />
                     </div>
@@ -343,20 +376,32 @@ const SectionAddEdit = () => {
                 <Controller
                   name="params"
                   control={control}
-                  render={({ field }) => (
-                    <div className="min-w-[210px]">
-                      <Selector
-                        {...field}
-                        options={[
-                          { label: "GET", value: "GET" },
-                          { label: "POST", value: "POST" },
-                        ]}
-                        placeholder="Select Params"
-                        isMulti={true}
-                        errorContent={errors?.params?.message}
-                      />
-                    </div>
-                  )}
+                  render={({ field }) => {
+                    const selectedValues = Array.isArray(field.value)
+                      ? field.value
+                      : [];
+
+                    return (
+                      <div className="min-w-[210px]">
+                        <Selector
+                          {...field}
+                          placeholder="Select Params"
+                          options={paramsOptions}
+                          isMulti={true}
+                          value={paramsOptions?.filter((option) =>
+                            selectedValues.includes(option.value)
+                          )}
+                          onChange={(selectedOptions) => {
+                            const selectedValues =
+                              selectedOptions?.map((opt) => opt.value) || [];
+                            field.onChange(selectedValues);
+                            trigger("params");
+                          }}
+                          errorContent={errors?.params?.message}
+                        />
+                      </div>
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -369,12 +414,13 @@ const SectionAddEdit = () => {
                 type="submit"
                 mainPrimary={true}
                 isLoading={loading}
-                //  disabled={!isValid}
+                disabled={!isValid}
               >
-                {isEditMode ? "Update" : "Add"}
+                Preview
               </Button>
             </div>
           </form>
+          {error}
         </FormWrapper>
       </section>
     </>

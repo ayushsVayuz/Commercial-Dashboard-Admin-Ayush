@@ -6,16 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
-import {
-  convertDateToISOFormat,
-  convertToDateObjectString,
-  decrypt,
-  encrypt,
-  titleCase,
-} from "../../functions";
 import { Search } from "../../components/search";
 import { readSection } from "../../redux/actions/section-action";
 import { MoreOption } from "../../components/moreOption";
+import { resetSectionPayload } from "../../redux/slices/sectionSlice";
 
 const SectionListing = () => {
   const dispatch = useDispatch();
@@ -24,6 +18,7 @@ const SectionListing = () => {
     isToggleLoading,
     loading,
     totalPages,
+    resetS
   } = useSelector((state) => state.section);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -142,6 +137,7 @@ const SectionListing = () => {
           <Link
             className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
             to="/section/add"
+            onClick={() => dispatch(resetSectionPayload())}
           >
             Add Section
           </Link>
