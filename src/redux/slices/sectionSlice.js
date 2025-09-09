@@ -49,7 +49,7 @@ const domainSlice = createSlice({
       })
       .addCase(readSection.fulfilled, (state, action) => {
         state.loading = false;
-        state.sections = action.payload.data.data;
+        state.sections = action.payload.data;
         state.totalPages = action.payload.data.totalPages;
       })
       .addCase(readSection.rejected, (state, action) => {

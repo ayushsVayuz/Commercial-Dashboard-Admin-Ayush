@@ -30,7 +30,7 @@ const SectionListing = () => {
   const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
-  console.log(page, "page-------");
+  console.log(sectionData, "section data");
 
   useEffect(() => {
     setSearchParams({
@@ -61,15 +61,15 @@ const SectionListing = () => {
   const headers = [
     "Sr No.",
     "Section Name",
-    "Added On",
-    "Status",
-    "Toggle Status",
+    "Order",
+    "Collapsible  ",
+    "Collapsed",
     "Action",
   ];
 
-  const dataToPass = sectionData.map((section) => ({
-    id: { content: section.id },
-    section: { content: section.name },
+  const dataToPass = sectionData?.map((section, index) => ({
+    id: { content: index + 1 },
+    section: { content: section.name, link: section.id },
     order: { content: section.order_index.toString() },
     collapsible: {
       content: section.is_collapsible ? "Yes" : "No",
@@ -79,24 +79,11 @@ const SectionListing = () => {
       content: section.is_collapsed ? "Yes" : "No",
       type: "status",
     },
-    createdOn: {
-      content: new Date(section.created_at).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
-    },
-    updatedOn: {
-      content: new Date(section.updated_at).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
-    },
+
     actions: {
       content: "Actions",
       type: "action",
-      actionMenu,
+      // actionMenu,
       isFunctionMenu: true,
       row: section,
     },
@@ -126,23 +113,23 @@ const SectionListing = () => {
     // );
   };
 
-  const Filter = () => {
-    return (
-      <div class="min-w-20 absolute top-4 right-4 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700">
-        <p className="px-2 py-1 text-sm font-semibold whitespace-nowrap">
-          Select Status
-        </p>
-        {filterMenu.map((item, index) => (
-          <div
-            className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
-            key={index}
-          >
-            <Link href={item.url}>{item.label}</Link>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // const Filter = () => {
+  //   return (
+  //     <div class="min-w-20 absolute top-4 right-4 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700">
+  //       <p className="px-2 py-1 text-sm font-semibold whitespace-nowrap">
+  //         Select Status
+  //       </p>
+  //       {filterMenu.map((item, index) => (
+  //         <div
+  //           className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
+  //           key={index}
+  //         >
+  //           <Link href={item.url}>{item.label}</Link>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <>
@@ -166,7 +153,7 @@ const SectionListing = () => {
             containerClassName={"w-full sm:w-auto mb-2 rounded px "}
             placeholder={"Search"}
             label="search"
-            filter={<Filter />}
+            // filter={<Filter />}
           />
         </div>
         {loading ? (
