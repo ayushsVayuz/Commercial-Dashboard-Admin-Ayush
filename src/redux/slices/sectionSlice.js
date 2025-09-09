@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createSection,
-  readSections,
+  readSection,
   updateSection,
   deleteSection,
 } from "../actions/section-action";
@@ -43,16 +43,16 @@ const domainSlice = createSlice({
 
     // Read Sections
     builder
-      .addCase(readSections.pending, (state) => {
+      .addCase(readSection.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(readSections.fulfilled, (state, action) => {
+      .addCase(readSection.fulfilled, (state, action) => {
         state.loading = false;
         state.sections = action.payload.data.data;
         state.totalPages = action.payload.data.totalPages;
       })
-      .addCase(readSections.rejected, (state, action) => {
+      .addCase(readSection.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch sections";
       });
@@ -76,24 +76,24 @@ const domainSlice = createSlice({
         state.error = action.payload?.message || "Failed to update section";
       });
     // Delete Section
-    builder
-      .addCase(deleteSection.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deleteSection.fulfilled, (state, action) => {
-        state.loading = false;
-        const index = state.sections.findIndex(
-          (section) => section.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.sections[index] = action.payload;
-        }
-      })
-      .addCase(deleteSection.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message || "Failed to update section";
-      });
+    // builder
+    //   .addCase(deleteSection.pending, (state) => {
+    //     state.loading = true;
+    //     state.error = null;
+    //   })
+    //   .addCase(deleteSection.fulfilled, (state, action) => {
+    //     state.loading = false;
+    //     const index = state.sections.findIndex(
+    //       (section) => section.id === action.payload.id
+    //     );
+    //     if (index !== -1) {
+    //       state.sections[index] = action.payload;
+    //     }
+    //   })
+    //   .addCase(deleteSection.rejected, (state, action) => {
+    //     state.loading = false;
+    //     state.error = action.payload?.message || "Failed to update section";
+    //   });
   },
 });
 

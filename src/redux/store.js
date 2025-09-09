@@ -6,7 +6,6 @@ import appSlice from "./slices/appSlice";
 
 import authSlice from "./slices/authSlice";
 import dashboardSlice from "./slices/dashboardSlice";
-import domainSlice from "./slices/domainSlice";
 import sectionSlice from "./slices/sectionSlice";
 
 export const store = configureStore({
@@ -16,7 +15,6 @@ export const store = configureStore({
     // auth: userAuthSlice,
     auth: authSlice,
     dashboard: dashboardSlice,
-    domain: domainSlice,
     section: sectionSlice,
   },
 });

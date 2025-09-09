@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { domainSchema } from "../../validation/section-validator";
+import { sectionSchema } from "../../validation/section-validator";
 import { Button } from "../../components/buttons";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createDomain,
-  fetchDomains,
-  updateDomain,
+  createSection,
+  readSection,
+  updateSection,
 } from "../../redux/actions/section-action";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
@@ -24,7 +24,7 @@ const SectionAddEdit = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-  
+
   const isEditMode = location.pathname.includes("/edit");
 
   const {
@@ -35,7 +35,7 @@ const SectionAddEdit = () => {
     setValue,
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(domainSchema),
+    // resolver: yupResolver(sectionSchema),
     defaultValues: {
       sectionName: "",
       sectionOrder: "",
@@ -43,7 +43,6 @@ const SectionAddEdit = () => {
   });
 
   const { sections, error, loading } = useSelector((state) => state.section);
-  
 
   const dispatch = useDispatch();
 
@@ -51,7 +50,7 @@ const SectionAddEdit = () => {
     if (isEditMode) {
       if (sections?.length === 0) {
         console.log(sections, "domm22");
-        dispatch(fetchDomains([{ field: "domainId", value: id }]));
+        dispatch(readSection([{ field: "domainId", value: id }]));
       }
     }
   }, [isEditMode, dispatch, id, sections?.length]);
@@ -68,7 +67,7 @@ const SectionAddEdit = () => {
 
     if (isEditMode && selectedDomain) {
       const existingDomainData = {
-        domainName: selectedDomain?.section,
+        sectionName: selectedDomain?.section,
         url: selectedDomain?.domainLink,
       };
 
@@ -81,24 +80,26 @@ const SectionAddEdit = () => {
 
   const onSubmit = async (data) => {
     try {
+      const payload = {
+        section: data?.sectionName,
+        sectionOrder: data?.sectionOrder,
+        isCollapsible: data?.isCollapsible,
+        backgroundColor: data?.backgroundColor,
+        padding: data?.padding,
+        borderRadius: data?.borderRadius,
+        apiEndpoint: data?.apiEndpoint,
+        requestMethod: data?.requestMethod,
+        refreshInterval: data?.refreshInterval,
+        params: data?.params?.map((p) => p.value) || [],
+      };
+
       let res;
       if (isEditMode) {
         res = await dispatch(
-          updateDomain({
-            domainId: id,
-            updatedData: {
-              section: data.domainName,
-              domainLink: data.url,
-            },
-          })
+          updateSection({ sectionId: id, updatedData: payload })
         );
       } else {
-        res = await dispatch(
-          createDomain({
-            section: data.domainName,
-            domainLink: data.url,
-          })
-        );
+        res = await dispatch(createSection(payload));
       }
 
       if (res?.payload?.code === 200 || res?.payload?.code === 201) {
