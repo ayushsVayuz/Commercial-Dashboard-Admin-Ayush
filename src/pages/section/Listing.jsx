@@ -18,7 +18,6 @@ import {
   titleCase,
 } from "../../functions";
 import { Search } from "../../components/search";
-import CryptoJS from "crypto-js";
 
 const SectionListing = () => {
   const dispatch = useDispatch();
@@ -30,16 +29,16 @@ const SectionListing = () => {
   } = useSelector((state) => state.section);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = parseInt(decrypt(searchParams.get("page"))) || 0;
-  const searchValue = decrypt(searchParams.get("search")) || "";
+  const page = parseInt(searchParams.get("page")) || 0;
+  const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
   console.log(page, "page-------");
 
   useEffect(() => {
     setSearchParams({
-      page: encrypt(currentPage.toString()),
-      search: encrypt(searchValue),
+      page: currentPage.toString(),
+      search: searchValue,
     });
   }, [currentPage]);
 

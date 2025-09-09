@@ -20,11 +20,11 @@ import { Selector } from "../../components/select";
 import { Toggle } from "../../components/inputs/toogle";
 
 const SectionAddEdit = () => {
+  const [selectedDomain, setSelectedDomain] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-  const decryptedId = decrypt(id);
-  console.log(decryptedId);
+  
   const isEditMode = location.pathname.includes("/edit");
 
   const {
@@ -43,7 +43,7 @@ const SectionAddEdit = () => {
   });
 
   const { sections, error, loading } = useSelector((state) => state.section);
-  const [selectedDomain, setSelectedDomain] = useState(null);
+  
 
   const dispatch = useDispatch();
 
@@ -51,17 +51,17 @@ const SectionAddEdit = () => {
     if (isEditMode) {
       if (sections?.length === 0) {
         console.log(sections, "domm22");
-        dispatch(fetchDomains([{ field: "domainId", value: decryptedId }]));
+        dispatch(fetchDomains([{ field: "domainId", value: id }]));
       }
     }
   }, [isEditMode, dispatch, id, sections?.length]);
 
   useEffect(() => {
     if (isEditMode && sections?.length > 0) {
-      const domainToSet = sections.find((obj) => obj.domainId === decryptedId);
+      const domainToSet = sections.find((obj) => obj.domainId === id);
       setSelectedDomain(domainToSet || null);
     }
-  }, [sections, decryptedId, isEditMode]);
+  }, [sections, id, isEditMode]);
 
   useEffect(() => {
     console.log(isEditMode, selectedDomain, "domm");
@@ -85,7 +85,7 @@ const SectionAddEdit = () => {
       if (isEditMode) {
         res = await dispatch(
           updateDomain({
-            domainId: decryptedId,
+            domainId: id,
             updatedData: {
               section: data.domainName,
               domainLink: data.url,

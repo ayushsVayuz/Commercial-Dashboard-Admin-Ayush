@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { LuSearch } from "react-icons/lu";
-import { decrypt, encrypt } from "../../functions";
+// import { decrypt, encrypt } from "../../functions";
 
 export const Search = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState(decrypt(searchParams.get("search")) || ""); // Decrypt the search query
+  const [query, setQuery] = useState(searchParams.get("search") || ""); // Decrypt the search query
 
   useEffect(() => {
     console.log(query, "query from search");
@@ -31,7 +31,7 @@ export const Search = (props) => {
   const handleSearch = () => {
     const params = new URLSearchParams(location.search);
     if (query) {
-      params.set("search", encrypt(query)); // Encrypt the query before setting it
+      params.set("search", query); // Encrypt the query before setting it
     } else {
       params.delete("search");
     }
