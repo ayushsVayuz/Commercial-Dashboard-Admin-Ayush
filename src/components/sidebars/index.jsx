@@ -7,13 +7,14 @@ import {
   LuAlignJustify,
   LuDatabase,
   LuHome,
+  LuLayoutDashboard,
   LuPanelLeftClose,
+  LuArrowRight,
 } from "react-icons/lu";
 import { iconSize } from "../../utils";
-import { useSelector } from "react-redux";
 
 export const Sidebar = ({ className, collapse, setCollapse }) => {
-const initialSidebarItems = [
+  const initialSidebarItems = [
     {
       id: 0,
       title: "Dashboard",
@@ -26,8 +27,8 @@ const initialSidebarItems = [
       title: "My Data",
       icon: <LuDatabase size={iconSize} />,
       child: [
-        { title: "Section", to: "/section", icon: <GoDotFill /> },
-        { title: "Widget", to: "/widget", icon: <GoDotFill /> },
+        { title: "Section", to: "/section", icon: <LuLayoutDashboard size={iconSize} />},
+        { title: "Widget", to: "/widget", icon: <LuArrowRight size={iconSize} /> },
       ],
       isPinned: false,
     },
