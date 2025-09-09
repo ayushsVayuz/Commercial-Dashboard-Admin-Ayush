@@ -230,7 +230,7 @@ const SectionAddEdit = () => {
                           {...field}
                           type="text"
                           placeholder="Enter Background Color of the Section"
-                          errorContent={errors?.url?.message}
+                          errorContent={errors?.backgroundColor?.message}
                         />
                       )}
                     />
@@ -249,7 +249,7 @@ const SectionAddEdit = () => {
                           {...field}
                           type="text"
                           placeholder="Enter Padding of the Section"
-                          errorContent={errors?.url?.message}
+                          errorContent={errors?.padding?.message}
                         />
                       )}
                     />
@@ -268,7 +268,7 @@ const SectionAddEdit = () => {
                           {...field}
                           type="text"
                           placeholder="Enter Border Radius of the Section"
-                          errorContent={errors?.url?.message}
+                          errorContent={errors?.borderRadius?.message}
                         />
                       )}
                     />
@@ -292,7 +292,7 @@ const SectionAddEdit = () => {
                         {...field}
                         type="text"
                         placeholder="Enter API Endpoint of the Section"
-                        errorContent={errors?.url?.message}
+                        errorContent={errors?.apiEndpoint?.message}
                       />
                     )}
                   />
@@ -313,7 +313,7 @@ const SectionAddEdit = () => {
                             { label: "POST", value: "POST" },
                           ]}
                           placeholder="Select Request Method"
-                          errorContent={errors?.url?.message}
+                          errorContent={errors?.requestMethod?.message}
                         />
                       </div>
                     )}
@@ -332,7 +332,7 @@ const SectionAddEdit = () => {
                         {...field}
                         type="text"
                         placeholder="Enter Refresh Interval of the Section"
-                        errorContent={errors?.url?.message}
+                        errorContent={errors?.refreshInterval?.message}
                       />
                     )}
                   />
@@ -355,7 +355,7 @@ const SectionAddEdit = () => {
                           ]}
                           placeholder="Select Params"
                           isMulti={true}
-                          errorContent={errors?.url?.message}
+                          errorContent={errors?.params?.message}
                         />
                       </div>
                     )}
