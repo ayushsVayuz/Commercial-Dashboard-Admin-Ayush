@@ -9,12 +9,12 @@ const getTokenFromLocalStorage = () => {
 // Create a new section
 export const createSection = createAsyncThunk(
   "section/createSection",
-  async (domainData, { rejectWithValue, getState }) => {
+  async (sectionData, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
     try {
       const response = await client.post(
-        "/master-settings/section",
-        domainData,
+        "/sections",
+        sectionData,
         {
           headers: {
             Authorization: `Bearer ${token}`,

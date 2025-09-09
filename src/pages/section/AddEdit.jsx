@@ -35,7 +35,7 @@ const SectionAddEdit = () => {
     setValue,
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(sectionSchema),
+    // resolver: yupResolver(sectionSchema),
     defaultValues: {
       section: "",
       sectionOrder: "",
@@ -45,7 +45,7 @@ const SectionAddEdit = () => {
       borderRadius: "",
       apiEndpoint: "",
       requestMethod: "",
-      refreshInterval: "",
+      refreshInterval: 0,
       params: "",
     },
   });
@@ -90,16 +90,21 @@ const SectionAddEdit = () => {
     console.log(data, "form data");
     try {
       const payload = {
-        section: data?.sectionName,
-        sectionOrder: data?.sectionOrder,
-        isCollapsible: data?.isCollapsible,
+        dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+        name: data?.sectionName,
+        order_index: data?.sectionOrder,
+        is_collapsible: data?.isCollapsible,
+        is_collapsed: data?.isCollapsible,
         backgroundColor: data?.backgroundColor,
-        padding: data?.padding,
-        borderRadius: data?.borderRadius,
-        apiEndpoint: data?.apiEndpoint,
-        requestMethod: data?.requestMethod,
-        refreshInterval: data?.refreshInterval,
-        params: data?.params?.map((p) => p.value) || [],
+        section_config: {
+          backgroundColor: data?.backgroundColor,
+          padding: data?.backgroundColor,
+          borderRadius: data?.backgroundColor,
+        },
+        api_endpoint: data?.apiEndpoint,
+        method: data?.requestMethod?.value,
+        refresh_interval: data?.refreshInterval,
+        params: {},
       };
 
       let res;
@@ -140,10 +145,7 @@ const SectionAddEdit = () => {
           mainTitle={isEditMode ? "Edit Section" : "Create Section"}
         />
         <FormWrapper>
-          {loading ? (
-            <TableShimmer />
-          ) : (
-            <form onSubmit={handleSubmit(onSubmit)}>
+         <form onSubmit={handleSubmit(onSubmit)}>
               {/* Section Name Field */}
               <h5 className="mb-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
                 General
@@ -367,12 +369,16 @@ const SectionAddEdit = () => {
                 <Button type="button" onClick={handleCancel} outLine={true}>
                   Cancel
                 </Button>
-                <Button type="submit" mainPrimary={true} disabled={!isValid}>
+                <Button
+                  type="submit"
+                  mainPrimary={true}
+                  isLoading={loading}
+                  //  disabled={!isValid}
+                >
                   {isEditMode ? "Update" : "Add"}
                 </Button>
               </div>
             </form>
-          )}
         </FormWrapper>
       </section>
     </>
