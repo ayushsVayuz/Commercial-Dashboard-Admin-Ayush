@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import client from "../axios-baseurl"; // Assuming you have axios setup here
+import client from "../axios-baseurl";
 
 // Function to get token from local storage
 const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
 };
 
-// Post a new section
-export const createDomain = createAsyncThunk(
+// Create a new section
+export const createSection = createAsyncThunk(
   "section/createDomain",
   async (domainData, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
@@ -31,7 +31,7 @@ export const createDomain = createAsyncThunk(
 );
 
 // Get section list with query
-export const fetchDomains = createAsyncThunk(
+export const readSection = createAsyncThunk(
   "section/fetchDomains",
   async (queryArray, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
@@ -65,32 +65,8 @@ export const fetchDomains = createAsyncThunk(
   }
 );
 
-export const fetchActiveDomains = createAsyncThunk(
-  "section/fetchActiveDomains",
-  async (_, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
-
-    try {
-      const response = await client.get(
-        `/master-settings/section/active-domains`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response, "responsee section");
-
-      return response.data;
-    } catch (error) {
-      console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
-    }
-  }
-);
-
 // Update section details
-export const updateDomain = createAsyncThunk(
+export const updateSection = createAsyncThunk(
   "section/updateDomain",
   async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
@@ -115,23 +91,24 @@ export const updateDomain = createAsyncThunk(
   }
 );
 
-// Update section status
-export const updateDomainStatus = createAsyncThunk(
-  "section/updateDomainStatus",
-  async ({ domainId, statusData }, { rejectWithValue, getState }) => {
+// Delete section
+export const deleteSection = createAsyncThunk(
+  "section/updateDomain",
+  async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
       const response = await client.put(
-        `/master-settings/section-status/${domainId}`,
-        statusData,
+        `/master-settings/section/${domainId}`,
+        updatedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(response, "responsee");
+
+      console.log(response, "response of edit");
 
       return response.data;
     } catch (error) {

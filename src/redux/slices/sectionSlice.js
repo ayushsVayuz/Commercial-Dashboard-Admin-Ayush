@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  createDomain,
-  fetchActiveDomains,
-  fetchDomains,
-  updateDomain,
-  updateDomainStatus,
+  createSection,
+  readSections,
+  updateSection,
+  deleteSection,
 } from "../actions/section-action";
 
 const initialState = {
@@ -20,7 +19,7 @@ const domainSlice = createSlice({
   name: "section",
   initialState,
   reducers: {
-    resetDomainState: (state) => {
+    resetSection: (state) => {
       state.sections = [];
       state.loading = false;
       state.error = null;
@@ -29,42 +28,41 @@ const domainSlice = createSlice({
   extraReducers: (builder) => {
     // Create Section
     builder
-      .addCase(createDomain.pending, (state) => {
+      .addCase(createSection.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(createDomain.fulfilled, (state, action) => {
+      .addCase(createSection.fulfilled, (state, action) => {
         state.loading = false;
         state.sections.push(action.payload);
       })
-      .addCase(createDomain.rejected, (state, action) => {
+      .addCase(createSection.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to create section";
       });
 
-    // Fetch Sections
+    // Read Sections
     builder
-      .addCase(fetchDomains.pending, (state) => {
+      .addCase(readSections.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchDomains.fulfilled, (state, action) => {
+      .addCase(readSections.fulfilled, (state, action) => {
         state.loading = false;
         state.sections = action.payload.data.data;
         state.totalPages = action.payload.data.totalPages;
       })
-      .addCase(fetchDomains.rejected, (state, action) => {
+      .addCase(readSections.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch sections";
       });
-
     // Update Section
     builder
-      .addCase(updateDomain.pending, (state) => {
+      .addCase(updateSection.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateDomain.fulfilled, (state, action) => {
+      .addCase(updateSection.fulfilled, (state, action) => {
         state.loading = false;
         const index = state.sections.findIndex(
           (section) => section.id === action.payload.id
@@ -73,62 +71,31 @@ const domainSlice = createSlice({
           state.sections[index] = action.payload;
         }
       })
-      .addCase(updateDomain.rejected, (state, action) => {
+      .addCase(updateSection.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to update section";
       });
-
-    // Update Section Status
+    // Delete Section
     builder
-      .addCase(updateDomainStatus.pending, (state, action) => {
-        state.isToggleLoading = action.meta.arg.domainId;
-        state.error = null;
-      })
-      .addCase(updateDomainStatus.fulfilled, (state, action) => {
-        state.isToggleLoading = null;
-        const { domainId, isActive } = action.payload.data;
-        const index = state.sections.findIndex(
-          (section) => section.domainId === domainId
-        );
-        if (index != -1) {
-          state.sections = state.sections.map((obj, i) => {
-            if (i == index) {
-              return {
-                ...obj,
-                isActive,
-              };
-            } else {
-              return obj;
-            }
-          });
-        }
-      })
-      .addCase(updateDomainStatus.rejected, (state, action) => {
-        state.isToggleLoading = null;
-        state.error =
-          action.payload?.message || "Failed to update section status";
-      });
-
-    // fetch active sections
-    builder
-      .addCase(fetchActiveDomains.pending, (state) => {
+      .addCase(deleteSection.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchActiveDomains.fulfilled, (state, action) => {
+      .addCase(deleteSection.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload.data);
-        const sortedData = action.payload.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        const index = state.sections.findIndex(
+          (section) => section.id === action.payload.id
         );
-        state.activeDomains = sortedData;
+        if (index !== -1) {
+          state.sections[index] = action.payload;
+        }
       })
-      .addCase(fetchActiveDomains.rejected, (state, action) => {
+      .addCase(deleteSection.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to fetch sections";
+        state.error = action.payload?.message || "Failed to update section";
       });
   },
 });
 
-export const { resetDomainState } = domainSlice.actions;
+export const { resetSection } = domainSlice.actions;
 export default domainSlice.reducer;
