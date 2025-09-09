@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createSection,
   readSection,
+  readSingleSection,
   updateSection,
 } from "../../redux/actions/section-action";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
@@ -20,10 +21,14 @@ import { Selector } from "../../components/select";
 import { Toggle } from "../../components/inputs/toogle";
 
 const SectionAddEdit = () => {
-  const [selectedDomain, setSelectedDomain] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const { sections, singleSection, error, loading } = useSelector(
+    (state) => state.section
+  );
 
   const isEditMode = location.pathname.includes("/edit");
 
@@ -50,41 +55,32 @@ const SectionAddEdit = () => {
     },
   });
 
-  const { sections, error, loading } = useSelector((state) => state.section);
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (isEditMode) {
-      if (sections?.length === 0) {
-        console.log(sections, "domm22");
-        dispatch(readSection([{ field: "domainId", value: id }]));
-      }
+      // if (sections?.length === 0) {
+      dispatch(readSingleSection({ id: id }));
+      // }
     }
-  }, [isEditMode, dispatch, id, sections?.length]);
+  }, [isEditMode, id]);
 
   useEffect(() => {
-    if (isEditMode && sections?.length > 0) {
-      const domainToSet = sections.find((obj) => obj.domainId === id);
-      setSelectedDomain(domainToSet || null);
+    if (isEditMode && singleSection) {
+      reset({
+        sectionName: singleSection?.name || "",
+        sectionOrder: singleSection?.order_index || "",
+        isCollapsible: singleSection?.is_collapsible || false,
+        backgroundColor: singleSection?.backgroundColor || "",
+        padding: singleSection?.section_config?.padding || "",
+        borderRadius: singleSection?.section_config?.borderRadius || "",
+        apiEndpoint: singleSection?.api_endpoint || "",
+        requestMethod: singleSection?.method
+          ? { label: singleSection.method, value: singleSection.method }
+          : null,
+        refreshInterval: singleSection?.refresh_interval || 0,
+        params: singleSection?.params || "",
+      });
     }
-  }, [sections, id, isEditMode]);
-
-  useEffect(() => {
-    console.log(isEditMode, selectedDomain, "domm");
-
-    if (isEditMode && selectedDomain) {
-      const existingDomainData = {
-        sectionName: selectedDomain?.section,
-        url: selectedDomain?.domainLink,
-      };
-
-      console.log(existingDomainData, "domm");
-
-      setValue("domainName", existingDomainData.domainName);
-      setValue("url", existingDomainData.url);
-    }
-  }, [isEditMode, selectedDomain, setValue]);
+  }, [isEditMode, singleSection, reset]);
 
   const onSubmit = async (data) => {
     console.log(data, "form data");
@@ -145,42 +141,42 @@ const SectionAddEdit = () => {
           mainTitle={isEditMode ? "Edit Section" : "Create Section"}
         />
         <FormWrapper>
-         <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Section Name Field */}
-              <h5 className="mb-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
-                General
-              </h5>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Controller
-                  name="sectionName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      label="Section Name"
-                      type="text"
-                      placeholder="Enter Section Name"
-                      errorContent={errors?.sectionName?.message}
-                    />
-                  )}
-                />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Section Name Field */}
+            <h5 className="mb-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+              General
+            </h5>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Controller
+                name="sectionName"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Section Name"
+                    type="text"
+                    placeholder="Enter Section Name"
+                    errorContent={errors?.sectionName?.message}
+                  />
+                )}
+              />
 
-                {/* Section Order */}
-                <Controller
-                  name="sectionOrder"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      label="Section Order"
-                      type="text"
-                      placeholder="Enter Section Order"
-                      errorContent={errors?.sectionOrder?.message}
-                    />
-                  )}
-                />
-                {/* Section Order */}
-                {/* <Controller
+              {/* Section Order */}
+              <Controller
+                name="sectionOrder"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    label="Section Order"
+                    type="text"
+                    placeholder="Enter Section Order"
+                    errorContent={errors?.sectionOrder?.message}
+                  />
+                )}
+              />
+              {/* Section Order */}
+              {/* <Controller
                   name="isCollapsible"
                   control={control}
                   render={({ field }) => (
@@ -194,191 +190,191 @@ const SectionAddEdit = () => {
                     />
                   )}
                 /> */}
-              </div>
-              <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
-                Configurations
-              </h5>
-              <div className="my-4 flex flex-col gap-4">
-                <div className="flex justify-between gap-2">
-                  <div>
-                    <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                      Section Collapsable{" "}
-                    </h6>
-                    <p className="text-xs text-gray-500">
-                      Enable this to make the section collapsable.
-                    </p>
-                  </div>
-                  <Controller
-                    name="isCollapsible"
-                    control={control}
-                    render={({ field }) => (
-                      <Toggle {...field} name="isCollapsible" />
-                    )}
-                  />
+            </div>
+            <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+              Configurations
+            </h5>
+            <div className="my-4 flex flex-col gap-4">
+              <div className="flex justify-between gap-2">
+                <div>
+                  <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                    Section Collapsable{" "}
+                  </h6>
+                  <p className="text-xs text-gray-500">
+                    Enable this to make the section collapsable.
+                  </p>
                 </div>
-
-                <div className="p-4 border rounded-lg grid sm:grid-cols-2 gap-4">
-                  <div className="flex justify-between items-center gap-2">
-                    <div>
-                      <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                        Background Color
-                      </h6>
-                    </div>
-                    <Controller
-                      name="backgroundColor"
-                      control={control}
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="Enter Background Color of the Section"
-                          errorContent={errors?.backgroundColor?.message}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="flex justify-between items-center gap-2">
-                    <div>
-                      <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                        Padding
-                      </h6>
-                    </div>
-                    <Controller
-                      name="padding"
-                      control={control}
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="Enter Padding of the Section"
-                          errorContent={errors?.padding?.message}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="flex justify-between items-center gap-2">
-                    <div>
-                      <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                        Border Radius
-                      </h6>
-                    </div>
-                    <Controller
-                      name="borderRadius"
-                      control={control}
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          type="text"
-                          placeholder="Enter Border Radius of the Section"
-                          errorContent={errors?.borderRadius?.message}
-                        />
-                      )}
-                    />
-                  </div>
-                </div>
+                <Controller
+                  name="isCollapsible"
+                  control={control}
+                  render={({ field }) => (
+                    <Toggle {...field} name="isCollapsible" />
+                  )}
+                />
               </div>
 
-              <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
-                API Configurations
-              </h5>
               <div className="p-4 border rounded-lg grid sm:grid-cols-2 gap-4">
                 <div className="flex justify-between items-center gap-2">
-                  <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                    API Endpoint
-                  </h6>
+                  <div>
+                    <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                      Background Color
+                    </h6>
+                  </div>
                   <Controller
-                    name="apiEndpoint"
+                    name="backgroundColor"
                     control={control}
                     render={({ field }) => (
                       <Input
                         {...field}
                         type="text"
-                        placeholder="Enter API Endpoint of the Section"
-                        errorContent={errors?.apiEndpoint?.message}
+                        placeholder="Enter Background Color of the Section"
+                        errorContent={errors?.backgroundColor?.message}
                       />
                     )}
                   />
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                    Request Method
-                  </h6>
+                  <div>
+                    <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                      Padding
+                    </h6>
+                  </div>
                   <Controller
-                    name="requestMethod"
-                    control={control}
-                    render={({ field }) => (
-                      <div className="min-w-[210px]">
-                        <Selector
-                          {...field}
-                          options={[
-                            { label: "GET", value: "GET" },
-                            { label: "POST", value: "POST" },
-                          ]}
-                          placeholder="Select Request Method"
-                          errorContent={errors?.requestMethod?.message}
-                        />
-                      </div>
-                    )}
-                  />
-                </div>
-                <div className="flex justify-between items-center gap-2">
-                  <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                    Refresh Interval
-                  </h6>
-
-                  <Controller
-                    name="refreshInterval"
+                    name="padding"
                     control={control}
                     render={({ field }) => (
                       <Input
                         {...field}
                         type="text"
-                        placeholder="Enter Refresh Interval of the Section"
-                        errorContent={errors?.refreshInterval?.message}
+                        placeholder="Enter Padding of the Section"
+                        errorContent={errors?.padding?.message}
                       />
                     )}
                   />
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
-                    Params
-                  </h6>
-
+                  <div>
+                    <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                      Border Radius
+                    </h6>
+                  </div>
                   <Controller
-                    name="params"
+                    name="borderRadius"
                     control={control}
                     render={({ field }) => (
-                      <div className="min-w-[210px]">
-                        <Selector
-                          {...field}
-                          options={[
-                            { label: "GET", value: "GET" },
-                            { label: "POST", value: "POST" },
-                          ]}
-                          placeholder="Select Params"
-                          isMulti={true}
-                          errorContent={errors?.params?.message}
-                        />
-                      </div>
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder="Enter Border Radius of the Section"
+                        errorContent={errors?.borderRadius?.message}
+                      />
                     )}
                   />
                 </div>
               </div>
+            </div>
 
-              <div className="mt-4 flex justify-end gap-4">
-                <Button type="button" onClick={handleCancel} outLine={true}>
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  mainPrimary={true}
-                  isLoading={loading}
-                  //  disabled={!isValid}
-                >
-                  {isEditMode ? "Update" : "Add"}
-                </Button>
+            <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+              API Configurations
+            </h5>
+            <div className="p-4 border rounded-lg grid sm:grid-cols-2 gap-4">
+              <div className="flex justify-between items-center gap-2">
+                <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                  API Endpoint
+                </h6>
+                <Controller
+                  name="apiEndpoint"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Enter API Endpoint of the Section"
+                      errorContent={errors?.apiEndpoint?.message}
+                    />
+                  )}
+                />
               </div>
-            </form>
+              <div className="flex justify-between items-center gap-2">
+                <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                  Request Method
+                </h6>
+                <Controller
+                  name="requestMethod"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="min-w-[210px]">
+                      <Selector
+                        {...field}
+                        options={[
+                          { label: "GET", value: "GET" },
+                          { label: "POST", value: "POST" },
+                        ]}
+                        placeholder="Select Request Method"
+                        errorContent={errors?.requestMethod?.message}
+                      />
+                    </div>
+                  )}
+                />
+              </div>
+              <div className="flex justify-between items-center gap-2">
+                <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                  Refresh Interval
+                </h6>
+
+                <Controller
+                  name="refreshInterval"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Enter Refresh Interval of the Section"
+                      errorContent={errors?.refreshInterval?.message}
+                    />
+                  )}
+                />
+              </div>
+              <div className="flex justify-between items-center gap-2">
+                <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200">
+                  Params
+                </h6>
+
+                <Controller
+                  name="params"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="min-w-[210px]">
+                      <Selector
+                        {...field}
+                        options={[
+                          { label: "GET", value: "GET" },
+                          { label: "POST", value: "POST" },
+                        ]}
+                        placeholder="Select Params"
+                        isMulti={true}
+                        errorContent={errors?.params?.message}
+                      />
+                    </div>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end gap-4">
+              <Button type="button" onClick={handleCancel} outLine={true}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                mainPrimary={true}
+                isLoading={loading}
+                //  disabled={!isValid}
+              >
+                {isEditMode ? "Update" : "Add"}
+              </Button>
+            </div>
+          </form>
         </FormWrapper>
       </section>
     </>

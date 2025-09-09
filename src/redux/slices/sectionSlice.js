@@ -10,6 +10,7 @@ import {
 const initialState = {
   sections: [],
   singleSection: {},
+  payload: {},
   loading: false,
   error: null,
   isToggleLoading: null,
@@ -20,6 +21,9 @@ const domainSlice = createSlice({
   name: "section",
   initialState,
   reducers: {
+    sectionPayload: (state, action) => {
+      state.payload = action.payload
+    },
     resetSection: (state) => {
       state.sections = [];
       state.loading = false;

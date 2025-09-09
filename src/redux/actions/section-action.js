@@ -86,12 +86,12 @@ export const readSingleSection = createAsyncThunk(
 // Update section details
 export const updateSection = createAsyncThunk(
   "section/updateSection",
-  async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
+  async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
       const response = await client.put(
-        `/master-settings/section/${domainId}`,
+        `/sections/${sectionId}`,
         updatedData,
         {
           headers: {
