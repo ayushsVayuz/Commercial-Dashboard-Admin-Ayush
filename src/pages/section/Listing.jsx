@@ -68,14 +68,38 @@ const SectionListing = () => {
   ];
 
   const dataToPass = sectionData.map((section) => ({
-    id: section.domainId,
-    section: titleCase(section.section),
-    createdOn: new Date(section.createdAt).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }),
-    status: section.isActive ? "Active" : "Inactive",
+    id: { content: section.id },
+    section: { content: section.name },
+    order: { content: section.order_index.toString() },
+    collapsible: {
+      content: section.is_collapsible ? "Yes" : "No",
+      type: "status",
+    },
+    collapsed: {
+      content: section.is_collapsed ? "Yes" : "No",
+      type: "status",
+    },
+    createdOn: {
+      content: new Date(section.created_at).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    },
+    updatedOn: {
+      content: new Date(section.updated_at).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    },
+    actions: {
+      content: "Actions",
+      type: "action",
+      actionMenu,
+      isFunctionMenu: true,
+      row: section,
+    },
   }));
 
   const getActionMenu = (id) => [
