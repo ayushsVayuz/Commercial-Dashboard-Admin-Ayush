@@ -65,7 +65,7 @@ const router = createBrowserRouter([
                     element: <SectionPreview />,
                   },
                   {
-                    path: "detail/:id",
+                    path: "view/:id",
                     element: <SectionDetails />,
                   },
                 ],

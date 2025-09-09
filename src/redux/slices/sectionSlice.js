@@ -4,11 +4,12 @@ import {
   readSection,
   updateSection,
   deleteSection,
+  readSingleSection,
 } from "../actions/section-action";
 
 const initialState = {
   sections: [],
-  activeDomains: [],
+  singleSection: {},
   loading: false,
   error: null,
   isToggleLoading: null,
@@ -53,6 +54,21 @@ const domainSlice = createSlice({
         state.totalPages = action.payload.data.totalPages;
       })
       .addCase(readSection.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to fetch sections";
+      });
+    // Read Single Section
+    builder
+      .addCase(readSingleSection.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(readSingleSection.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleSection = action.payload.data;
+        state.totalPages = action.payload.data.totalPages;
+      })
+      .addCase(readSingleSection.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch sections";
       });

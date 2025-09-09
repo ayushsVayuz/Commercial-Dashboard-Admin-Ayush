@@ -12,15 +12,11 @@ export const createSection = createAsyncThunk(
   async (sectionData, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
     try {
-      const response = await client.post(
-        "/sections",
-        sectionData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await client.post("/sections", sectionData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response, "slow days");
 
       return response.data;
@@ -55,6 +51,28 @@ export const readSection = createAsyncThunk(
           },
         }
       );
+      console.log(response, "responsee section");
+
+      return response.data;
+    } catch (error) {
+      console.log("rannn2", error);
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Get section list with query
+export const readSingleSection = createAsyncThunk(
+  "section/readSingleSection",
+  async ({ id }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token;
+
+    try {
+      const response = await client.get(`/sections/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response, "responsee section");
 
       return response.data;
