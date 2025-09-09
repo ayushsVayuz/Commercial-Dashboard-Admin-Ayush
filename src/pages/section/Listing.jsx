@@ -45,14 +45,14 @@ const SectionListing = () => {
       dispatch(
         readSection({
           id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          // queryArray: [{ field: "query", value: searchValue }],
+          queryArray: [{ field: "query", value: searchValue }],
         })
       );
     } else {
       dispatch(
         readSection({
           id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          // queryArray: [{ field: "page", value: currentPage + 1 }],
+          queryArray: [{ field: "page", value: currentPage + 1 }],
         })
       );
     }

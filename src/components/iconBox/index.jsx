@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { SVG } from "../svg";
 import { IoIosArrowForward, IoIosArrowRoundForward } from "react-icons/io";
 import { iconSize } from "../../utils";
+import { FaAngleRight } from "react-icons/fa";
 
 export const IconBox = ({
   to,
   icon,
+  item,
   child,
   title,
   setPin,
   onClick,
   collapse,
+  className,
 }) => {
   const [dropdown, setDropdown] = useState(false);
   const { pathname } = useLocation();
-  const pathSegment = pathname.split("/")[1];
-  console.log(`/${pathSegment}` == to);
-  console.log(pathSegment, "pathsegemetn");
-  console.log(pathname);
-  console.log(to, "to from sidebar");
 
   // Handle toggle of  dropdown
   const handleDropdown = () => {
@@ -27,7 +24,12 @@ export const IconBox = ({
   };
 
   useEffect(() => {
-    if (child && child.some((data) => pathname.startsWith(data.to))) {
+    if (
+      child?.some((data) => pathname.includes(data.to)) ||
+      child?.some((item) =>
+        item?.matches?.some((match) => pathname.includes(match))
+      )
+    ) {
       setDropdown(true);
     } else {
       setDropdown(false);
@@ -36,57 +38,100 @@ export const IconBox = ({
 
   // Function to check if pathname is inside array
 
-  const isPathnameInArray = (pathname, array) => {
-    return array?.some((item) => item.to === pathname);
-  };
+  // const isPathnameInArray = (pathname, array) => {
+  //   return array?.some(
+  //     (item) =>
+  //       item.to === pathname ||
+  //       item.child?.some(
+  //         (childItem) =>
+  //           childItem.to === pathname ||
+  //           childItem.matches?.some((match) => match === pathname) ||
+  //           pathname.startsWith(childItem.to)
+  //       )
+  //   );
+  // };
 
-  const isPathnameInArrayResult = isPathnameInArray(pathname, child);
+  // const isPathnameInArrayResult = isPathnameInArray(pathname, child);
+
+  // child
+  //   ?.filter((item) => item?.matches)
+  //   ?.forEach((item) => {
+  //     const isMatch = item.matches.some((match) => pathname === match);
+
+  //     if (isMatch) {
+  //       console.log(isMatch, "trueee");
+  //     }
+  //   });
+
+  const isMatching = child?.some((item) => {
+    // console.log(item, "1");
+    item?.matches?.some((match) => {
+      // console.log(match, pathname, "log 2");
+      pathname === match;
+    });
+  });
+
+  // console.log(dropdown, isMatching, "log 3");
 
   return (
     <>
       {to ? (
         <Link
           to={to}
-          className={`px-2 py-2.5 ${
-            pathname == to && "bg-secondaryBg dark:bg-[#392347]"
-          }  flex items-center gap-4 text-black dark:text-white`}
+          className={`${className} px-2 py-2.5 ${
+            pathname === to ||
+            item?.matches?.some((match) => pathname.includes(match))
+              ? "bg-secondaryBg dark:bg-[#392347]"
+              : ""
+          } relative flex items-center gap-4 text-black dark:text-white hover:bg-secondaryBg dark:hover:bg-[#392347] rounded`}
           onClick={onClick}
+          data-tooltip-id={collapse ? "my-tooltip" : ""}
+          data-tooltip-content={item.title}
         >
-          {/* <img className={`w-5`} src="/icons/home.svg" alt="" /> */}
-          {/* <SVG className="stroke-icon" iconId={icon} /> */}
           <span
             className={`${
-              pathname == to ? "text-primaryBg" : "text-black"
-            } dark:text-white`}
+              pathname == to ||
+              item?.matches?.some((match) => pathname.includes(match))
+                ? "text-primaryBg dark:text-[#ab66d1]"
+                : "text-black dark:text-white"
+            } `}
           >
             {icon && icon}
           </span>
           {title && (
             <span
               className={`${
-                pathname.includes(to)
-                  ? "text-primaryText"
+                pathname == to ||
+                item?.matches?.some((match) => pathname.includes(match))
+                  ? "text-primaryText dark:text-[#ab66d1]"
                   : "text-black dark:text-white"
-              } text-base `}
+              } text-base flex items-center`}
             >
               {title}
             </span>
           )}
+          {child && (
+            <FaAngleRight
+              className={`absolute right-2 ml-2 transform transition-transform ${
+                pathname == to ? "rotate-90" : "rotate-0"
+              }`}
+            />
+          )}
         </Link>
       ) : (
         <button
+          data-tooltip-id={collapse ? "my-tooltip" : ""}
+          data-tooltip-content={item.title}
           onClick={handleDropdown}
-          className={`${
-            dropdown && "bg-secondaryBg dark:bg-[#392347]"
-          } w-full px-2 py-2.5 flex items-center justify-between gap-2`}
+          className={`${className} ${
+            isMatching || dropdown ? "bg-secondaryBg dark:bg-[#392347]" : ""
+          } w-full px-2 py-2.5 flex items-center justify-between gap-2 hover:bg-secondaryBg dark:hover:bg-[#392347] rounded`}
         >
           <p className="flex gap-4 dark:text-white">
-            {/* <img className="w-5" src={icon} alt="" /> */}
-            {/* <SVG className="stroke-icon" iconId={icon} /> */}
             <span
               className={`${
-                isPathnameInArrayResult
-                  ? "text-primaryBg"
+                isMatching || dropdown
+                  ? "text-primaryBg dark:text-white"
                   : "text-black dark:text-white"
               }`}
             >
@@ -95,10 +140,10 @@ export const IconBox = ({
             {title && (
               <span
                 className={`${
-                  isPathnameInArrayResult
+                  isMatching || dropdown
                     ? "text-primaryText dark:text-white"
-                    : "dark:text-white"
-                } text-base `}
+                    : "text-black dark:text-white"
+                } text-base`}
               >
                 {title}
               </span>
@@ -108,62 +153,79 @@ export const IconBox = ({
             <span className="flex items-center gap-2">
               <IoIosArrowForward
                 className={`${dropdown && "rotate-90"} ${
-                  isPathnameInArrayResult
-                    ? "text-primaryText"
-                    : "dark:text-white"
+                  isMatching ? "text-primaryText" : "dark:text-white"
                 }`}
               />
-              {/* <button onClick={setPin}>
-                <SVG className="stroke-icon dark:text-white" iconId="Pin" />
-              </button> */}
-              {/* <MdOutlinePushPin /> */}
             </span>
           )}
         </button>
       )}
-      {!collapse && (
+      {dropdown && (
         <>
-          {dropdown && (
+          {child && (
             <>
-              {child && (
-                <>
-                  <ul className="mt-2.5">
-                    {child.map((data, index) => (
-                      <li className="px-4 list-none">
-                        <Link
-                          to={data.to}
-                          key={index}
-                          className={`py-1 pl-2 pr-1 rounded-xl flex items-center gap-2`}
-                        >
-                          <span className="flex items-center gap-2">
+              <ul className={`mt-2.5 ${!collapse && "space-y-2"}`}>
+                {child.map((data, index) => {
+                  return (
+                    <li
+                      data-tooltip-id={collapse ? "my-tooltip" : ""}
+                      data-tooltip-content={data.title}
+                      className={`${data.className} ${collapse ? "px-0" : "px-4"} group`}
+                      key={index}
+                    >
+                      <Link
+                        to={data.to}
+                        className={`${
+                          collapse ? "px-2 py-2.5" : "py-1 pl-2 pr-1"
+                        }  rounded-xl flex items-center gap-2`}
+                      >
+                        <span className="flex items-center gap-2">
+                          {data.icon ? (
+                            <span
+                              className={`${
+                                pathname.includes(data.to) ||
+                                data?.matches?.some((match) =>
+                                  pathname.includes(match)
+                                )
+                                  ? "fill-primaryText text-primaryText"
+                                  : "text-black dark:text-white group-hover:text-primaryText"
+                              } `}
+                            >
+                              {data.icon}
+                            </span>
+                          ) : (
                             <IoIosArrowRoundForward
                               className={`${
-                                pathname.includes(data.to)
+                                pathname.includes(data.to) ||
+                                data?.matches?.some((match) =>
+                                  pathname.includes(match)
+                                )
                                   ? "fill-primaryText"
-                                  : "fill-black dark:fill-white"
+                                  : "fill-black dark:fill-white group-hover:fill-primaryText"
                               }`}
                               size={iconSize}
                             />
-                            {/* <SVG className="svg-menu" iconId="right-3" /> */}
-                            {/* {data.icon && data.icon} */}
-                            {data.title && (
-                              <span
-                                className={`${
-                                  pathname.includes(data.to)
-                                    ? "text-primaryText"
-                                    : "text-black dark:text-white"
-                                } text-sm `}
-                              >
-                                {data.title}
-                              </span>
-                            )}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+                          )}
+                          {!collapse && data.title && (
+                            <span
+                              className={`${
+                                pathname.includes(data.to) ||
+                                data?.matches?.some((match) =>
+                                  pathname.includes(match)
+                                )
+                                  ? "text-primaryText"
+                                  : "text-black dark:text-white group-hover:text-primaryText"
+                              } text-sm`}
+                            >
+                              {data.title}
+                            </span>
+                          )}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </>
           )}
         </>

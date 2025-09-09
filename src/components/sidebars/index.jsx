@@ -8,13 +8,12 @@ import {
   LuDatabase,
   LuHome,
   LuPanelLeftClose,
-  LuSettings,
-  LuUsers,
 } from "react-icons/lu";
 import { iconSize } from "../../utils";
+import { useSelector } from "react-redux";
 
 export const Sidebar = ({ className, collapse, setCollapse }) => {
-  const initialSidebarItems = [
+const initialSidebarItems = [
     {
       id: 0,
       title: "Dashboard",
@@ -34,7 +33,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
     },
   ];
   const [items, setItems] = useState(initialSidebarItems);
-  console.log(items, "items from sidebar");
+
   // Handler to toggle the pin status of an item
   const handlePinToggle = (title) => {
     setItems((prevItems) => {
@@ -65,29 +64,36 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
         exit={{ left: "-50%", transition: { duration: 0.3 } }}
         className={`${
           className ? className : ""
-        } shadow-xl dark:dark:bg-slate-900 `}
+        } shadow-sm dark:dark:bg-slate-900`}
       >
         <div
           className={`${
-            collapse ? "flex justify-center items-center " : "pl-2"
-          } pb-4 `}
+            collapse ? "flex justify-center items-center" : "pl-2"
+          } pb-4`}
         >
           <button onClick={handleSidebar}>
             {!collapse ? (
-              <LuPanelLeftClose className="dark:text-white" size={iconSize} />
+              <LuPanelLeftClose
+                className="text-black dark:text-white "
+                size={iconSize}
+              />
             ) : (
-              <LuAlignJustify className="dark:text-white" size={iconSize} />
+              <LuAlignJustify
+                className="text-black dark:text-white"
+                size={iconSize}
+              />
             )}
           </button>
         </div>
-        {items?.map((item, index) => (
-          <>
-            {console.log(item, index)}
+        <div className="space-y-2">
+          {items?.map((item, index) => (
             <IconBox
               containerClassName="px-4 py-2"
               titleClassName={
                 item.to == null && "font-semibold text-primary uppercase "
               }
+              className={item.className}
+              item={item}
               key={index}
               to={item.to}
               icon={item.icon}
@@ -96,8 +102,8 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
               setPin={() => handlePinToggle(item.title)}
               collapse={collapse}
             />
-          </>
-        ))}
+          ))}
+        </div>
       </motion.div>
     </AnimatePresence>
   );
