@@ -27,33 +27,11 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
       title: "My Data",
       icon: <LuDatabase size={iconSize} />,
       child: [
-        { title: "Domain", to: "/domain", icon: <GoDotFill /> },
         { title: "Section", to: "/section", icon: <GoDotFill /> },
         { title: "Widget", to: "/widget", icon: <GoDotFill /> },
       ],
       isPinned: false,
     },
-    // {
-    //   id: 2,
-    //   title: "Users",
-    //   icon: <LuUsers size={iconSize} />,
-    //   child: [
-    //     { title: "Members", to: "/members", icon: <GoDotFill /> },
-    //     // { title: "Tenants", to: "/tenants", icon: <GoDotFill /> },
-    //     // { title: "Owner", to: "/owner", icon: <GoDotFill /> },
-    //   ],
-    //   isPinned: false,
-    // },
-    // {
-    //   id: 3,
-    //   title: "Master Setting",
-    //   icon: <LuSettings size={iconSize} />,
-    //   child: [
-    //     { title: "Assign Role", to: "/assign-role", icon: <GoDotFill /> },
-    //     { title: "Companies", to: "/companies", icon: <GoDotFill /> },
-    //   ],
-    //   isPinned: false,
-    // },
   ];
   const [items, setItems] = useState(initialSidebarItems);
   console.log(items, "items from sidebar");

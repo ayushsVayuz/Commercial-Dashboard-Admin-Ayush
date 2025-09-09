@@ -22,35 +22,20 @@ export const Dashboard = () => {
       {loading ? (
         <TableShimmer />
       ) : (
-        <div className="p-6">
+        <div>
           <h1 className="!text-2xl font-semibold text-[#3d3d47] mb-6 dark:text-white">
             Dashboard Statistics
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card
-              title="Domains"
+              title="Sections"
               stats={stats?.domains}
-              onNavigate={() => navigate("/domain")}
+              onNavigate={() => navigate("/section")}
             />
             <Card
-              title="Master Config"
+              title="Widgets"
               stats={stats?.masterConfig}
-              onNavigate={() => navigate("/masterConfig")}
-            />
-            <Card
-              title="Domain Specific Config"
-              stats={stats?.domainSpecificConfig}
-              onNavigate={() => navigate("/config")}
-            />
-            <Card
-              title="Regex"
-              stats={stats?.regex}
-              onNavigate={() => navigate("/regex")}
-            />
-            <Card
-              title="Route Mapping"
-              stats={stats?.routeMfMapping}
-              onNavigate={() => navigate("/routeMF")}
+              onNavigate={() => navigate("/widget")}
             />
           </div>
         </div>
