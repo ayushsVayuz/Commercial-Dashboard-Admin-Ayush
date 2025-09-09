@@ -10,14 +10,10 @@ import { NoData } from "../noDara";
 import { LoaderIcon } from "react-hot-toast";
 
 export const Table = ({
-  module,
   loading,
   headers,
   initialData,
-  isAction,
-  isStatus,
-  actionMenu,
-  isFucntionAction,
+  
   length,
   selectedValue,
   setSelectedValue,
@@ -25,10 +21,8 @@ export const Table = ({
   setCurrentPage,
   setSort,
   headersSort,
-  onToggleChange,
-  isToggleLoading,
   totalPages,
-  rowPerPage,
+
 }) => {
   const [data, setData] = useState(initialData);
 
@@ -243,16 +237,6 @@ const renderCell = (cell, row) => {
           <LoaderIcon />
         )}
       </div>
-    );
-  }
-
-  if (cell.type === "action") {
-    return (
-      <MoreOption
-        actionMenu={cell.actionMenu}
-        isFunctionMenu={cell.isFunctionMenu}
-        row={row}
-      />
     );
   }
 
