@@ -76,24 +76,24 @@ const domainSlice = createSlice({
         state.error = action.payload?.message || "Failed to update section";
       });
     // Delete Section
-    // builder
-    //   .addCase(deleteSection.pending, (state) => {
-    //     state.loading = true;
-    //     state.error = null;
-    //   })
-    //   .addCase(deleteSection.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     const index = state.sections.findIndex(
-    //       (section) => section.id === action.payload.id
-    //     );
-    //     if (index !== -1) {
-    //       state.sections[index] = action.payload;
-    //     }
-    //   })
-    //   .addCase(deleteSection.rejected, (state, action) => {
-    //     state.loading = false;
-    //     state.error = action.payload?.message || "Failed to update section";
-    //   });
+    builder
+      .addCase(deleteSection.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteSection.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.sections.findIndex(
+          (section) => section.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.sections[index] = action.payload;
+        }
+      })
+      .addCase(deleteSection.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to update section";
+      });
   },
 });
 

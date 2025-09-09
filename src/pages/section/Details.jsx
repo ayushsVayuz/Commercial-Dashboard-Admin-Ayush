@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchDomains } from "../../redux/actions/domain-action";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import { Heading } from "../../components/heading";
 import { RenderLableValue } from "../../components/labels";
 import { decrypt } from "../../functions";
+import { readSection } from "../../redux/actions/section-action";
 
 const SectionDetails = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const SectionDetails = () => {
   const { domains, loading } = useSelector((state) => state.domain);
 
   useEffect(() => {
-    dispatch(fetchDomains([{ field: "domainId", value: decryptedId }]));
+    dispatch(readSection([{ field: "domainId", value: decryptedId }]));
   }, [decryptedId, dispatch]);
 
   // Log to check domain data

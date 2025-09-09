@@ -18,8 +18,6 @@ export const Table = ({
   isStatus,
   actionMenu,
   isFucntionAction,
-  isRowComponent,
-  RowComponent,
   length,
   selectedValue,
   setSelectedValue,
@@ -158,142 +156,25 @@ export const Table = ({
                       </tr>
                     ) : (
                       <>
-                        {isRowComponent ? (
-                          <RowComponent />
-                        ) : (
-                          data?.map((row, rowIndex) => (
-                            <>
-                              <tr
-                                key={rowIndex}
-                                className="border-b border-dashed border-gray-300 dark:border-gray-500 last:border-none"
-                              >
-                                {Object.entries(row).map(
-                                  ([key, cell], cellIndex) => (
-                                    <td
-                                      key={cellIndex}
-                                      className={`${
-                                        key == "Property Name" ||
-                                        key == "Tenant Name"
-                                          ? "text-left"
-                                          : "text-center"
-                                      } ${
-                                        module == "Forms" &&
-                                        key == "id" &&
-                                        "hidden"
-                                      } py-4 px-1 whitespace-nowrap text-xs`}
-                                    >
-                                      {key == "id" ? (
-                                        <Link
-                                          to={`/${
-                                            module == "Lease"
-                                              ? "lease"
-                                              : module == "Member"
-                                              ? "member"
-                                              : module == "Propery"
-                                              ? "property"
-                                              : module == "Company"
-                                              ? "company"
-                                              : module == "Unit"
-                                              ? "unit"
-                                              : module == "Domain"
-                                              ? "domain"
-                                              : module == "MasterConfig"
-                                              ? "masterConfig"
-                                              : module == "RouteMF"
-                                              ? "routeMF"
-                                              : module == "Config"
-                                              ? "config"
-                                              : module == "Regex"
-                                              ? "regex"
-                                              : module == "Forms"
-                                              ? "forms"
-                                              : ""
-                                          }-detail/${cell}`}
-                                          className="text-primaryText hover:underline font-semibold"
-                                        >
-                                          {currentPage * 10 + (rowIndex + 1)}
-                                        </Link>
-                                      ) : key === "totalUnit" ? (
-                                        <Link
-                                          to={`/unit`}
-                                          className="text-primaryText hover:underline font-medium text-xs"
-                                        >
-                                          {cell}
-                                        </Link>
-                                      ) : key === "Community" ||
-                                        key === "community" ? (
-                                        <Link
-                                          to={`/property-detail/${row.id}`}
-                                          className="text-primaryText hover:underline font-medium text-xs"
-                                        >
-                                          {cell}
-                                        </Link>
-                                      ) : key === "unitOrBlock" ? (
-                                        <Link
-                                          to={`/unit-detail/${rowIndex}`}
-                                          className="text-primaryText hover:underline font-medium text-xs"
-                                        >
-                                          {cell}
-                                        </Link>
-                                      ) : (
-                                        <span
-                                          className={`${
-                                            cell === "Active" ||
-                                            cell === "In progress"
-                                              ? "bg-[#43b9b2]/[0.1] text-[#43b9b2] dark:text-green-300 px-3 py-1 rounded-full"
-                                              : cell === "Reject" ||
-                                                cell === "Under Notice" ||
-                                                cell === "Occupied"
-                                              ? "bg-[#fd7e40]/[0.1] text-[#C42A02] dark:text-red-300 px-3 py-1 rounded-full"
-                                              : cell === "Pending" ||
-                                                cell === "Under-Review" ||
-                                                cell === "Inactive" ||
-                                                cell === "Not leased"
-                                              ? "bg-[#fd7e4033]/[0.2] text-[#fd7e40] dark:text-yellow-300 px-3 py-1 rounded-full"
-                                              : cell === "Expired"
-                                              ? "bg-[#2c2c31]/[0.2] text-[#2c2c31] dark:text-gray-300 px-3 py-1 rounded-full"
-                                              : cell === "Modification-Required"
-                                              ? " bg-[#c280d2]/[0.2] text-[#c280d2] dark:text-[#dda7eb] px-3 py-1 rounded-full"
-                                              : cell === "Vacant"
-                                              ? " bg-green-500/[0.2] text-green-900 dark:text-[#dda7eb] px-3 py-1 rounded-full"
-                                              : "dark:text-white "
-                                          }`}
-                                        >
-                                          {cell?.length > 30
-                                            ? cell.slice(0, 30) + "..."
-                                            : cell}
-                                        </span>
-                                      )}
-                                    </td>
-                                  )
-                                )}
-                                {isStatus && (
-                                  <div className="text-center py-2 px-2 whitespace-nowrap text-xs justify-center items-center flex capitalize">
-                                    {!(isToggleLoading == row.id) ? (
-                                      <Toggle
-                                        onChange={() => onToggleChange(row)}
-                                        isChecked={
-                                          row.status == "Active" ? true : false
-                                        }
-                                      />
-                                    ) : (
-                                      <LoaderIcon />
-                                    )}
-                                  </div>
-                                )}
-                                {isAction && (
-                                  <td className="text-center py-2 px-2 whitespace-nowrap text-xs">
-                                    <MoreOption
-                                      actionMenu={actionMenu}
-                                      isFunctionMenu={isFucntionAction}
-                                      row={row}
-                                    />
+                        <>
+                          {data?.map((row, rowIndex) => (
+                            <tr
+                              key={rowIndex}
+                              className="border-b border-dashed border-gray-300 dark:border-gray-500 last:border-none"
+                            >
+                              {Object.entries(row).map(
+                                ([key, cell], cellIndex) => (
+                                  <td
+                                    key={cellIndex}
+                                    className={`text-center py-4 px-1 whitespace-nowrap text-xs`}
+                                  >
+                                    {renderCell(cell, row)}
                                   </td>
-                                )}
-                              </tr>
-                            </>
-                          ))
-                        )}
+                                )
+                              )}
+                            </tr>
+                          ))}
+                        </>
                       </>
                     )}
                   </tbody>
@@ -345,5 +226,85 @@ export const Table = ({
         </>
       )}
     </>
+  );
+};
+
+const renderCell = (cell, row) => {
+  // 1. Custom React component
+  if (cell.component) return cell.component;
+
+  // 2. Toggle cell
+  if (cell.type === "toggle") {
+    return (
+      <div className="flex justify-center items-center">
+        {!cell.loading ? (
+          <Toggle onChange={cell.onChange} isChecked={cell.checked} />
+        ) : (
+          <LoaderIcon />
+        )}
+      </div>
+    );
+  }
+
+  // 3. MoreOption cell
+  if (cell.type === "action") {
+    return (
+      <MoreOption
+        actionMenu={cell.actionMenu}
+        isFunctionMenu={cell.isFunctionMenu}
+        row={row}
+      />
+    );
+  }
+
+  // 4. Link cell
+  if (cell.link) {
+    return (
+      <Link
+        to={cell.link}
+        className="text-primaryText hover:underline font-medium text-xs"
+        title={cell.tooltip || ""}
+      >
+        {cell.content}
+      </Link>
+    );
+  }
+
+  // 5. Status cell
+  if (cell.type === "status") {
+    const statusClasses = {
+      Active: "bg-[#43b9b2]/[0.1] text-[#43b9b2] dark:text-green-300",
+      "In progress": "bg-[#43b9b2]/[0.1] text-[#43b9b2] dark:text-green-300",
+      Reject: "bg-[#fd7e40]/[0.1] text-[#C42A02] dark:text-red-300",
+      "Under Notice": "bg-[#fd7e40]/[0.1] text-[#C42A02] dark:text-red-300",
+      Occupied: "bg-[#fd7e40]/[0.1] text-[#C42A02] dark:text-red-300",
+      Pending: "bg-[#fd7e4033]/[0.2] text-[#fd7e40] dark:text-yellow-300",
+      "Under-Review":
+        "bg-[#fd7e4033]/[0.2] text-[#fd7e40] dark:text-yellow-300",
+      Inactive: "bg-[#fd7e4033]/[0.2] text-[#fd7e40] dark:text-yellow-300",
+      "Not leased": "bg-[#fd7e4033]/[0.2] text-[#fd7e40] dark:text-yellow-300",
+      Expired: "bg-[#2c2c31]/[0.2] text-[#2c2c31] dark:text-gray-300",
+      "Modification-Required":
+        "bg-[#c280d2]/[0.2] text-[#c280d2] dark:text-[#dda7eb]",
+      Vacant: "bg-green-500/[0.2] text-green-900 dark:text-[#dda7eb]",
+    };
+
+    return (
+      <span
+        className={`${statusClasses[cell.content] || "dark:text-white"} 
+        px-3 py-1 rounded-full`}
+      >
+        {cell.content}
+      </span>
+    );
+  }
+
+  // 6. Default → plain text
+  return (
+    <span title={cell.tooltip || ""}>
+      {typeof cell.content === "string" && cell.content.length > 30
+        ? cell.content.slice(0, 30) + "..."
+        : cell.content}
+    </span>
   );
 };

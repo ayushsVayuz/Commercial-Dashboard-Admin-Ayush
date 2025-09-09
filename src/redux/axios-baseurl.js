@@ -2,7 +2,7 @@ import axios from "axios";
 
 const client = axios.create(
   {
-    baseURL: "https://anarock-super-admin.vayuz.com/v2",
+    baseURL: "https://whitelabels-1.apnacomplex.com/dashboard-api/v1",
   },
   {
     withCredentials: true,

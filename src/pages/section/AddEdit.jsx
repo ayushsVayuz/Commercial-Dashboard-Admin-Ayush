@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,10 +35,18 @@ const SectionAddEdit = () => {
     setValue,
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(sectionSchema),
+    resolver: yupResolver(sectionSchema),
     defaultValues: {
-      sectionName: "",
+      section: "",
       sectionOrder: "",
+      isCollapsible: "",
+      backgroundColor: "",
+      padding: "",
+      borderRadius: "",
+      apiEndpoint: "",
+      requestMethod: "",
+      refreshInterval: "",
+      params: "",
     },
   });
 
@@ -79,6 +87,7 @@ const SectionAddEdit = () => {
   }, [isEditMode, selectedDomain, setValue]);
 
   const onSubmit = async (data) => {
+    console.log(data, "form data");
     try {
       const payload = {
         section: data?.sectionName,
@@ -149,7 +158,7 @@ const SectionAddEdit = () => {
                       label="Section Name"
                       type="text"
                       placeholder="Enter Section Name"
-                      errorContent={errors?.domainName?.message}
+                      errorContent={errors?.sectionName?.message}
                     />
                   )}
                 />
@@ -164,7 +173,7 @@ const SectionAddEdit = () => {
                       label="Section Order"
                       type="text"
                       placeholder="Enter Section Order"
-                      errorContent={errors?.url?.message}
+                      errorContent={errors?.sectionOrder?.message}
                     />
                   )}
                 />
@@ -358,93 +367,14 @@ const SectionAddEdit = () => {
                 <Button type="button" onClick={handleCancel} outLine={true}>
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  mainPrimary={true}
-                  disabled={!isValid}
-                  // className={`px-4 py-2 rounded-md ${
-                  //   isValid
-                  //     ? "bg-blue-600 text-white hover:bg-blue-700"
-                  //     : "bg-blue-300 text-blue-100 cursor-not-allowed"
-                  // }`}
-                >
+                <Button type="submit" mainPrimary={true} disabled={!isValid}>
                   {isEditMode ? "Update" : "Add"}
                 </Button>
               </div>
-              {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             </form>
           )}
         </FormWrapper>
       </section>
-
-      {/* <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-800 rounded-md shadow-md">
-      <MetaTitle title={"Section Add or Edit | Anarock"} />
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-        {isEditMode ? "Edit Section" : "Create Section"}
-      </h2>
-      {loading ? (
-        <TableShimmer />
-      ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          
-          <div className="mb-4">
-            <Controller
-              name="domainName"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  label="Section Name"
-                  type="text"
-                  placeholder="Enter Section Name"
-                  errorContent={errors?.domainName?.message}
-                />
-              )}
-            />
-          </div>
-
-         
-          <div className="mb-6">
-            <Controller
-              name="url"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  label="URL"
-                  type="text"
-                  placeholder="Enter URL"
-                  errorContent={errors?.url?.message}
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex justify-end gap-4">
-            <Button
-              type="button"
-              onClick={handleCancel}
-              className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              mainPrimary={true} // Assuming `mainPrimary` applies primary styling
-              disabled={!isValid}
-              className={`px-4 py-2 rounded-md ${
-                isValid
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-blue-300 text-blue-100 cursor-not-allowed"
-              }`}
-            >
-              {isEditMode ? "Update" : "Add"}
-            </Button>
-          </div>
-          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-        </form>
-      )}
-    </div> */}
     </>
   );
 };

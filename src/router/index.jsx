@@ -4,7 +4,7 @@ import { ErrorComponent } from "../components/error";
 import HomePage from "../pages/common/HomePage";
 import LoginPage from "../pages/common/LoginPage";
 import { PrimaryLayout } from "../components/layout/primary";
-import ProtectedRoute from "../pages/protectedRoute";
+import ProtectedRoute from "./protectedRoute";
 import { Dashboard } from "../pages/dashboard";
 import SectionListing from "../pages/section/Listing";
 import SectionAddEdit from "../pages/section/AddEdit";

@@ -8,7 +8,7 @@ const getTokenFromLocalStorage = () => {
 
 // Create a new section
 export const createSection = createAsyncThunk(
-  "section/createDomain",
+  "section/createSection",
   async (domainData, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
     try {
@@ -32,14 +32,14 @@ export const createSection = createAsyncThunk(
 
 // Get section list with query
 export const readSection = createAsyncThunk(
-  "section/fetchDomains",
-  async (queryArray, { rejectWithValue, getState }) => {
+  "section/readSection",
+  async ({ id, queryArray }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
       // Construct the query string from the array of query objects
       const queryString = queryArray
-        .map(
+        ?.map(
           (query) =>
             `${encodeURIComponent(query.field)}=${encodeURIComponent(
               query.value
@@ -48,7 +48,7 @@ export const readSection = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/master-settings/section${queryString ? "?" + queryString : ""}`,
+        `/sections/dashboard/${id}${queryString ? "?" + queryString : ""}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ export const readSection = createAsyncThunk(
 
 // Update section details
 export const updateSection = createAsyncThunk(
-  "section/updateDomain",
+  "section/updateSection",
   async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
@@ -93,7 +93,7 @@ export const updateSection = createAsyncThunk(
 
 // Delete section
 export const deleteSection = createAsyncThunk(
-  "section/updateDomain",
+  "section/deleteSection",
   async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 

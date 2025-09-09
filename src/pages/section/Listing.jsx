@@ -4,10 +4,6 @@ import { Table } from "../../components/table";
 import { TbEdit, TbEye } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-  fetchDomains,
-  updateDomainStatus,
-} from "../../redux/actions/domain-action";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import {
@@ -18,6 +14,7 @@ import {
   titleCase,
 } from "../../functions";
 import { Search } from "../../components/search";
+import { readSection } from "../../redux/actions/section-action";
 
 const SectionListing = () => {
   const dispatch = useDispatch();
@@ -45,9 +42,19 @@ const SectionListing = () => {
   useEffect(() => {
     if (searchValue?.length > 0) {
       setCurrentPage(0);
-      dispatch(fetchDomains([{ field: "query", value: searchValue }]));
+      dispatch(
+        readSection({
+          id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+          // queryArray: [{ field: "query", value: searchValue }],
+        })
+      );
     } else {
-      dispatch(fetchDomains([{ field: "page", value: currentPage + 1 }]));
+      dispatch(
+        readSection({
+          id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+          // queryArray: [{ field: "page", value: currentPage + 1 }],
+        })
+      );
     }
   }, [currentPage, searchValue]);
 
@@ -85,14 +92,14 @@ const SectionListing = () => {
   ];
 
   const onToggleChange = async (row) => {
-    dispatch(
-      updateDomainStatus({
-        domainId: row.id,
-        statusData: {
-          isActive: row.status == "Active" ? false : true,
-        },
-      })
-    );
+    // dispatch(
+    //   updateDomainStatus({
+    //     domainId: row.id,
+    //     statusData: {
+    //       isActive: row.status == "Active" ? false : true,
+    //     },
+    //   })
+    // );
   };
 
   const Filter = () => {
