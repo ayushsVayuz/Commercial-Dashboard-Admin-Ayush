@@ -44,15 +44,51 @@ const SectionDetails = () => {
                 </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
-                {RenderLableValue("Section Name", <span>{singleSection?.name}</span>)}
-                {RenderLableValue("Section Order", <span>{singleSection?.order_index}</span>)}
                 {RenderLableValue(
-                  "Status",
-                  <span>{singleSection?.isActive ? "Active" : "Inactive"}</span>
+                  "Section Name",
+                  <span>{singleSection?.name}</span>
                 )}
                 {RenderLableValue(
-                  "Link",
-                  <span>{singleSection?.domainLink}</span>
+                  "Section Order",
+                  <span>{singleSection?.order_index}</span>
+                )}
+                {RenderLableValue(
+                  "Is Collapsible",
+                  <span>{singleSection?.is_collapsible ? "Yes" : "No"}</span>
+                )}
+                {RenderLableValue(
+                  "Is Collapsed",
+                  <span>{singleSection?.is_collapsed ? "Yes" : "No"}</span>
+                )}
+                {RenderLableValue(
+                  "API Endpoint",
+                  <span>{singleSection?.api_endpoint}</span>
+                )}
+                {RenderLableValue(
+                  "Method",
+                  <span>{singleSection?.method}</span>
+                )}
+                {RenderLableValue(
+                  "Response Type",
+                  <span>{singleSection?.response_type ?? "N/A"}</span>
+                )}
+                {RenderLableValue(
+                  "Refresh Interval",
+                  <span>{singleSection?.refresh_interval}</span>
+                )}
+
+                {/* Section Config - Nested Object */}
+                {RenderLableValue(
+                  "Padding",
+                  <span>{singleSection?.section_config?.padding}</span>
+                )}
+                {RenderLableValue(
+                  "Border Radius",
+                  <span>{singleSection?.section_config?.borderRadius}</span>
+                )}
+                {RenderLableValue(
+                  "Background Color",
+                  <span>{singleSection?.section_config?.backgroundColor}</span>
                 )}
               </div>
             </div>
