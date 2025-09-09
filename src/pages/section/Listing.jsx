@@ -15,6 +15,7 @@ import {
 } from "../../functions";
 import { Search } from "../../components/search";
 import { readSection } from "../../redux/actions/section-action";
+import { MoreOption } from "../../components/moreOption";
 
 const SectionListing = () => {
   const dispatch = useDispatch();
@@ -67,6 +68,20 @@ const SectionListing = () => {
     "Action",
   ];
 
+  const getActionMenu = [
+    {
+      label: "Edit",
+      url: `/section/edit/`,
+      icon: <TbEdit className="text-xl" />,
+    },
+    {
+      label: "View",
+      url: `/section/view/`,
+      icon: <TbEye className="text-xl" />,
+    },
+  ];
+
+
   const dataToPass = sectionData?.map((section, index) => ({
     id: { content: index + 1 },
     section: { content: section.name, link: section.id },
@@ -79,29 +94,12 @@ const SectionListing = () => {
       content: section.is_collapsed ? "Yes" : "No",
       type: "status",
     },
-
     actions: {
-      content: "Actions",
-      type: "action",
-      // actionMenu,
-      isFunctionMenu: true,
-      row: section,
+      component: <MoreOption id={section.id} actionMenu={getActionMenu} />,
     },
   }));
 
-  const getActionMenu = (id) => [
-    {
-      label: "Edit",
-      url: `/section/edit/${encrypt(id)}`,
-      icon: <TbEdit className="text-xl" />,
-    },
-    {
-      label: "View",
-      url: `/section/view/${encrypt(id)}`,
-      icon: <TbEye className="text-xl" />,
-    },
-  ];
-
+  
   const onToggleChange = async (row) => {
     // dispatch(
     //   updateDomainStatus({

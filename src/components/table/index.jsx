@@ -246,7 +246,6 @@ const renderCell = (cell, row) => {
     );
   }
 
-  // 3. MoreOption cell
   if (cell.type === "action") {
     return (
       <MoreOption
@@ -257,7 +256,6 @@ const renderCell = (cell, row) => {
     );
   }
 
-  // 4. Link cell
   if (cell.link) {
     return (
       <Link
@@ -269,8 +267,6 @@ const renderCell = (cell, row) => {
       </Link>
     );
   }
-
-  // 5. Status cell
   if (cell.type === "status") {
     const statusClasses = {
       Active: "bg-[#43b9b2]/[0.1] text-[#43b9b2] dark:text-green-300",
@@ -299,7 +295,6 @@ const renderCell = (cell, row) => {
     );
   }
 
-  // 6. Default → plain text
   return (
     <span title={cell.tooltip || ""}>
       {typeof cell.content === "string" && cell.content.length > 30

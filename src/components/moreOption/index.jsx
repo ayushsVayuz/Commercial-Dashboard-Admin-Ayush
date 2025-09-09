@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { IoMdMore } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useOutsideClick } from "../../functions/index";
 import { RxCross2 } from "react-icons/rx";
 
-export const MoreOption = ({ actionMenu, isFunctionMenu, row }) => {
+export const MoreOption = ({ id, actionMenu }) => {
   const [open, isOpen] = useState(false);
 
   const menuRef = useRef();
@@ -36,55 +36,18 @@ export const MoreOption = ({ actionMenu, isFunctionMenu, row }) => {
           <button className="hidden px-x py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
             <RxCross2 className="text-xl" />
           </button>
-          {isFunctionMenu ? (
+          {actionMenu?.map((data, index) => (
             <>
-              <td className="text-center  whitespace-nowrap text-xs">
-                {typeof row.id == Object
-                  ? isFunctionMenu(row.id).map((action) => (
-                      <>
-                        {console.log(row, "huhuuuu")}
-                        <Link
-                          to={action.url}
-                          key={action.label}
-                          className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
-                        >
-                          {action.icon}
-                          {action.label}
-                        </Link>
-                      </>
-                    ))
-                  : isFunctionMenu(row.id).map((action) => (
-                      <Link
-                        to={action.url}
-                        key={action.label}
-                        className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
-                      >
-                        {action.icon}
-                        {action.label}
-                      </Link>
-                    ))}
-              </td>
+              <Link
+                to={`${data.url}${id}`}
+                key={index}
+                className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
+              >
+                {data.icon ? data.icon : null}
+                <p className="">{data.label}</p>
+              </Link>
             </>
-          ) : (
-            <>
-              {actionMenu?.map((data, index) => (
-                <>
-                  {data.type == "Children" ? (
-                    <>{data.children}</>
-                  ) : (
-                    <Link
-                      to={data.url}
-                      key={index}
-                      className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
-                    >
-                      {data.icon ? data.icon : null}
-                      <p className="">{data.label}</p>
-                    </Link>
-                  )}
-                </>
-              ))}
-            </>
-          )}
+          ))}
         </div>
       )}
     </div>

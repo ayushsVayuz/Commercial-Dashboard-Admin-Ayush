@@ -6,7 +6,7 @@ import { useState } from "react";
 import {
   LuAlignJustify,
   LuDatabase,
-  LuHome,
+  LuHouse ,
   LuLayoutDashboard,
   LuPanelLeftClose,
   LuArrowRight,
@@ -18,7 +18,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
     {
       id: 0,
       title: "Dashboard",
-      icon: <LuHome size={iconSize} />,
+      icon: <LuHouse size={iconSize} />,
       to: "/dashboard",
       isPinned: false,
     },
