@@ -19,11 +19,12 @@ const WidgetsListing = () => {
     widgets: widgetsData,
     isToggleLoading,
     loading,
-    totalPages,
+    totalCount,
   } = useSelector((state) => state.widget);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page")) || 0;
+  const totalPages = totalCount ? Math.ceil(totalCount / 10) : 0;
   const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
@@ -164,47 +165,6 @@ const WidgetsListing = () => {
           </div>
         )}
       </widget>
-
-      {/* <widget className="flex flex-col gap-4">
-      <MetaTitle title={"Widget | Anarock"} />
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center">
-        <h1>Widget Listing</h1>
-        <Link
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-          to="/widget/add"
-        >
-          Create Widget
-        </Link>
-      </div>
-
-      <div>
-        <div className="card bg-themeDefault dark:dark:bg-slate-800">
-          <div className="ml-auto">
-            <Search placeholder={"Search by Name"} />
-          </div>
-          {loading ? (
-            <TableShimmer />
-          ) : (
-            <div className="card-body p-0">
-              <Table
-                module={"Widget"}
-                headers={headers}
-                initialData={dataToPass}
-                isAction={true}
-                isFucntionAction={getActionMenu}
-                isStatus={true}
-                onToggleChange={onToggleChange}
-                isToggleLoading={isToggleLoading}
-                totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                rowPerPage={false}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-    </widget> */}
     </>
   );
 };

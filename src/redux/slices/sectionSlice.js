@@ -13,8 +13,7 @@ const initialState = {
   payload: {},
   loading: false,
   error: null,
-  isToggleLoading: null,
-  totalPages: 1,
+  totalCount: null,
 };
 
 const domainSlice = createSlice({
@@ -58,7 +57,7 @@ const domainSlice = createSlice({
       .addCase(readSection.fulfilled, (state, action) => {
         state.loading = false;
         state.sections = action.payload.data;
-        state.totalPages = action.payload.data.totalPages;
+        state.totalCount = action.payload.data.total;
       })
       .addCase(readSection.rejected, (state, action) => {
         state.loading = false;

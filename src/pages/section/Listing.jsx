@@ -17,12 +17,13 @@ const SectionListing = () => {
     sections: sectionData,
     isToggleLoading,
     loading,
-    totalPages,
-    resetS
+    totalCount,
+    resetS,
   } = useSelector((state) => state.section);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page")) || 0;
+  const totalPages = totalCount ? Math.ceil(totalCount / 10) : 0;
   const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
@@ -76,7 +77,6 @@ const SectionListing = () => {
     },
   ];
 
-
   const dataToPass = sectionData?.map((section, index) => ({
     id: { content: index + 1 },
     section: { content: section.name, link: `view/${section.id}` },
@@ -94,7 +94,6 @@ const SectionListing = () => {
     },
   }));
 
-  
   const onToggleChange = async (row) => {
     // dispatch(
     //   updateDomainStatus({
@@ -158,8 +157,6 @@ const SectionListing = () => {
               module={"Section"}
               headers={headers}
               initialData={dataToPass}
-              isAction={true}
-              isFucntionAction={getActionMenu}
               isStatus={true}
               onToggleChange={onToggleChange}
               isToggleLoading={isToggleLoading}
@@ -171,47 +168,6 @@ const SectionListing = () => {
           </div>
         )}
       </section>
-
-      {/* <section className="flex flex-col gap-4">
-      <MetaTitle title={"Section | Anarock"} />
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center">
-        <h1>Section Listing</h1>
-        <Link
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-          to="/section/add"
-        >
-          Create Section
-        </Link>
-      </div>
-
-      <div>
-        <div className="card bg-themeDefault dark:dark:bg-slate-800">
-          <div className="ml-auto">
-            <Search placeholder={"Search by Name"} />
-          </div>
-          {loading ? (
-            <TableShimmer />
-          ) : (
-            <div className="card-body p-0">
-              <Table
-                module={"Section"}
-                headers={headers}
-                initialData={dataToPass}
-                isAction={true}
-                isFucntionAction={getActionMenu}
-                isStatus={true}
-                onToggleChange={onToggleChange}
-                isToggleLoading={isToggleLoading}
-                totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                rowPerPage={false}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-    </section> */}
     </>
   );
 };

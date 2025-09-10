@@ -13,7 +13,7 @@ export const Table = ({
   loading,
   headers,
   initialData,
-  
+
   length,
   selectedValue,
   setSelectedValue,
@@ -22,7 +22,6 @@ export const Table = ({
   setSort,
   headersSort,
   totalPages,
-
 }) => {
   const [data, setData] = useState(initialData);
 

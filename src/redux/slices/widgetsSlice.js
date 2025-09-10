@@ -14,7 +14,7 @@ const initialState = {
   loading: false,
   error: null,
   isToggleLoading: null,
-  totalPages: 1,
+  totalCount: 0,
 };
 
 const widgetsSlice = createSlice({
@@ -53,8 +53,7 @@ const widgetsSlice = createSlice({
       .addCase(readWidget.fulfilled, (state, action) => {
         state.loading = false;
         state.widgets = action.payload.data;
-        state.totalPages = action.payload.data.totalPages;
-        console.log(action.payload.data, "widget dataaa");
+        state.totalCount = action.payload.data.total;
       })
       .addCase(readWidget.rejected, (state, action) => {
         state.loading = false;
@@ -116,6 +115,5 @@ const widgetsSlice = createSlice({
   },
 });
 
-export const { widgetPayload, resetWidgetPayload } =
-  widgetsSlice.actions;
+export const { widgetPayload, resetWidgetPayload } = widgetsSlice.actions;
 export default widgetsSlice.reducer;
