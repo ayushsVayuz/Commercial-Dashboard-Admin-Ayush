@@ -46,9 +46,9 @@ export const readSection = createAsyncThunk(
       const response = await client.get(
         `/sections/dashboard/${id}${queryString ? "?" + queryString : ""}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
         }
       );
       console.log(response, "responsee section");

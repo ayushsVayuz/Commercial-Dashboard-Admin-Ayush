@@ -420,7 +420,6 @@ const SectionAddEdit = () => {
               </Button>
             </div>
           </form>
-          {error}
         </FormWrapper>
       </section>
     </>
