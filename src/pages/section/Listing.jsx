@@ -21,7 +21,8 @@ const SectionListing = () => {
   } = useSelector((state) => state.section);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = parseInt(searchParams.get("page")) || 0;
+  const page = parseInt(searchParams.get("skip")) || 0;
+  const limit = parseInt(searchParams.get("limit")) || 10;
   const totalPages = totalCount ? Math.ceil(totalCount / 10) : 0;
   const searchValue = searchParams.get("search") || "";
 
@@ -29,29 +30,42 @@ const SectionListing = () => {
   console.log(totalCount, "totalPages");
 
   useEffect(() => {
-    setSearchParams({
-      page: currentPage.toString(),
+    const currentParams = {
+      skip: currentPage.toString() *10,
+      limit: limit.toString(),
       search: searchValue,
-    });
-  }, [currentPage]);
+    };
+
+    const prevParams = Object.fromEntries([...searchParams]);
+
+    // Only update search params if something changed
+    const hasChanged = Object.entries(currentParams).some(
+      ([key, value]) => prevParams[key] !== value
+    );
+
+    if (hasChanged) {
+      setSearchParams(currentParams);
+    }
+  }, [currentPage, limit, searchValue]);
 
   useEffect(() => {
+    const payload = {
+      id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+      queryArray: [],
+    };
+
     if (searchValue?.length > 0) {
+      
       setCurrentPage(0);
-      dispatch(
-        readSection({
-          id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          queryArray: [{ field: "search", value: searchValue }],
-        })
-      );
+      payload.queryArray.push({ field: "search", value: searchValue });
     } else {
-      dispatch(
-        readSection({
-          id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          queryArray: [{ field: "page", value: currentPage + 1 }],
-        })
+      payload.queryArray.push(
+        { field: "skip", value: currentPage * limit },
+        { field: "limit", value: limit }
       );
     }
+
+    dispatch(readSection(payload));
   }, [currentPage, searchValue]);
 
   const headers = [
