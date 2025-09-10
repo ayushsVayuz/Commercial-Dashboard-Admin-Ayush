@@ -15,7 +15,6 @@ const SectionListing = () => {
   const dispatch = useDispatch();
   const {
     sections: sectionData,
-    isToggleLoading,
     loading,
     totalCount,
     resetS,
@@ -27,7 +26,7 @@ const SectionListing = () => {
   const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
-  console.log(sectionData, "section data");
+  console.log(totalCount, "totalPages");
 
   useEffect(() => {
     setSearchParams({

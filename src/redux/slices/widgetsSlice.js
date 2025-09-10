@@ -53,7 +53,7 @@ const widgetsSlice = createSlice({
       .addCase(readWidget.fulfilled, (state, action) => {
         state.loading = false;
         state.widgets = action.payload.data;
-        state.totalCount = action.payload.data.total;
+        state.totalCount = action.payload.total;
       })
       .addCase(readWidget.rejected, (state, action) => {
         state.loading = false;
@@ -68,7 +68,7 @@ const widgetsSlice = createSlice({
       .addCase(readSingleWidget.fulfilled, (state, action) => {
         state.loading = false;
         state.singleWidget = action.payload.data;
-        state.totalPages = action.payload.data.totalPages;
+        state.totalPages = action.payload.total;
       })
       .addCase(readSingleWidget.rejected, (state, action) => {
         state.loading = false;
