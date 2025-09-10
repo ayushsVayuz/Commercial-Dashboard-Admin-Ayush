@@ -4,7 +4,7 @@ export const widgetSchema = yup.object().shape({
   // General
   widgetName: yup.string().required("Widget name is required"),
   widgetType: yup.string().required("Widget type is required"),
-  section: yup.string().required("Section is required"),
+  section: yup.object().required("Section is required"),
   groupId: yup.string().required("Group ID is required"),
 
   // Position
@@ -21,14 +21,14 @@ export const widgetSchema = yup.object().shape({
   width: yup
     .number()
     .typeError("Width must be a number")
-    .min(1, "Width must be at least 1")
-    .max(12, "Width cannot exceed 12")
+    .min(0, "Width must be at least 0")
+    .max(1024, "Width cannot exceed 1024")
     .nullable(),
   height: yup
     .number()
     .typeError("Height must be a number")
-    .min(1, "Height must be at least 1")
-    .max(12, "Height cannot exceed 12")
+    .min(0, "Height must be at least 0")
+    .max(690, "Height cannot exceed 196")
     .nullable(),
 
   // Constraints

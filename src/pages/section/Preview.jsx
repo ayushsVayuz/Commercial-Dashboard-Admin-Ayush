@@ -35,7 +35,7 @@ const SectionPreview = () => {
           updateSection({ sectionId: id, updatedData: data })
         );
       } else {
-        res = dispatch(createSection(data));
+        res = await dispatch(createSection(data));
       }
 
       if (
@@ -53,6 +53,9 @@ const SectionPreview = () => {
       console.error("Submission error:", error);
     }
   };
+
+
+  console.log(payload, "section preview payload data");
 
   return (
     <section>

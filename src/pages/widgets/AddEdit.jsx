@@ -21,13 +21,15 @@ import { widgetSchema } from "../../validation/widget-validator";
 
 const WidgetAddEdit = () => {
   const [sectionOptions, setSectionOptions] = useState([]);
+  const [selectedSection, setSelectedSection] = useState({});
+
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const { payload, singleWidget, error, loading } = useSelector(
-    (state) => state.widget // <-- update slice to widget
+    (state) => state.widget
   );
 
   const isEditMode = location.pathname.includes("/edit");
@@ -85,12 +87,9 @@ const WidgetAddEdit = () => {
       reset({
         widgetName: singleWidget.name || "",
         widgetType: singleWidget.type || "",
-        section: singleWidget.section?.name
-          ? {
-              label: singleWidget.section?.name,
-              value: singleWidget.section?.id,
-            }
-          : "" || "",
+        section: singleWidget.section
+          ? { id: singleWidget.section.id, name: singleWidget.section.name }
+          : null,
 
         posX: singleWidget.position?.x || 0,
         posY: singleWidget.position?.y || 0,
@@ -118,12 +117,10 @@ const WidgetAddEdit = () => {
       reset({
         widgetName: singleWidget.name || "",
         widgetType: singleWidget.type || "",
-        section: singleWidget.section?.name
-          ? {
-              label: singleWidget.section?.name,
-              value: singleWidget.section?.id,
-            }
-          : "" || "",
+
+        section: singleWidget.section
+          ? { id: singleWidget.section.id, name: singleWidget.section.name }
+          : null,
 
         posX: singleWidget.position?.x || 0,
         posY: singleWidget.position?.y || 0,
@@ -152,7 +149,7 @@ const WidgetAddEdit = () => {
     const payload = {
       name: data.widgetName,
       type: data.widgetType,
-      section_id: data.section,
+      section_id: data.section.id,
       position: {
         x: Number(data.posX),
         y: Number(data.posY),
@@ -216,6 +213,7 @@ const WidgetAddEdit = () => {
     fetchSections();
   }, [dispatch]);
 
+  console.log(errors, "errors");
   return (
     <section className="dark:bg-gray-800 dark:h-screen">
       <MetaTitle title={`Widget ${isEditMode ? "Edit" : "Add"} | Anarock`} />
@@ -237,13 +235,21 @@ const WidgetAddEdit = () => {
               control={control}
               render={({ field }) => (
                 <Selector
-                  {...field}
                   label="Section"
                   placeholder="Select Section"
                   options={sectionOptions}
-                  value={field.value} // ✅ already in {label, value} format
-                  onChange={(selected) => field.onChange(selected)}
-                  errorContent={errors?.section?.message}
+                  value={
+                    sectionOptions.find(
+                      (opt) => opt.value === field.value?.id
+                    ) || null
+                  }
+                  onChange={(selected) => {
+                    field.onChange(
+                      selected
+                        ? { id: selected.value, name: selected.label }
+                        : null
+                    );
+                  }}
                 />
               )}
             />

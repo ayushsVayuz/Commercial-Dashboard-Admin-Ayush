@@ -80,7 +80,7 @@ const SectionListing = () => {
   const dataToPass = sectionData?.map((section, index) => ({
     id: { content: index + 1 },
     section: { content: section.name, link: `view/${section.id}` },
-    order: { content: section.order_index.toString() },
+    order: { content: section.order_index?.toString() },
     collapsible: {
       content: section.is_collapsible ? "Yes" : "No",
       type: "status",

@@ -109,7 +109,7 @@ const SectionAddEdit = () => {
         borderRadius: data?.borderRadius,
       },
       api_endpoint: data?.apiEndpoint,
-      method: data?.requestMethod?.value,
+      method: data?.requestMethod,
       refresh_interval: data?.refreshInterval,
       response_type: "json",
       params: [],
@@ -152,9 +152,10 @@ const SectionAddEdit = () => {
   const methodOptions = [
     { label: "GET", value: "GET" },
     { label: "POST", value: "POST" },
+    { label: "PUT", value: "PUT" },
+    { label: "DELETE", value: "DELETE" },
+    { label: "PATCH", value: "PATCH" },
   ];
-
-  console.log(errors, getValues(), "form errors");
 
   return (
     <>
