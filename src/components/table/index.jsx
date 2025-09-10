@@ -13,8 +13,6 @@ export const Table = ({
   loading,
   headers,
   initialData,
-
-  length,
   selectedValue,
   setSelectedValue,
   currentPage,

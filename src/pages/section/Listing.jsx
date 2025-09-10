@@ -157,9 +157,6 @@ const SectionListing = () => {
               module={"Section"}
               headers={headers}
               initialData={dataToPass}
-              isStatus={true}
-              onToggleChange={onToggleChange}
-              isToggleLoading={isToggleLoading}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

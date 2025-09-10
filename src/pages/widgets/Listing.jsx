@@ -17,7 +17,6 @@ const WidgetsListing = () => {
   const navigate = useNavigate();
   const {
     widgets: widgetsData,
-    isToggleLoading,
     loading,
     totalCount,
   } = useSelector((state) => state.widget);
@@ -28,7 +27,6 @@ const WidgetsListing = () => {
   const searchValue = searchParams.get("search") || "";
 
   const [currentPage, setCurrentPage] = useState(page);
-  console.log(widgetsData, "widget data");
 
   useEffect(() => {
     setSearchParams({
@@ -87,17 +85,6 @@ const WidgetsListing = () => {
     },
   }));
 
-  const onToggleChange = async (row) => {
-    // dispatch(
-    //   updateDomainStatus({
-    //     domainId: row.id,
-    //     statusData: {
-    //       isActive: row.status == "Active" ? false : true,
-    //     },
-    //   })
-    // );
-  };
-
   // const Filter = () => {
   //   return (
   //     <div class="min-w-20 absolute top-4 right-4 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700">
@@ -152,11 +139,6 @@ const WidgetsListing = () => {
               module={"Widget"}
               headers={headers}
               initialData={dataToPass}
-              isAction={true}
-              isFucntionAction={getActionMenu}
-              isStatus={true}
-              onToggleChange={onToggleChange}
-              isToggleLoading={isToggleLoading}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
