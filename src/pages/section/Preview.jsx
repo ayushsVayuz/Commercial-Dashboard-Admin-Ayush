@@ -135,7 +135,7 @@ const SectionPreview = () => {
           isLoading={loading}
           //  disabled={!isValid}
         >
-          {isEditMode ? "Update" : "Add"}
+          {isEditMode ? "Update" : "Create"}
         </Button>
       </div>
     </section>

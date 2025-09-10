@@ -7,6 +7,7 @@ import appSlice from "./slices/appSlice";
 import authSlice from "./slices/authSlice";
 import dashboardSlice from "./slices/dashboardSlice";
 import sectionSlice from "./slices/sectionSlice";
+import widgetsSlice from "./slices/widgetsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     auth: authSlice,
     dashboard: dashboardSlice,
     section: sectionSlice,
+    widget: widgetsSlice,
   },
 });

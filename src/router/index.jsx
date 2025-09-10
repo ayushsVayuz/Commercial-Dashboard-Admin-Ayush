@@ -10,6 +10,10 @@ import SectionListing from "../pages/section/Listing";
 import SectionAddEdit from "../pages/section/AddEdit";
 import SectionDetails from "../pages/section/Details";
 import SectionPreview from "../pages/section/Preview";
+import WidgetsListing from "../pages/widgets/Listing";
+import WidgetDetails from "../pages/widgets/Details";
+import WidgetPreview from "../pages/widgets/Preview";
+import WidgetAddEdit from "../pages/widgets/AddEdit";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +75,37 @@ const router = createBrowserRouter([
                   {
                     path: "view/:id",
                     element: <SectionDetails />,
+                  },
+                ],
+              },
+              // Widgets Routes
+              {
+                path: "widget",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <WidgetsListing />,
+                  },
+                  {
+                    path: "add",
+                    element: <WidgetAddEdit />,
+                  },
+                  {
+                    path: "edit/:id",
+                    element: <WidgetAddEdit />,
+                  },
+                  {
+                    path: "preview",
+                    element: <WidgetPreview />,
+                  },
+                  {
+                    path: "preview/:id",
+                    element: <WidgetPreview />,
+                  },
+                  {
+                    path: "view/:id",
+                    element: <WidgetDetails />,
                   },
                 ],
               },
