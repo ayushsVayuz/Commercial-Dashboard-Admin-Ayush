@@ -17,6 +17,7 @@ import { Toggle } from "../../components/inputs/toogle";
 import toast from "react-hot-toast";
 import { widgetPayload } from "../../redux/slices/widgetsSlice";
 import { readSection } from "../../redux/actions/section-action";
+import { widgetSchema } from "../../validation/widget-validator";
 
 const WidgetAddEdit = () => {
   const [sectionOptions, setSectionOptions] = useState([]);
@@ -39,6 +40,7 @@ const WidgetAddEdit = () => {
     trigger,
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(widgetSchema),
     defaultValues: {
       // General
       widgetName: "",
@@ -83,7 +85,12 @@ const WidgetAddEdit = () => {
       reset({
         widgetName: singleWidget.name || "",
         widgetType: singleWidget.type || "",
-        section: singleWidget.section?.name || "",
+        section: singleWidget.section?.name
+          ? {
+              label: singleWidget.section?.name,
+              value: singleWidget.section?.id,
+            }
+          : "" || "",
 
         posX: singleWidget.position?.x || 0,
         posY: singleWidget.position?.y || 0,
@@ -105,12 +112,18 @@ const WidgetAddEdit = () => {
         tablet: JSON.stringify(singleWidget.responsive?.tablet || {}),
         desktop: JSON.stringify(singleWidget.responsive?.desktop || {}),
       });
+      console.log(singleWidget, "singleWidget data");
     } else {
       const singleWidget = payload;
       reset({
         widgetName: singleWidget.name || "",
         widgetType: singleWidget.type || "",
-        section: singleWidget.section?.name || "",
+        section: singleWidget.section?.name
+          ? {
+              label: singleWidget.section?.name,
+              value: singleWidget.section?.id,
+            }
+          : "" || "",
 
         posX: singleWidget.position?.x || 0,
         posY: singleWidget.position?.y || 0,
@@ -223,26 +236,18 @@ const WidgetAddEdit = () => {
               name="section"
               control={control}
               render={({ field }) => (
-                <div className="min-w-[210px]">
-                  <Selector
-                    {...field}
-                    label="Section"
-                    placeholder="Select Section"
-                    options={sectionOptions}
-                    value={
-                      sectionOptions.find(
-                        (option) => option.value === field.value
-                      ) || null
-                    }
-                    onChange={(selected) => {
-                      field.onChange(selected?.value || "");
-                      trigger("section");
-                    }}
-                    errorContent={errors?.section?.message}
-                  />
-                </div>
+                <Selector
+                  {...field}
+                  label="Section"
+                  placeholder="Select Section"
+                  options={sectionOptions}
+                  value={field.value} // ✅ already in {label, value} format
+                  onChange={(selected) => field.onChange(selected)}
+                  errorContent={errors?.section?.message}
+                />
               )}
             />
+
             <Controller
               name="widgetName"
               control={control}
@@ -251,6 +256,7 @@ const WidgetAddEdit = () => {
                   {...field}
                   label="Widget Name"
                   placeholder="Enter name"
+                  errorContent={errors?.widgetName?.message}
                 />
               )}
             />
@@ -262,6 +268,7 @@ const WidgetAddEdit = () => {
                   {...field}
                   label="Widget Type"
                   placeholder="e.g., chart"
+                  errorContent={errors?.widgetType?.message}
                 />
               )}
             />
@@ -282,6 +289,7 @@ const WidgetAddEdit = () => {
                     {...field}
                     label={fieldName.toUpperCase()}
                     type="number"
+                    errorContent={errors?.[fieldName]?.message}
                   />
                 )}
               />
@@ -297,14 +305,24 @@ const WidgetAddEdit = () => {
               name="minWidth"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Min Width" type="number" />
+                <Input
+                  {...field}
+                  label="Min Width"
+                  type="number"
+                  errorContent={errors?.minWidth?.message}
+                />
               )}
             />
             <Controller
               name="maxWidth"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Max Width" type="number" />
+                <Input
+                  {...field}
+                  label="Max Width"
+                  type="number"
+                  errorContent={errors?.maxWidth?.message}
+                />
               )}
             />
           </div>
@@ -332,12 +350,24 @@ const WidgetAddEdit = () => {
             <Controller
               name="chartType"
               control={control}
-              render={({ field }) => <Input {...field} label="Chart Type" />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Chart Type"
+                  errorContent={errors?.chartType?.message}
+                />
+              )}
             />
             <Controller
               name="groupId"
               control={control}
-              render={({ field }) => <Input {...field} label="Group ID" />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Group ID"
+                  errorContent={errors?.groupId?.message}
+                />
+              )}
             />
             {/* <Controller
               name="dataField"
@@ -354,13 +384,23 @@ const WidgetAddEdit = () => {
             <Controller
               name="borderColor"
               control={control}
-              render={({ field }) => <Input {...field} label="Border Color" />}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Border Color"
+                  errorContent={errors?.borderColor?.message}
+                />
+              )}
             />
             <Controller
               name="backgroundColor"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Background Color" />
+                <Input
+                  {...field}
+                  label="Background Color"
+                  errorContent={errors?.backgroundColor?.message}
+                />
               )}
             />
           </div>
@@ -374,21 +414,33 @@ const WidgetAddEdit = () => {
               name="mobile"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Mobile Config (JSON)" />
+                <Input
+                  {...field}
+                  label="Mobile Config (JSON)"
+                  errorContent={errors?.mobile?.message}
+                />
               )}
             />
             <Controller
               name="tablet"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Tablet Config (JSON)" />
+                <Input
+                  {...field}
+                  label="Tablet Config (JSON)"
+                  errorContent={errors?.tablet?.message}
+                />
               )}
             />
             <Controller
               name="desktop"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Desktop Config (JSON)" />
+                <Input
+                  {...field}
+                  label="Desktop Config (JSON)"
+                  errorContent={errors?.desktop?.message}
+                />
               )}
             />
           </div>

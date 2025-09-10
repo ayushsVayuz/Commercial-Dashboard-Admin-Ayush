@@ -87,11 +87,12 @@ export const readSingleWidget = createAsyncThunk(
 export const updateWidget = createAsyncThunk(
   "widget/updateWidget",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
+    console.log(widgetId, updatedData, "widgetid and updated data");
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
       const response = await client.put(
-        `/widgets/${sectionId}`,
+        `/widgets/${widgetId}`,
         updatedData,
         {
           headers: {

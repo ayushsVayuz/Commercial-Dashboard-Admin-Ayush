@@ -14,7 +14,6 @@ import { FormWrapper } from "../../components/wrappers/form";
 import { decrypt, encrypt } from "../../functions";
 import { Selector } from "../../components/select";
 import { Toggle } from "../../components/inputs/toogle";
-import toast from "react-hot-toast";
 import { sectionPayload } from "../../redux/slices/sectionSlice";
 
 const SectionAddEdit = () => {

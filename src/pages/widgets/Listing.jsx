@@ -1,4 +1,4 @@
-import { Link, Outlet, useSearchParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import { Heading } from "../../components/heading";
 import { Table } from "../../components/table";
 import { TbEdit, TbEye } from "react-icons/tb";
@@ -10,15 +10,16 @@ import { Search } from "../../components/search";
 import { readWidget } from "../../redux/actions/widgets-action";
 import { MoreOption } from "../../components/moreOption";
 import { resetWidgetPayload } from "../../redux/slices/widgetsSlice";
+import { Button } from "../../components/buttons";
 
 const WidgetsListing = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     widgets: widgetsData,
     isToggleLoading,
     loading,
     totalPages,
-    resetWidgetPayload,
   } = useSelector((state) => state.widget);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -54,13 +55,7 @@ const WidgetsListing = () => {
     }
   }, [currentPage, searchValue]);
 
-  const headers = [
-    "Sr No.",
-    "Widget",
-    "Section",
-    "Type",
-    "Action",
-  ];
+  const headers = ["Sr No.", "Widget", "Section", "Type", "Action"];
 
   const getActionMenu = [
     {
@@ -80,7 +75,10 @@ const WidgetsListing = () => {
   const dataToPass = widgetsData?.map((widget, index) => ({
     id: { content: index + 1 },
     widget: { content: widget?.name, link: `view/${widget?.id}` },
-    section: { content: widget?.section?.name, link: `/section/view/${widget?.section?.id}` },
+    section: {
+      content: widget?.section?.name,
+      link: `/section/view/${widget?.section?.id}`,
+    },
     type: { content: widget?.type },
 
     actions: {
@@ -127,13 +125,15 @@ const WidgetsListing = () => {
             parent="Widget"
             mainTitle="Widget Listing"
           />
-          <Link
+          <Button
             className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-            to="/widget/add"
-            onClick={() => dispatch(resetSectionPayload())}
+            onClick={() => {
+              navigate("/widget/add");
+              dispatch(resetWidgetPayload());
+            }}
           >
             Add Widget
-          </Link>
+          </Button>
         </div>
         <div className="flex sm:justify-end items-center gap-2">
           <Search

@@ -28,9 +28,9 @@ const WidgetPreview = () => {
     try {
       let res;
       if (isEditMode) {
-        res = await dispatch(updateWidget({ WidgetId: id, updatedData: data }));
+        res = await dispatch(updateWidget({ widgetId: id, updatedData: data }));
       } else {
-        res = dispatch(createWidget(data));
+        res = await dispatch(createWidget(data));
       }
 
       if (
