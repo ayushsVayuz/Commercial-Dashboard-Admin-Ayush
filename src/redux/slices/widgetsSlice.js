@@ -5,6 +5,7 @@ import {
   updateWidget,
   deleteWidget,
   readSingleWidget,
+  changeStatusWidget,
 } from "../actions/widgets-action";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   singleWidget: {},
   payload: {},
   loading: false,
+  statusLoading: {},
   error: null,
   isToggleLoading: null,
   totalCount: 0,
@@ -41,10 +43,10 @@ const widgetsSlice = createSlice({
       })
       .addCase(createWidget.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to create section";
+        state.error = action.payload?.message || "Failed to create widgets";
       });
 
-    // Read Sections
+    // Read widgets
     builder
       .addCase(readWidget.pending, (state) => {
         state.loading = true;
@@ -83,7 +85,7 @@ const widgetsSlice = createSlice({
       .addCase(updateWidget.fulfilled, (state, action) => {
         state.loading = false;
         const index = state.widgets.findIndex(
-          (section) => section.id === action.payload.id
+          (widgets) => widgets.id === action.payload.id
         );
         if (index !== -1) {
           state.widgets[index] = action.payload;
@@ -91,7 +93,25 @@ const widgetsSlice = createSlice({
       })
       .addCase(updateWidget.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to update section";
+        state.error = action.payload?.message || "Failed to update widgets";
+      });
+
+    // Change status of widgets
+    builder
+      .addCase(changeStatusWidget.pending, (state, action) => {
+        state.statusLoading = action.meta.arg.widgetId;
+      })
+      .addCase(changeStatusWidget.fulfilled, (state) => {
+        state.widgets = state.widgets.map((widgets) =>
+          widgets.id === state.statusLoading
+            ? { ...widgets, status: widgets.status === 1 ? 0 : 1 }
+            : widgets
+        );
+        state.statusLoading = {};
+      })
+      .addCase(changeStatusWidget.rejected, (state, action) => {
+        state.statusLoading = {};
+        state.error = action.payload?.message || "Failed to update widgets";
       });
     // Delete Widget
     builder
@@ -102,7 +122,7 @@ const widgetsSlice = createSlice({
       .addCase(deleteWidget.fulfilled, (state, action) => {
         state.loading = false;
         const index = state.widgets.findIndex(
-          (section) => section.id === action.payload.id
+          (widget) => widget.id === action.payload.id
         );
         if (index !== -1) {
           state.widgets[index] = action.payload;
@@ -110,7 +130,7 @@ const widgetsSlice = createSlice({
       })
       .addCase(deleteWidget.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to update section";
+        state.error = action.payload?.message || "Failed to update widgets";
       });
   },
 });

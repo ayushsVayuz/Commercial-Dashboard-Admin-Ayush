@@ -7,10 +7,15 @@ import { useEffect, useState } from "react";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import { Search } from "../../components/search";
-import { readWidget } from "../../redux/actions/widgets-action";
+import {
+  changeStatusWidget,
+  readWidget,
+} from "../../redux/actions/widgets-action";
 import { MoreOption } from "../../components/moreOption";
 import { resetWidgetPayload } from "../../redux/slices/widgetsSlice";
 import { Button } from "../../components/buttons";
+import { LuLoaderCircle } from "react-icons/lu";
+import { Toggle } from "../../components/inputs/toogle";
 
 const WidgetsListing = () => {
   const dispatch = useDispatch();
@@ -19,42 +24,60 @@ const WidgetsListing = () => {
     widgets: widgetsData,
     loading,
     totalCount,
+    statusLoading,
   } = useSelector((state) => state.widget);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = parseInt(searchParams.get("page")) || 0;
-  const totalPages = totalCount ? Math.ceil(totalCount / 10) : 0;
-  const searchValue = searchParams.get("search") || "";
+  const [rowsPerPage, setRowsPerPage] = useState(
+    parseInt(searchParams.get("limit")) || 10
+  );
+  const currentPageFromUrl = parseInt(searchParams.get("skip")) || 0;
+  const searchQuery = searchParams.get("search") || "";
 
-  const [currentPage, setCurrentPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(currentPageFromUrl);
 
+  const totalPages = totalCount ? Math.ceil(totalCount / rowsPerPage) : 0;
+
+  // keep URL params in sync
   useEffect(() => {
-    setSearchParams({
-      page: currentPage.toString(),
-      search: searchValue,
-    });
-  }, [currentPage]);
+    const newParams = {
+      skip: currentPage.toString(),
+      limit: rowsPerPage.toString(),
+      search: searchQuery,
+    };
 
+    const existingParams = Object.fromEntries([...searchParams]);
+
+    const hasChanged = Object.entries(newParams).some(
+      ([key, value]) => existingParams[key] !== value
+    );
+
+    if (hasChanged) {
+      setSearchParams(newParams);
+    }
+  }, [currentPage, rowsPerPage, searchQuery]);
+
+  // fetch data on change
   useEffect(() => {
-    if (searchValue?.length > 0) {
+    const requestPayload = {
+      queryArray: [],
+    };
+
+    if (searchQuery?.length > 0) {
       setCurrentPage(0);
-      dispatch(
-        readWidget({
-          // id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          queryArray: [{ field: "search", value: searchValue }],
-        })
-      );
+      requestPayload.queryArray.push({ field: "search", value: searchQuery });
     } else {
-      dispatch(
-        readWidget({
-          // id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          queryArray: [{ field: "page", value: currentPage + 1 }],
-        })
+      requestPayload.queryArray.push(
+        { field: "skip", value: currentPage * rowsPerPage },
+        { field: "limit", value: rowsPerPage }
       );
     }
-  }, [currentPage, searchValue]);
 
-  const headers = ["Sr No.", "Widget", "Section", "Type", "Action"];
+    dispatch(readWidget(requestPayload));
+  }, [currentPage, searchQuery, rowsPerPage]);
+
+  const headers = ["Sr No.", "Widget", "Section", "Type", "Status", "Action"];
 
   const getActionMenu = [
     {
@@ -69,85 +92,84 @@ const WidgetsListing = () => {
     },
   ];
 
-  console.log(widgetsData, "widget dataaa");
-
   const dataToPass = widgetsData?.map((widget, index) => ({
-    id: { content: index + 1 },
+    srNo: { content: currentPage * rowsPerPage + (index + 1) },
     widget: { content: widget?.name, link: `view/${widget?.id}` },
     section: {
       content: widget?.section?.name,
       link: `/section/view/${widget?.section?.id}`,
     },
     type: { content: widget?.type },
-
+    status: {
+      component: (
+        <>
+          {statusLoading == widget.id ? (
+            <div className="flex justify-center items-center">
+              <LuLoaderCircle size={24} />
+            </div>
+          ) : (
+            <Toggle
+              value={widget.status == 1 ? true : false}
+              onChange={() =>
+                dispatch(changeStatusWidget({ widgetId: widget.id }))
+              }
+            />
+          )}
+        </>
+      ),
+    },
     actions: {
       component: <MoreOption id={widget?.id} actionMenu={getActionMenu} />,
     },
   }));
 
-  // const Filter = () => {
-  //   return (
-  //     <div class="min-w-20 absolute top-4 right-4 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700">
-  //       <p className="px-2 py-1 text-sm font-semibold whitespace-nowrap">
-  //         Select Status
-  //       </p>
-  //       {filterMenu.map((item, index) => (
-  //         <div
-  //           className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
-  //           key={index}
-  //         >
-  //           <Link href={item.url}>{item.label}</Link>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
-
   return (
-    <>
-      <widget className="flex flex-col gap-4">
-        <MetaTitle title={"Widget | Anarock"} />
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-          <Heading
-            sectionLink="/widget"
-            parent="Widget"
-            mainTitle="Widget Listing"
+    <section className="flex flex-col gap-4">
+      <MetaTitle title={"Widget | Anarock"} />
+
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+        <Heading
+          sectionLink="/widget"
+          parent="Widget"
+          mainTitle="Widget Listing"
+        />
+        <Button
+          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+          onClick={() => {
+            navigate("/widget/add");
+            dispatch(resetWidgetPayload());
+          }}
+        >
+          Add Widget
+        </Button>
+      </div>
+
+      <div className="flex sm:justify-end items-center gap-2">
+        <Search
+          containerClassName="w-full sm:w-auto mb-2 rounded px"
+          placeholder="Search"
+          label="search"
+        />
+      </div>
+
+      {loading ? (
+        <TableShimmer />
+      ) : (
+        <div className="card-body dark:dark:bg-slate-800 p-0">
+          <Table
+            module="Widget"
+            headers={headers}
+            initialData={dataToPass}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            rowPerPage={true}
+            selectedValue={rowsPerPage}
+            setSelectedValue={setRowsPerPage}
           />
-          <Button
-            className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-            onClick={() => {
-              navigate("/widget/add");
-              dispatch(resetWidgetPayload());
-            }}
-          >
-            Add Widget
-          </Button>
         </div>
-        <div className="flex sm:justify-end items-center gap-2">
-          <Search
-            containerClassName={"w-full sm:w-auto mb-2 rounded px "}
-            placeholder={"Search"}
-            label="search"
-            // filter={<Filter />}
-          />
-        </div>
-        {loading ? (
-          <TableShimmer />
-        ) : (
-          <div className="card-body dark:dark:bg-slate-800 p-0">
-            <Table
-              module={"Widget"}
-              headers={headers}
-              initialData={dataToPass}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              rowPerPage={false}
-            />
-          </div>
-        )}
-      </widget>
-    </>
+      )}
+    </section>
   );
 };
 

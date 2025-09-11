@@ -91,9 +91,30 @@ export const updateWidget = createAsyncThunk(
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
+      const response = await client.put(`/widgets/${widgetId}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response, "response of edit");
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Change status of section
+export const changeStatusWidget = createAsyncThunk(
+  "widget/changeStatusWidget",
+  async ({ widgetId }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token;
+
+    try {
       const response = await client.put(
-        `/widgets/${widgetId}`,
-        updatedData,
+        `/widgets/update-status/${widgetId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

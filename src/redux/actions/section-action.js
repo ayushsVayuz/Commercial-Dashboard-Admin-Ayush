@@ -90,9 +90,30 @@ export const updateSection = createAsyncThunk(
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
+      const response = await client.put(`/sections/${sectionId}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response, "response of edit");
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Change status of section
+export const changeStatusSection = createAsyncThunk(
+  "section/changeStatusSection",
+  async ({ sectionId }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token;
+
+    try {
       const response = await client.put(
-        `/sections/${sectionId}`,
-        updatedData,
+        `/sections/update-status/${sectionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

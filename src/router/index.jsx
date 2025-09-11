@@ -5,7 +5,7 @@ import HomePage from "../pages/common/HomePage";
 import LoginPage from "../pages/common/LoginPage";
 import { PrimaryLayout } from "../components/layout/primary";
 import ProtectedRoute from "./protectedRoute";
-import Dashboard from "../pages/dashboard/Dashboard";
+import Dashboard from "../pages/dashboard/test";
 import SectionListing from "../pages/section/Listing";
 import SectionAddEdit from "../pages/section/AddEdit";
 import SectionDetails from "../pages/section/Details";
@@ -45,7 +45,6 @@ const router = createBrowserRouter([
                 path: "dashboard",
                 element: <Dashboard />,
               },
-   
 
               // Section Routes
               {

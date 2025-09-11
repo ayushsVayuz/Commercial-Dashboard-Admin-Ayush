@@ -5,6 +5,7 @@ import {
   updateSection,
   deleteSection,
   readSingleSection,
+  changeStatusSection,
 } from "../actions/section-action";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   singleSection: {},
   payload: {},
   loading: false,
+  statusLoading: {},
   error: null,
   totalCount: 0,
 };
@@ -95,6 +97,23 @@ const domainSlice = createSlice({
       })
       .addCase(updateSection.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload?.message || "Failed to update section";
+      });
+    // Change status of section
+    builder
+      .addCase(changeStatusSection.pending, (state, action) => {
+        state.statusLoading = action.meta.arg.sectionId;
+      })
+      .addCase(changeStatusSection.fulfilled, (state) => {
+        state.sections = state.sections.map((section) =>
+          section.id === state.statusLoading
+            ? { ...section, status: section.status === 1 ? 0 : 1 }
+            : section
+        );
+        state.statusLoading = {};
+      })
+      .addCase(changeStatusSection.rejected, (state, action) => {
+        state.statusLoading = {};
         state.error = action.payload?.message || "Failed to update section";
       });
     // Delete Section
