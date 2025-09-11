@@ -7,8 +7,11 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   // API Configuration
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://whitelabels-1.apnacomplex.com/dashboard-api/v1';
-  const DASHBOARD_ENDPOINT = '/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details'; 
+  const API_BASE_URL =
+    process.env.REACT_APP_API_BASE_URL ||
+    "https://whitelabels-1.apnacomplex.com/dashboard-api/v1";
+  const DASHBOARD_ENDPOINT =
+    "/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details";
 
   // Custom SVG Icons
   const ChevronDownIcon = () => (
@@ -86,13 +89,13 @@ const Dashboard = () => {
   const apiRequest = async (url, options = {}) => {
     const defaultOptions = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       ...options,
     };
 
     // Add authorization header if token exists
-    const token = localStorage?.getItem?.('authToken');
+    const token = localStorage?.getItem?.("authToken");
     if (token) {
       defaultOptions.headers.Authorization = `Bearer ${token}`;
     }
@@ -102,10 +105,10 @@ const Dashboard = () => {
     if (!response.ok) {
       if (response.status === 401) {
         // Handle unauthorized
-        localStorage?.removeItem?.('authToken');
-        throw new Error('Unauthorized access. Please log in again.');
+        localStorage?.removeItem?.("authToken");
+        throw new Error("Unauthorized access. Please log in again.");
       } else if (response.status >= 500) {
-        throw new Error('Server error. Please try again later.');
+        throw new Error("Server error. Please try again later.");
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -119,24 +122,24 @@ const Dashboard = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // For demo purposes, we'll use the local JSON data if API call fails
       let data;
       try {
         const response = await apiRequest(DASHBOARD_ENDPOINT);
-        if (response.status === 'success') {
+        if (response.status === "success") {
           data = response.data;
         } else {
-          throw new Error(response.message || 'Failed to fetch dashboard data');
+          throw new Error(response.message || "Failed to fetch dashboard data");
         }
       } catch (apiError) {
-        console.warn('API call failed, using fallback data:', apiError.message);
+        console.warn("API call failed, using fallback data:", apiError.message);
         // Fallback to the original JSON data for demo
         data = getFallbackData();
       }
 
       setDashboardData(data);
-      
+
       // Initialize collapsed sections based on data
       const initialCollapsed = new Set();
       data.sections.forEach((section) => {
@@ -145,10 +148,9 @@ const Dashboard = () => {
         }
       });
       setCollapsedSections(initialCollapsed);
-      
     } catch (err) {
-      setError(err.message || 'Failed to load dashboard data');
-      console.error('Dashboard fetch error:', err);
+      setError(err.message || "Failed to load dashboard data");
+      console.error("Dashboard fetch error:", err);
     } finally {
       setLoading(false);
     }
@@ -235,245 +237,6 @@ const Dashboard = () => {
               },
               created_at: null,
               updated_at: "2025-09-10T09:35:02.000Z",
-            },
-          ],
-        },
-        {
-          id: "44bd930d-89d8-45fd-8ad8-875a6226e98b",
-          dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          name: "Overview",
-          order_index: 2,
-          is_collapsible: 1,
-          is_collapsed: 0,
-          section_config: {
-            padding: 20,
-            borderRadius: 12,
-            backgroundColor: "#ffffff",
-          },
-          api_endpoint: "/financial/overview",
-          method: "GET",
-          response_type: "json",
-          refresh_interval: 60000,
-          params: {},
-          response_mapping: {
-            income: "data.income",
-            expenditure: "data.expenditure",
-          },
-          created_at: "2025-09-08T15:55:15.000Z",
-          updated_at: "2025-09-10T09:35:02.000Z",
-          widgets: [
-            {
-              id: "9731f86d-d828-43ba-a7ce-b405001bfcc1",
-              section_id: "44bd930d-89d8-45fd-8ad8-875a6226e98b",
-              type: "chart",
-              name: "Updated Chart",
-              position: {
-                h: 3,
-                w: 4,
-                x: 0,
-                y: 0,
-              },
-              constraints: {
-                maxWidth: 6,
-                minWidth: 2,
-                draggable: true,
-              },
-              group_id: "1",
-              response_mapping: {
-                dataField: "revenue",
-              },
-              styling: {
-                borderColor: "#ddd",
-                backgroundColor: "#f9f9f9",
-              },
-              config: {
-                chartType: "bar",
-              },
-              responsive: {
-                mobile: {
-                  h: 2,
-                  w: 12,
-                },
-                tablet: {
-                  h: 2,
-                  w: 6,
-                },
-                desktop: {
-                  h: 3,
-                  w: 4,
-                },
-              },
-              created_at: "2025-09-08T17:05:14.000Z",
-              updated_at: "2025-09-10T09:35:03.000Z",
-            },
-            {
-              id: "abcdd8ae-e153-43f1-acbb-9651a30e1507",
-              section_id: "44bd930d-89d8-45fd-8ad8-875a6226e98b",
-              type: "chart",
-              name: "Sales Chart",
-              position: {
-                h: 2,
-                w: 3,
-                x: 0,
-                y: 0,
-              },
-              constraints: {
-                maxWidth: 4,
-                minWidth: 2,
-                draggable: true,
-              },
-              group_id: "1",
-              response_mapping: {
-                dataField: "sales",
-              },
-              styling: {
-                borderColor: "#ccc",
-                backgroundColor: "#fff",
-              },
-              config: {
-                chartType: "bar",
-              },
-              responsive: {
-                mobile: {},
-                tablet: {},
-                desktop: {},
-              },
-              created_at: "2025-09-09T06:33:39.000Z",
-              updated_at: "2025-09-09T06:33:39.000Z",
-            },
-            {
-              id: "b8c409ed-6ae1-4ad8-ad60-8b981d7a24ca",
-              section_id: "44bd930d-89d8-45fd-8ad8-875a6226e98b",
-              type: "chart",
-              name: "Helpdesk Tickets Chart",
-              position: {
-                h: 2,
-                w: 3,
-                x: 0,
-                y: 0,
-              },
-              constraints: {
-                maxWidth: 4,
-                minWidth: 2,
-                draggable: true,
-              },
-              group_id: "1",
-              response_mapping: {
-                dataField: "tickets",
-              },
-              styling: {
-                borderColor: "#ccc",
-                backgroundColor: "#fff",
-              },
-              config: {
-                chartType: "bar",
-              },
-              responsive: {
-                mobile: {},
-                tablet: {},
-                desktop: {},
-              },
-              created_at: "2025-09-09T06:34:21.000Z",
-              updated_at: "2025-09-09T06:34:21.000Z",
-            },
-            {
-              id: "e08d3486-a911-471b-b4e9-c25a44765bbe",
-              section_id: "44bd930d-89d8-45fd-8ad8-875a6226e98b",
-              type: "chart",
-              name: "Helpdesk Tickets Chart",
-              position: {
-                h: 2,
-                w: 3,
-                x: 0,
-                y: 0,
-              },
-              constraints: {
-                maxWidth: 4,
-                minWidth: 2,
-                draggable: true,
-              },
-              group_id: "1",
-              response_mapping: {
-                dataField: "tickets",
-              },
-              styling: {
-                borderColor: "#ccc",
-                backgroundColor: "#fff",
-              },
-              config: {
-                chartType: "bar",
-              },
-              responsive: {
-                mobile: {},
-                tablet: {},
-                desktop: {},
-              },
-              created_at: "2025-09-09T06:49:53.000Z",
-              updated_at: "2025-09-09T06:49:53.000Z",
-            },
-          ],
-        },
-        {
-          id: "bc7fa196-48b2-4f85-8d2d-123dddb88f8c",
-          dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          name: "Engagement New",
-          order_index: 2,
-          is_collapsible: 1,
-          is_collapsed: 0,
-          section_config: {
-            padding: 16,
-            borderRadius: 8,
-            backgroundColor: "#f8f9fa",
-          },
-          widgets: [],
-        },
-        {
-          id: "ce94da0f-c332-43f5-8cd9-8125a0c35cd2",
-          dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-          name: "Test 2234",
-          order_index: 2,
-          is_collapsible: 1,
-          is_collapsed: 1,
-          section_config: {
-            padding: "3",
-            borderRadius: "3",
-            backgroundColor: "#FFFFFF",
-          },
-          widgets: [
-            {
-              id: "05302a1c-9a97-467a-a270-c64c4db8dd8a",
-              section_id: "ce94da0f-c332-43f5-8cd9-8125a0c35cd2",
-              type: "chart",
-              name: "test",
-              position: {
-                h: 2,
-                w: 3,
-                x: 0,
-                y: 0,
-              },
-              constraints: {
-                maxWidth: 4,
-                minWidth: 2,
-                draggable: true,
-              },
-              group_id: "1",
-              response_mapping: {
-                dataField: null,
-              },
-              styling: {
-                borderColor: "#ccc",
-                backgroundColor: "#fff",
-              },
-              config: {
-                chartType: "bar",
-              },
-              responsive: {
-                mobile: {},
-                tablet: {},
-                desktop: {},
-              },
-              created_at: null,
-              updated_at: "2025-09-10T08:50:30.000Z",
             },
           ],
         },
@@ -691,11 +454,23 @@ const Dashboard = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center max-w-md">
           <div className="text-red-500 mb-4">
-            <svg className="h-12 w-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.728-.833-2.498 0L4.316 15.5c-.77.833.192 2.5 1.732 2.5z" />
+            <svg
+              className="h-12 w-12 mx-auto"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.728-.833-2.498 0L4.316 15.5c-.77.833.192 2.5 1.732 2.5z"
+              />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Failed to Load Dashboard</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Failed to Load Dashboard
+          </h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={handleRefresh}

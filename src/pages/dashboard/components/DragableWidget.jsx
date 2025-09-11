@@ -19,7 +19,13 @@ const getGroupBounds = (group) => {
   };
 };
 
-const DraggableWidget = ({ widget, widgets, setWidgets }) => {
+export const DraggableWidget = ({
+  widget,
+  widgets,
+  setWidgets,
+  children,
+  className,
+}) => {
   const groupId = widget.groupId ?? widget.id;
   const groupWidgets = widgets.filter((w) => (w.groupId ?? w.id) === groupId);
   const isGrouped = widget.groupId !== undefined;
@@ -274,76 +280,9 @@ const DraggableWidget = ({ widget, widgets, setWidgets }) => {
       )} */}
 
       {/* Widget Content Drag Handle */}
-      <div
-        ref={widgetDragRef}
-        className="flex-1 flex items-center justify-center cursor-move hover:bg-blue-600"
-      >
-        {widget.id}
+      <div ref={widgetDragRef} className={className}>
+        {children}
       </div>
     </div>
   );
 };
-
-export default function Dashboard() {
-  const [widgets, setWidgets] = useState([
-    { id: "A", x: 0, y: 0, w: 4, h: 1, groupId: "group1" },
-    { id: "B", x: 0, y: 1, w: 4, h: 1, groupId: "group1" },
-    { id: "C", x: 4, y: 0, w: 4, h: 2 },
-    { id: "D", x: 8, y: 0, w: 4, h: 2 },
-    { id: "E", x: 0, y: 2, w: 6, h: 2, groupId: "group2" },
-    { id: "F", x: 6, y: 2, w: 6, h: 2, groupId: "group2" },
-  ]);
-
-  return (
-    <div className="p-4 max-w-6xl mx-auto border-2 border-gray-300 bg-slate-100">
-      <div className="mb-4 text-sm text-gray-600">
-        <p>
-          <strong>Instructions:</strong>
-        </p>
-        <ul className="list-disc ml-4 mt-1">
-          <li>Drag widgets by clicking on their ID area</li>
-          <li>Drag entire groups by clicking on the "Group" header</li>
-          <li>
-            Items turn{" "}
-            <span className="text-green-600 font-semibold">green</span> when
-            hovering over a valid drop target
-          </li>
-          <li>
-            Items turn <span className="text-red-600 font-semibold">red</span>{" "}
-            when hovering over an invalid drop target
-          </li>
-          <li>Swapping only works when sizes match</li>
-          <li>
-            A & B should swap within group1, E & F should swap within group2
-          </li>
-          <li>C & D can swap (both 4x2), groups can swap if same size</li>
-        </ul>
-      </div>
-      <DndProvider backend={HTML5Backend}>
-        <div
-          className="
-            grid gap-2 w-full
-            grid-cols-12
-            auto-rows-[60px]
-            sm:auto-rows-[50px]
-            md:auto-rows-[70px]
-            lg:auto-rows-[80px]
-          "
-        >
-          {widgets.map((w) => (
-            <DraggableWidget
-              key={w.id}
-              widget={w}
-              widgets={widgets}
-              setWidgets={setWidgets}
-            />
-          ))}
-        </div>
-      </DndProvider>
-
-      <div className="mt-4 text-xs text-gray-500">
-        <p>Check browser console for drag/drop debug info</p>
-      </div>
-    </div>
-  );
-}
