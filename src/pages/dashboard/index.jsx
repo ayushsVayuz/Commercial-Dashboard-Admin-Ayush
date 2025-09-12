@@ -10,11 +10,7 @@ import CommunityStats from "./components/widgets/CommunityStats";
 import Helpdesk from "./components/widgets/Helpdesk";
 import Engagement from "./components/widgets/Engagement";
 
-export default function Dashboard() {
-  const [widgets, setWidgets] = useState([]);
-  const [selectedCommunity, setSelectedCommunity] = useState(null);
-
-  const widgetsDummyArray = [
+const widgetsDummyArray = [
     { id: "A", x: 0, y: 0, w: 4, h: 1, groupId: "group1" },
     { id: "B", x: 0, y: 1, w: 4, h: 1, groupId: "group1" },
     { id: "C", x: 4, y: 0, w: 4, h: 2 },
@@ -23,46 +19,52 @@ export default function Dashboard() {
     { id: "F", x: 6, y: 2, w: 6, h: 2, groupId: "group2" },
   ];
 
-  useEffect(() => {
-    async function fetchDashboard() {
-      try {
-        const res = await fetch(
-          "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
-        );
-        const json = await res.json();
+export default function Dashboard() {
+  const [widgets, setWidgets] = useState(widgetsDummyArray);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
 
-        if (json?.statusCode === 200) {
-          const apiWidgets = [];
+  
 
-          // Flatten sections → widgets
-          json.data.sections.forEach((section) => {
-            section.widgets.forEach((w) => {
-              apiWidgets.push({
-                id: w.id,
-                name: w.name,
-                type: w.type,
-                x: w.position?.x ?? 0,
-                y: w.position?.y ?? 0,
-                w: w.position?.w ?? 2,
-                h: w.position?.h ?? 1,
-                groupId: w.group_id || null,
-                draggable: w.constraints?.draggable ?? true,
-                maxWidth: w.constraints?.maxWidth ?? null,
-                minWidth: w.constraints?.minWidth ?? null,
-                sectionId: section.id,
-              });
-            });
-          });
+  // useEffect(() => {
+  //   async function fetchDashboard() {
+  //     try {
+  //       const res = await fetch(
+  //         "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
+  //       );
+  //       const json = await res.json();
 
-          setWidgets(apiWidgets);
-        }
-      } catch (err) {
-        console.error("Failed to load dashboard:", err);
-      }
-    }
+  //       if (json?.statusCode === 200) {
+  //         const apiWidgets = [];
 
-    fetchDashboard();
-  }, []);
+  //         // Flatten sections → widgets
+  //         json.data.sections.forEach((section) => {
+  //           section.widgets.forEach((w) => {
+  //             apiWidgets.push({
+  //               id: w.id,
+  //               name: w.name,
+  //               type: w.type,
+  //               x: w.position?.x ?? 0,
+  //               y: w.position?.y ?? 0,
+  //               w: w.position?.w ?? 2,
+  //               h: w.position?.h ?? 1,
+  //               groupId: w.group_id || null,
+  //               draggable: w.constraints?.draggable ?? true,
+  //               maxWidth: w.constraints?.maxWidth ?? null,
+  //               minWidth: w.constraints?.minWidth ?? null,
+  //               sectionId: section.id,
+  //             });
+  //           });
+  //         });
+
+  //         setWidgets(apiWidgets);
+  //       }
+  //     } catch (err) {
+  //       console.error("Failed to load dashboard:", err);
+  //     }
+  //   }
+
+  //   fetchDashboard();
+  // }, []);
 
   const dashboardData = dummyDashboardData;
 
@@ -91,7 +93,7 @@ export default function Dashboard() {
         selectedCommunity={selectedCommunity}
         setSelectedCommunity={setSelectedCommunity}
       /> */}
-      <Card title="Financial Summary">
+      {/* <Card title="Financial Summary">
         <FinancialSummary
           data={dashboardData}
           formatCurrencyShort={formatCurrencyShort}
@@ -116,7 +118,7 @@ export default function Dashboard() {
 
       <Card title="Engagement">
         <Engagement data={dashboardData} />
-      </Card>
+      </Card> */}
 
       <div className="p-4 max-w-6xl mx-auto border-2 border-gray-300 bg-slate-100">
         <DndProvider backend={HTML5Backend}>

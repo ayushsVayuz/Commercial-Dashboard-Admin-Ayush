@@ -270,18 +270,22 @@ export const DraggableWidget = ({
       }}
     >
       {/* Group Drag Handle - only show if widget is part of a group */}
-      {/* {isGrouped && (
+      {isGrouped && (
         <div
           ref={groupDragRef}
           className="bg-slate-700 text-xs w-full text-center cursor-move p-1 rounded-t-lg hover:bg-slate-600"
         >
           ⇕ Group {widget.groupId}
         </div>
-      )} */}
+      )}
 
       {/* Widget Content Drag Handle */}
-      <div ref={widgetDragRef} className={className}>
-        {children}
+      <div ref={widgetDragRef}
+      //  className={className}
+      className="w-full h-full flex items-center justify-center "
+       >
+        {/* {children} */}
+        {widget.id}
       </div>
     </div>
   );

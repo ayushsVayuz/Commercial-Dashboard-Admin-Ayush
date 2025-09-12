@@ -2,11 +2,21 @@ import * as yup from "yup";
 
 // Standard URL regex pattern for general URL validation
 const urlRegex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+
 // Regex patterns
 const cssLengthRegex = /^(\d+(\.\d+)?)(px|em|rem|%|vh|vw)?$/;
 const colorRegex =
   /^(#(?:[0-9a-fA-F]{3}){1,2}|rgba?\((\s*\d+\s*,){2,3}\s*[\d.]+\))$/;
 const apiEndpointRegex = /^\/[a-zA-Z0-9/_-]*$/;
+
+// Example widget ids (replace with your actual widget IDs)
+// const allowedWidgetIds = [
+//   "line_chart",
+//   "bar_chart",
+//   "pie_chart",
+//   "table",
+//   "stat_card",
+// ];
 
 export const sectionSchema = yup.object().shape({
   sectionName: yup
@@ -22,6 +32,13 @@ export const sectionSchema = yup.object().shape({
     .required("Section order is required"),
 
   isCollapsible: yup.boolean().required(),
+
+  height: yup
+    .number()
+    .typeError("Height must be a number")
+    .min(50, "Height must be at least 50 pixels")
+    .max(2000, "Height must be at most 2000 pixels")
+    .nullable(),
 
   backgroundColor: yup
     .string()
@@ -61,7 +78,11 @@ export const sectionSchema = yup.object().shape({
     .max(86400, "Refresh interval must be less than 86400 seconds (24 hours)")
     .required(),
 
-  params: yup
+  params: yup.array().nullable(),
+
+  widget: yup
     .array()
-    .nullable(),
+    // .of(yup.string().oneOf(allowedWidgetIds, "Invalid widget selected"))
+    .min(1, "At least one widget is required")
+    .required("Widget(s) are required"),
 });

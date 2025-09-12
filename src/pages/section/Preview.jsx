@@ -12,6 +12,14 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 
+const widgetNameMap = {
+  line_chart: "Line Chart",
+  bar_chart: "Bar Chart",
+  pie_chart: "Pie Chart",
+  table: "Table",
+  stat_card: "Stat Card",
+};
+
 const SectionPreview = () => {
   const { payload, loading } = useSelector((state) => state.section);
   const navigate = useNavigate();
@@ -24,10 +32,7 @@ const SectionPreview = () => {
     navigate(-1);
   };
 
-  console.log(payload, "preview payload data");
-
   const handleSubmit = async (data) => {
-    console.log(data, "form data");
     try {
       let res;
       if (isEditMode) {
@@ -47,15 +52,13 @@ const SectionPreview = () => {
           `Section ${isEditMode ? "Updated" : "Created"} Successfully`
         );
       }
-      console.log("Submission response:", res);
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Submission error:", error);
     }
   };
 
-
-  console.log(payload, "section preview payload data");
+  console.log(payload, "testets");
 
   return (
     <section>
@@ -78,6 +81,7 @@ const SectionPreview = () => {
               Section Order - {payload?.order_index}
             </p>
           </CardWrapper>
+
           <CardWrapper title="General">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
@@ -90,6 +94,36 @@ const SectionPreview = () => {
               )}
             </div>
           </CardWrapper>
+
+          <CardWrapper title="Widgets">
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-gray-200 rounded-lg shadow-sm">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-2 border">Type</th>
+                    <th className="px-4 py-2 border">Group ID</th>
+                    <th className="px-4 py-2 border">X</th>
+                    <th className="px-4 py-2 border">Y</th>
+                    <th className="px-4 py-2 border">W</th>
+                    <th className="px-4 py-2 border">H</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payload?.widgets?.map((row, index) => (
+                    <tr key={index} className="odd:bg-white even:bg-gray-50">
+                      <td className="px-4 py-2 border">{row.type}</td>
+                      <td className="px-4 py-2 border">{row.group_id}</td>
+                      <td className="px-4 py-2 border">{row.X}</td>
+                      <td className="px-4 py-2 border">{row.Y}</td>
+                      <td className="px-4 py-2 border">{row.w}</td>
+                      <td className="px-4 py-2 border">{row.h}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardWrapper>
+
           <CardWrapper title="Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
@@ -106,6 +140,7 @@ const SectionPreview = () => {
               )}
             </div>
           </CardWrapper>
+
           <CardWrapper title="API Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
@@ -132,11 +167,10 @@ const SectionPreview = () => {
           Back
         </Button>
         <Button
-          onClick={()=>handleSubmit(payload)}
+          onClick={() => handleSubmit(payload)}
           type="submit"
           mainPrimary={true}
           isLoading={loading}
-          //  disabled={!isValid}
         >
           {isEditMode ? "Update" : "Create"}
         </Button>
