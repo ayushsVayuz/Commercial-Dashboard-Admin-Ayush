@@ -243,7 +243,7 @@ const SectionAddEdit = () => {
                   placeholder="Select widgets"
                   options={widgetOptions}
                   isMulti={true}
-                  value={widgetOptions.filter((opt) =>
+                  value={widgetOptions?.filter((opt) =>
                     selectedValues.includes(opt.value)
                   )}
                   onChange={(selectedOptions) => {
@@ -521,7 +521,7 @@ const SectionAddEdit = () => {
                   };
 
                   const handleRemove = (index) => {
-                    const updated = params.filter((_, i) => i !== index);
+                    const updated = params?.filter((_, i) => i !== index);
                     field.onChange(updated);
                   };
 
