@@ -5,7 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { sectionSchema } from "../../validation/section-validator";
 import { Button } from "../../components/buttons";
 import { useDispatch, useSelector } from "react-redux";
-import { readSingleSection } from "../../redux/actions/section-action";
+import {
+  readSectionListing,
+  readSingleSection,
+} from "../../redux/actions/section-action";
 import { MetaTitle } from "../../components/metaTitle";
 import { Input } from "../../components/inputs/input";
 import { Heading } from "../../components/heading";
@@ -16,6 +19,7 @@ import { sectionPayload } from "../../redux/slices/sectionSlice";
 import { readWidget } from "../../redux/actions/widgets-action";
 
 const SectionAddEdit = () => {
+  const [sectionOptions, setSectionsOptions] = useState([]);
   const [widgetOptions, setWidgetOptions] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,40 +44,63 @@ const SectionAddEdit = () => {
     defaultValues: {
       section: "",
       sectionOrder: "",
-      isCollapsible: "",
-      backgroundColor: "",
-      padding: "",
-      borderRadius: "",
+      // isCollapsible: "",
+      // backgroundColor: "",
+      // padding: "",
+      // borderRadius: "",
       apiEndpoint: "",
       requestMethod: "",
       refreshInterval: "",
-      params: [],
-      widgets: [],
+      // params: [],
+      // widgets: [],
     },
   });
 
   const { fields, replace } = useFieldArray({
     control,
-    name: "widgets",
+    // name: "widgets",
+    name: "sectionName",
   });
 
   useEffect(() => {
-    const fetchWidgets = async () => {
+    const requestPayload = {
+      id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+      queryArray: [],
+    };
+    const fetchSections = async () => {
       try {
-        const res = await dispatch(readWidget({}));
+        const res = await dispatch(readSectionListing({}));
         if (res?.payload) {
-          const options = res.payload?.data?.map((w) => ({
-            label: w.name,
-            value: w.id,
+          const options = res.payload?.data?.map((s) => ({
+            label: s.name,
+            value: s.section_id,
           }));
-          setWidgetOptions(options);
+          setSectionsOptions(options);
         }
       } catch (err) {
         console.error("Error fetching widgets:", err);
       }
     };
-    fetchWidgets();
+    fetchSections();
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   const fetchWidgets = async () => {
+  //     try {
+  //       const res = await dispatch(readWidget({}));
+  //       if (res?.payload) {
+  //         const options = res.payload?.data?.map((w) => ({
+  //           label: w.name,
+  //           value: w.id,
+  //         }));
+  //         setWidgetOptions(options);
+  //       }
+  //     } catch (err) {
+  //       console.error("Error fetching widgets:", err);
+  //     }
+  //   };
+  //   fetchWidgets();
+  // }, [dispatch]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -85,34 +112,34 @@ const SectionAddEdit = () => {
     if (isEditMode && singleSection) {
       const section = singleSection;
       reset({
-        sectionName: section.name || "",
+        sectionName: section.section_id || "",
         sectionOrder: section.order_index || "",
-        isCollapsible: section.is_collapsible || false,
-        height: section?.section_config?.height || "",
-        backgroundColor: section.section_config?.backgroundColor || "",
-        padding: section.section_config?.padding || "",
-        borderRadius: section.section_config?.borderRadius || "",
+        // isCollapsible: section.is_collapsible || false,
+        // height: section?.section_config?.height || "",
+        // backgroundColor: section.section_config?.backgroundColor || "",
+        // padding: section.section_config?.padding || "",
+        // borderRadius: section.section_config?.borderRadius || "",
         apiEndpoint: section.api_endpoint || "",
         requestMethod: section.method,
         refreshInterval: section.refresh_interval || 0,
-        params: section.params || [],
-        widgets: section.widgets || [],
+        // params: section.params || [],
+        // widgets: section.widgets || [],
       });
     } else {
       const section = payload;
       reset({
-        sectionName: section.name || "",
+        sectionName: section.section_id || "",
         sectionOrder: section.order_index || "",
-        isCollapsible: section.is_collapsible || false,
-        height: section?.section_config?.height || "",
-        backgroundColor: section.section_config?.backgroundColor || "",
-        padding: section.section_config?.padding || "",
-        borderRadius: section.section_config?.borderRadius || "",
+        // isCollapsible: section.is_collapsible || false,
+        // height: section?.section_config?.height || "",
+        // backgroundColor: section.section_config?.backgroundColor || "",
+        // padding: section.section_config?.padding || "",
+        // borderRadius: section.section_config?.borderRadius || "",
         apiEndpoint: section.api_endpoint || "",
         requestMethod: section.method || {},
         refreshInterval: section.refresh_interval || 0,
-        params: section.params || [],
-        widgets: section.widgets || [],
+        // params: section.params || [],
+        // widgets: section.widgets || [],
       });
     }
   }, [isEditMode, singleSection, payload, reset]);
@@ -120,30 +147,30 @@ const SectionAddEdit = () => {
   const onSubmit = async (data) => {
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-      name: data?.sectionName,
+      section_id: data?.sectionName,
       order_index: data?.sectionOrder,
-      is_collapsible: data?.isCollapsible,
-      is_collapsed: data?.isCollapsible,
-      section_config: {
-        height: data?.height,
-        backgroundColor: data?.backgroundColor,
-        padding: data?.padding,
-        borderRadius: data?.borderRadius,
-      },
+      // is_collapsible: data?.isCollapsible,
+      // is_collapsed: data?.isCollapsible,
+      // section_config: {
+      //   height: data?.height,
+      //   backgroundColor: data?.backgroundColor,
+      //   padding: data?.padding,
+      //   borderRadius: data?.borderRadius,
+      // },
       api_endpoint: data?.apiEndpoint,
       method: data?.requestMethod,
       refresh_interval: data?.refreshInterval,
       response_type: "json",
-      params: data?.params || [],
-      widgets: data.widgets.map((w) => ({
-        widget_id: w.widgetId,
-        type: w.widgetType,
-        group_id: w.groupId,
-        X: w.posX,
-        Y: w.posY,
-        w: w.width,
-        h: w.height,
-      })),
+      // params: data?.params || [],
+      // widgets: data.widgets.map((w) => ({
+      //   widget_id: w.widgetId,
+      //   type: w.widgetType,
+      //   group_id: w.groupId,
+      //   X: w.posX,
+      //   Y: w.posY,
+      //   w: w.width,
+      //   h: w.height,
+      // })),
     };
     dispatch(sectionPayload(payload));
     if (isEditMode) {
@@ -207,15 +234,20 @@ const SectionAddEdit = () => {
               name="sectionName"
               control={control}
               render={({ field }) => (
-                <Input
-                  {...field}
+                <Selector
                   label="Section Name"
-                  type="text"
-                  placeholder="Enter Section Name"
+                  placeholder="Select Section"
+                  options={sectionOptions}
+                  isMulti={false}
+                  value={field.value || null}
+                  onChange={(selectedOption) => {
+                    field.onChange(selectedOption);
+                  }}
                   errorContent={errors?.sectionName?.message}
                 />
               )}
             />
+
             <Controller
               name="sectionOrder"
               control={control}
@@ -230,7 +262,7 @@ const SectionAddEdit = () => {
               )}
             />
           </div>
-          <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+          {/* <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             Widgets
           </h5>
           <Controller
@@ -281,14 +313,14 @@ const SectionAddEdit = () => {
                 <tbody>
                   {fields.map((item, index) => (
                     <tr key={item.id}>
-                      {/* Widget Name (read only) */}
+                     
                       <td className="border p-2">
                         <Controller
                           name={`widgets.${index}.widgetName`}
                           control={control}
                           render={({ field }) => <Input {...field} disabled />}
                         />
-                        {/* keep widgetId hidden in form */}
+                        
                         <Controller
                           name={`widgets.${index}.widgetId`}
                           control={control}
@@ -351,10 +383,10 @@ const SectionAddEdit = () => {
                 </tbody>
               </table>
             </div>
-          )}
-
-          <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
-            Configurations
+          )} */}
+          {/* Advance Configurations */}
+          {/* <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+           Advance Configurations
           </h5>
           <div className="my-4 flex flex-col gap-4">
             <div className="p-4 border rounded-lg grid sm:grid-cols-2 gap-4">
@@ -435,7 +467,8 @@ const SectionAddEdit = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
+          {/* API Configurations */}
           <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             API Configurations
           </h5>
@@ -506,7 +539,7 @@ const SectionAddEdit = () => {
             </div>
 
             {/* Params Table */}
-            <div className="col-span-2">
+            {/* <div className="col-span-2">
               <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200 mb-2">
                 Params
               </h6>
@@ -619,7 +652,7 @@ const SectionAddEdit = () => {
                   );
                 }}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-4 flex justify-end gap-4">

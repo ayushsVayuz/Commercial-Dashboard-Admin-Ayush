@@ -60,6 +60,40 @@ export const readSection = createAsyncThunk(
     }
   }
 );
+// Get section list with id
+export const readSectionListing = createAsyncThunk(
+  "section/readSectionListing",
+  async ({ id, queryArray }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+
+    try {
+      // Construct the query string from the array of query objects
+      const queryString = queryArray
+        ?.map(
+          (query) =>
+            `${encodeURIComponent(query.field)}=${encodeURIComponent(
+              query.value
+            )}`
+        )
+        .join("&");
+
+      const response = await client.get(
+        `/sections/all-sections/${id ? id : ""}${queryString ? "?" + queryString : ""}`,
+        {
+          // headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
+        }
+      );
+      console.log(response, "responsee section");
+
+      return response.data;
+    } catch (error) {
+      console.log("rannn2", error);
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
 
 // Get section list with query
 export const readSingleSection = createAsyncThunk(

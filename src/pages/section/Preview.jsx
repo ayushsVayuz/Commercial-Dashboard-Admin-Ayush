@@ -33,14 +33,19 @@ const SectionPreview = () => {
   };
 
   const handleSubmit = async (data) => {
+    const updatedPayload = {
+      ...data,
+      section_id: data?.section_id?.value,
+    };
+
     try {
       let res;
       if (isEditMode) {
         res = await dispatch(
-          updateSection({ sectionId: id, updatedData: data })
+          updateSection({ sectionId: id, updatedData: updatedPayload })
         );
       } else {
-        res = await dispatch(createSection(data));
+        res = await dispatch(createSection(updatedPayload));
       }
 
       if (
@@ -75,14 +80,14 @@ const SectionPreview = () => {
         <div className="w-full md:w-[100%] flex flex-col">
           <CardWrapper>
             <h5 className="font-semibold !text-3xl text-primaryText dark:text-white hover:text-primaryBg">
-              {payload?.name}
+              {payload?.section_id?.label}
             </h5>
             <p className="font-medium text-base dark:text-gray-200">
               Section Order - {payload?.order_index}
             </p>
           </CardWrapper>
 
-          <CardWrapper title="General">
+          {/* <CardWrapper title="General">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
                 "Is Collapsible",
@@ -93,9 +98,9 @@ const SectionPreview = () => {
                 <span>{payload?.is_collapsed ? "Yes" : "No"}</span>
               )}
             </div>
-          </CardWrapper>
+          </CardWrapper> */}
 
-          <CardWrapper title="Widgets">
+          {/* <CardWrapper title="Widgets">
             <div className="overflow-x-auto">
               <table className="min-w-full border border-gray-200 rounded-lg shadow-sm">
                 <thead className="bg-gray-100">
@@ -122,9 +127,9 @@ const SectionPreview = () => {
                 </tbody>
               </table>
             </div>
-          </CardWrapper>
+          </CardWrapper> */}
 
-          <CardWrapper title="Configuration">
+          {/* <CardWrapper title="Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
                 "Padding",
@@ -139,7 +144,7 @@ const SectionPreview = () => {
                 <span>{payload?.section_config?.backgroundColor}</span>
               )}
             </div>
-          </CardWrapper>
+          </CardWrapper> */}
 
           <CardWrapper title="API Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
@@ -148,10 +153,10 @@ const SectionPreview = () => {
                 <span>{payload?.api_endpoint}</span>
               )}
               {RenderLableValue("Method", <span>{payload?.method}</span>)}
-              {RenderLableValue(
+              {/* {RenderLableValue(
                 "Response Type",
                 <span>{payload?.response_type ?? "N/A"}</span>
-              )}
+              )} */}
               {RenderLableValue(
                 "Refresh Interval",
                 <span>{payload?.refresh_interval}</span>
