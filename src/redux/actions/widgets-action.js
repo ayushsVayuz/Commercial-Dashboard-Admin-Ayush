@@ -29,7 +29,7 @@ export const createWidget = createAsyncThunk(
 // Get widget list with query
 export const readWidget = createAsyncThunk(
   "widget/readWidget",
-  async ({ queryArray }, { rejectWithValue, getState }) => {
+  async ({ id, queryArray }, { rejectWithValue, getState }) => {
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
     try {
@@ -44,7 +44,7 @@ export const readWidget = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widgets/${queryString ? "?" + queryString : ""}`,
+        `/widgets/${id ? id : ""}${queryString ? "?" + queryString : ""}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -113,14 +113,11 @@ export const changeStatusWidget = createAsyncThunk(
     const token = getTokenFromLocalStorage() || getState().auth.token;
 
     try {
-      const response = await client.put(
-        `/widgets/update-status/${widgetId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await client.put(`/widgets/update-status/${widgetId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log(response, "response of edit");
 

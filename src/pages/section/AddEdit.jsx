@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sectionSchema } from "../../validation/section-validator";
 import { Button } from "../../components/buttons";
@@ -17,10 +22,16 @@ import { Selector } from "../../components/select";
 import { Toggle } from "../../components/inputs/toogle";
 import { sectionPayload } from "../../redux/slices/sectionSlice";
 import { readWidget } from "../../redux/actions/widgets-action";
+import WidgetGrid from "./components/WidgetGrid";
 
 const SectionAddEdit = () => {
   const [sectionOptions, setSectionsOptions] = useState([]);
   const [widgetOptions, setWidgetOptions] = useState([]);
+  const [widgetPositions, setWidgetPositions] = useState([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sectionId = searchParams.get("section_id");
+
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -44,7 +55,8 @@ const SectionAddEdit = () => {
     defaultValues: {
       section: "",
       sectionOrder: "",
-      // isCollapsible: "",
+      isCollapsible: "",
+      isCollapsed: "",
       // backgroundColor: "",
       // padding: "",
       // borderRadius: "",
@@ -52,7 +64,7 @@ const SectionAddEdit = () => {
       requestMethod: "",
       refreshInterval: "",
       // params: [],
-      // widgets: [],
+      widgets: [],
     },
   });
 
@@ -76,31 +88,37 @@ const SectionAddEdit = () => {
             value: s.section_id,
           }));
           setSectionsOptions(options);
+          options.push({ label: "Other", value: "other" });
         }
       } catch (err) {
         console.error("Error fetching widgets:", err);
       }
     };
     fetchSections();
-  }, [dispatch]);
+  }, []);
 
-  // useEffect(() => {
-  //   const fetchWidgets = async () => {
-  //     try {
-  //       const res = await dispatch(readWidget({}));
-  //       if (res?.payload) {
-  //         const options = res.payload?.data?.map((w) => ({
-  //           label: w.name,
-  //           value: w.id,
-  //         }));
-  //         setWidgetOptions(options);
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching widgets:", err);
-  //     }
-  //   };
-  //   fetchWidgets();
-  // }, [dispatch]);
+  useEffect(() => {
+    const fetchWidgets = async () => {
+      try {
+        const res = await dispatch(readWidget({ id: sectionId }));
+        if (res?.payload) {
+          const options = res.payload?.data?.map((w, index) => ({
+            title: w.title,
+            widget_id: w.widget_id,
+            key_name: w.key_name,
+            is_active: w.is_active,
+            position: positions[index] || [0, 0, 2, 2],
+          }));
+          setWidgetOptions(options);
+        }
+      } catch (err) {
+        console.error("Error fetching widgets:", err);
+      }
+    };
+    if (sectionId !== null) {
+      fetchWidgets();
+    }
+  }, [sectionId]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -114,7 +132,8 @@ const SectionAddEdit = () => {
       reset({
         sectionName: section.section_id || "",
         sectionOrder: section.order_index || "",
-        // isCollapsible: section.is_collapsible || false,
+        isCollapsible: section.is_collapsible || false,
+        isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
         // backgroundColor: section.section_config?.backgroundColor || "",
         // padding: section.section_config?.padding || "",
@@ -123,14 +142,15 @@ const SectionAddEdit = () => {
         requestMethod: section.method,
         refreshInterval: section.refresh_interval || 0,
         // params: section.params || [],
-        // widgets: section.widgets || [],
+        widgets: section.widgets || [],
       });
     } else {
       const section = payload;
       reset({
         sectionName: section.section_id || "",
         sectionOrder: section.order_index || "",
-        // isCollapsible: section.is_collapsible || false,
+        isCollapsible: section.is_collapsible || false,
+        isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
         // backgroundColor: section.section_config?.backgroundColor || "",
         // padding: section.section_config?.padding || "",
@@ -139,7 +159,7 @@ const SectionAddEdit = () => {
         requestMethod: section.method || {},
         refreshInterval: section.refresh_interval || 0,
         // params: section.params || [],
-        // widgets: section.widgets || [],
+        widgets: section.widgets || [],
       });
     }
   }, [isEditMode, singleSection, payload, reset]);
@@ -149,8 +169,8 @@ const SectionAddEdit = () => {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
       order_index: data?.sectionOrder,
-      // is_collapsible: data?.isCollapsible,
-      // is_collapsed: data?.isCollapsible,
+      is_collapsible: data?.isCollapsible,
+      is_collapsed: data?.isCollapsible,
       // section_config: {
       //   height: data?.height,
       //   backgroundColor: data?.backgroundColor,
@@ -162,15 +182,7 @@ const SectionAddEdit = () => {
       refresh_interval: data?.refreshInterval,
       response_type: "json",
       // params: data?.params || [],
-      // widgets: data.widgets.map((w) => ({
-      //   widget_id: w.widgetId,
-      //   type: w.widgetType,
-      //   group_id: w.groupId,
-      //   X: w.posX,
-      //   Y: w.posY,
-      //   w: w.width,
-      //   h: w.height,
-      // })),
+      widgets: widgetPositions,
     };
     dispatch(sectionPayload(payload));
     if (isEditMode) {
@@ -215,6 +227,15 @@ const SectionAddEdit = () => {
     { label: "PATCH", value: "PATCH" },
   ];
 
+  const positions = [
+    [0, 0, 2, 2],
+    [2, 0, 2, 2],
+    [8, 0, 2, 2],
+    [0, 2, 2, 2],
+    [2, 2, 2, 2],
+    [9, 2, 2, 2],
+  ];
+
   return (
     <section className="dark:bg-gray-800 dark:h-screen ">
       <MetaTitle title={`Section ${isEditMode ? "Edit" : "Add"} | Anarock`} />
@@ -242,6 +263,15 @@ const SectionAddEdit = () => {
                   value={field.value || null}
                   onChange={(selectedOption) => {
                     field.onChange(selectedOption);
+                    setSearchParams((prev) => {
+                      const newParams = new URLSearchParams(prev);
+                      if (selectedOption?.label) {
+                        newParams.set("section_id", selectedOption.value);
+                      } else {
+                        newParams.delete("section_id");
+                      }
+                      return newParams;
+                    });
                   }}
                   errorContent={errors?.sectionName?.message}
                 />
@@ -262,10 +292,15 @@ const SectionAddEdit = () => {
               )}
             />
           </div>
-          {/* <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+          <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             Widgets
           </h5>
-          <Controller
+          <WidgetGrid
+            data={widgetOptions}
+            widgetPositions={widgetPositions}
+            setWidgetPositions={setWidgetPositions}
+          />
+          {/* <Controller
             name="widgets"
             control={control}
             render={({ field }) => {

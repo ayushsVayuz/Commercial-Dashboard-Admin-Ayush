@@ -11,6 +11,8 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
+import WidgetGrid from "./components/WidgetGrid";
+import { useState } from "react";
 
 const widgetNameMap = {
   line_chart: "Line Chart",
@@ -21,6 +23,7 @@ const widgetNameMap = {
 };
 
 const SectionPreview = () => {
+  const [widgetPositions, setWidgetPositions] = useState([]);
   const { payload, loading } = useSelector((state) => state.section);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -145,6 +148,14 @@ const SectionPreview = () => {
               )}
             </div>
           </CardWrapper> */}
+
+          <CardWrapper title="Widgets">
+            <WidgetGrid
+              data={payload?.widgets}
+              widgetPositions={widgetPositions}
+              setWidgetPositions={setWidgetPositions}
+            />
+          </CardWrapper>
 
           <CardWrapper title="API Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
