@@ -8,6 +8,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const widgets = [
   {
     widget_id: "d94e5bbe-8fb3-11f0-a613-0277871623b0",
+    widget_name: "Income",
     key_name: "financial",
     title: "Income",
     is_active: 1,
@@ -102,9 +103,9 @@ export default function WidgetGrid({
   const renderCard = (item) => (
     <div
       key={item.widget_id}
-      className="h-full p-4 rounded-xl drop-shadow-md border-[0.5px] border-[#EBEBEB] bg-white flex flex-col"
+      className={`h-full p-4 rounded-xl drop-shadow-md border-[0.5px] border-[#EBEBEB] bg-white flex flex-col`}
       role="region"
-      aria-label={item.title}
+      aria-label={item.widget_name}
     >
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -118,6 +119,7 @@ export default function WidgetGrid({
       </div>
     </div>
   );
+
 
   return (
     <div className="min-h-[370px]">

@@ -104,15 +104,17 @@ const SectionAddEdit = () => {
   useEffect(() => {
     const fetchWidgets = async () => {
       try {
+       
         const res = await dispatch(readWidget({ id: sectionId }));
         if (res?.payload) {
           const options = res.payload?.data?.map((w, index) => ({
-            widget_name: w.widget_name,
+            widget_name: w.widget_name || w.title,
             widget_id: w.widget_id,
             key_name: w.key_name,
             is_active: w.is_active,
             position: positions[index] || [0, 0, 2, 2],
           }));
+          setWidgetPositions([])
           setWidgetOptions(options);
         }
       } catch (err) {
@@ -257,7 +259,7 @@ const SectionAddEdit = () => {
     [9, 2, 2, 2],
   ];
 
-  console.log(widgetOptions, "widgetOptions");
+  console.log(widgetPositions, "widgets option");
 
   return (
     <section className="dark:bg-gray-800 dark:h-screen ">

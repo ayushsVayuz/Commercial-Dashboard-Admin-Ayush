@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import WidgetGrid from "../section/components/WidgetGrid";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import MicrofrontendLoader from "../../components/MFloader/MicroFrontendLoader";
 
 const Dashboard = () => {
   const [sections, setSections] = useState([]);
@@ -94,6 +95,21 @@ const Dashboard = () => {
 
   return (
     <div>
+      <MicrofrontendLoader
+        // ref={tableRef}
+
+        scriptUrl={
+          `${
+            localStorage.getItem(`noticeBoardMF-tableBundle`) ||
+            "https://anarock-staging.s3.us-east-1.amazonaws.com/anarock-frontend/dashboard/mf/dashboard-bundle.js"
+          }` + `?date=${Date.now()}`
+        }
+        globalVarName="dashboardMF"
+        mountDivId="dashboardMF"
+        // propsToPass={staticProps}
+      />
+
+      <div className="dashboardMF"></div>
       {/* Section Tabs (draggable) */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="sections" direction="horizontal">
@@ -128,7 +144,6 @@ const Dashboard = () => {
           )}
         </Droppable>
       </DragDropContext>
-
       {/* Render all sections with their widgets */}
       {sections.map((section) => (
         <div key={section.section_id} className="mb-6">
