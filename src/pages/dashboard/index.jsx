@@ -61,7 +61,7 @@ const Dashboard = () => {
 
     // prepare payload for API
     const payload = updated.map((s) => ({
-      section_id: s.section_id,
+      id: s.section_id,
       order_index: s.order_index,
     }));
 
