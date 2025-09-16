@@ -1,212 +1,151 @@
 import { useEffect, useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DraggableWidget } from "./components/DragableWidget";
-import Card from "./components/widgets/Card";
-import FinancialSummary from "./components/widgets/FinancialSummary";
-import GateUpdates from "./components/widgets/GateUpdate";
-import Facilities from "./components/widgets/Facilities";
-import CommunityStats from "./components/widgets/CommunityStats";
-import Helpdesk from "./components/widgets/Helpdesk";
-import Engagement from "./components/widgets/Engagement";
+import WidgetGrid from "../section/components/WidgetGrid";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const widgetsDummyArray = [
-    { id: "A", x: 0, y: 0, w: 4, h: 1, groupId: "group1" },
-    { id: "B", x: 0, y: 1, w: 4, h: 1, groupId: "group1" },
-    { id: "C", x: 4, y: 0, w: 4, h: 2 },
-    { id: "D", x: 8, y: 0, w: 4, h: 2 },
-    { id: "E", x: 0, y: 2, w: 6, h: 2, groupId: "group2" },
-    { id: "F", x: 6, y: 2, w: 6, h: 2, groupId: "group2" },
-  ];
+const Dashboard = () => {
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export default function Dashboard() {
-  const [widgets, setWidgets] = useState(widgetsDummyArray);
-  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await fetch(
+          "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
+        );
+        const result = await res.json();
 
-  
+        if (result?.statusCode === 200) {
+          const apiSections =
+            result.data.sections?.map((s, idx) => ({
+              section_id: s.id,
+              name: s.name,
+              order_index: s.order_index ?? idx,
+              widgets:
+                s.widgets?.map((w) => ({
+                  widget_id: w.widget_id,
+                  key_name: w.key_name,
+                  title: w.widget_name,
+                  is_active: w.is_active,
+                  position: w.position || [0, 0, 4, 2],
+                })) || [],
+            })) || [];
 
-  // useEffect(() => {
-  //   async function fetchDashboard() {
-  //     try {
-  //       const res = await fetch(
-  //         "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
-  //       );
-  //       const json = await res.json();
+          setSections(apiSections);
+        }
+      } catch (err) {
+        console.error("Error fetching dashboard:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //       if (json?.statusCode === 200) {
-  //         const apiWidgets = [];
+    fetchDashboard();
+  }, []);
 
-  //         // Flatten sections → widgets
-  //         json.data.sections.forEach((section) => {
-  //           section.widgets.forEach((w) => {
-  //             apiWidgets.push({
-  //               id: w.id,
-  //               name: w.name,
-  //               type: w.type,
-  //               x: w.position?.x ?? 0,
-  //               y: w.position?.y ?? 0,
-  //               w: w.position?.w ?? 2,
-  //               h: w.position?.h ?? 1,
-  //               groupId: w.group_id || null,
-  //               draggable: w.constraints?.draggable ?? true,
-  //               maxWidth: w.constraints?.maxWidth ?? null,
-  //               minWidth: w.constraints?.minWidth ?? null,
-  //               sectionId: section.id,
-  //             });
-  //           });
-  //         });
+  // Handle drag end for sections
+  // Handle drag end for sections
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
 
-  //         setWidgets(apiWidgets);
-  //       }
-  //     } catch (err) {
-  //       console.error("Failed to load dashboard:", err);
-  //     }
-  //   }
+    const reordered = Array.from(sections);
+    const [removed] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, removed);
 
-  //   fetchDashboard();
-  // }, []);
+    // Update order_index based on new order
+    const updated = reordered.map((s, idx) => ({
+      ...s,
+      order_index: idx + 1,
+    }));
 
-  const dashboardData = dummyDashboardData;
+    setSections(updated);
 
-  // utils/formatters.js
-  const formatCurrencyShort = (value) => {
-    if (value === null || value === undefined || isNaN(value)) return "0";
+    // prepare payload for API
+    const payload = updated.map((s) => ({
+      section_id: s.section_id,
+      order_index: s.order_index,
+    }));
 
-    const num = Number(value);
+    console.log("Saving to backend:", payload);
 
-    if (num >= 1_000_000_000) {
-      return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+    try {
+      const res = await fetch(
+        "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save",
+        {
+          method: "PUT", // or PUT/PATCH based on your API spec
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sections: payload }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error(`Failed to save sections: ${res.status}`);
+      }
+
+      const result = await res.json();
+      console.log("Save success:", result);
+    } catch (err) {
+      console.error("Error saving section order:", err);
     }
-    if (num >= 1_000_000) {
-      return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-    }
-    if (num >= 1_000) {
-      return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
-    }
-
-    return num.toString();
   };
 
+  if (loading) return <div>Loading Dashboard...</div>;
+
   return (
-    <>
-      {/* <CommunityFilter
-        selectedCommunity={selectedCommunity}
-        setSelectedCommunity={setSelectedCommunity}
-      /> */}
-      {/* <Card title="Financial Summary">
-        <FinancialSummary
-          data={dashboardData}
-          formatCurrencyShort={formatCurrencyShort}
-        />
-      </Card>
+    <div>
+      {/* Section Tabs (draggable) */}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="sections" direction="horizontal">
+          {(provided) => (
+            <div
+              className="flex gap-4 mb-6"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {sections.map((section, index) => (
+                <Draggable
+                  key={section.section_id}
+                  draggableId={section.section_id}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      className={`px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-600 border-gray-200 ${
+                        snapshot.isDragging ? "shadow-md" : ""
+                      }`}
+                    >
+                      {section.name}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
 
-      <Card title="Gate Updates">
-        <GateUpdates data={dashboardData} />
-      </Card>
-
-      <Card title="Facilities">
-        <Facilities data={dashboardData} />
-      </Card>
-
-      <Card title="Community Stats">
-        <CommunityStats data={dashboardData} />
-      </Card>
-
-      <Card title="Helpdesk">
-        <Helpdesk data={dashboardData} />
-      </Card>
-
-      <Card title="Engagement">
-        <Engagement data={dashboardData} />
-      </Card> */}
-
-      <div className="p-4 max-w-6xl mx-auto border-2 border-gray-300 bg-slate-100">
-        <DndProvider backend={HTML5Backend}>
-          <div
-            className="
-            grid gap-2 w-full
-            grid-cols-12
-            auto-rows-[60px]
-            sm:auto-rows-[50px]
-            md:auto-rows-[70px]
-            lg:auto-rows-[80px]
-          "
-          >
-            {widgets.map((w) => (
-              <DraggableWidget
-                key={w.id}
-                widget={w}
-                widgets={widgets}
-                setWidgets={setWidgets}
-              />
-            ))}
-          </div>
-        </DndProvider>
-      </div>
-    </>
+      {/* Render all sections with their widgets */}
+      {sections.map((section) => (
+        <div key={section.section_id} className="mb-6">
+          <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
+          {section.widgets && section.widgets.length > 0 ? (
+            <WidgetGrid
+              data={section.widgets}
+              isDraggable={false}
+              isResizable={false}
+            />
+          ) : (
+            <div>No widgets found</div>
+          )}
+        </div>
+      ))}
+    </div>
   );
-}
-
-export const dummyDashboardData = {
-  // 🔹 Financial Summary
-  finance: {
-    incomeSummary: {
-      opening_balance: 150000,
-      income: 85000,
-      collection: 70000,
-      closing_balance: 205000,
-    },
-    expenditureSummary: {
-      expenditure: 40000,
-      payment: 30000,
-      outstanding: 10000,
-    },
-  },
-
-  // 🔹 Gate Updates
-  gate_pass_visitors: 120,
-  gate_pass_staff: 85,
-  gate_pass_delivery: 60,
-  gate_pass_cabs: 40,
-  gate_data: [
-    { date: "2025-09-05", visitors: 20, staff: 10, delivery: 5, cabs: 3 },
-    { date: "2025-09-06", visitors: 25, staff: 15, delivery: 8, cabs: 4 },
-    { date: "2025-09-07", visitors: 30, staff: 12, delivery: 10, cabs: 6 },
-    { date: "2025-09-08", visitors: 18, staff: 14, delivery: 6, cabs: 5 },
-    { date: "2025-09-09", visitors: 27, staff: 20, delivery: 9, cabs: 7 },
-  ],
-
-  // 🔹 Facilities
-  facility_utilisation: 75,
-  facility_revenue: 45000,
-  facility_data: [
-    { date: "2025-09-01", utilisation: 50, revenue: 2000 },
-    { date: "2025-09-02", utilisation: 60, revenue: 3000 },
-    { date: "2025-09-03", utilisation: 70, revenue: 5000 },
-    { date: "2025-09-04", utilisation: 80, revenue: 7000 },
-    { date: "2025-09-05", utilisation: 90, revenue: 9000 },
-  ],
-
-  // 🔹 Community Stats
-  community_stats: {
-    move_in: 12,
-    move_out: 7,
-  },
-
-  // 🔹 Helpdesk
-  helpdesk_open_complaints: 25,
-  helpdesk_data: [
-    { name: "Electrical", value: 10 },
-    { name: "Plumbing", value: 7 },
-    { name: "Cleaning", value: 5 },
-    { name: "Security", value: 3 },
-  ],
-
-  // 🔹 Engagement
-  engagement_data: [
-    { name: "Polls", value: 40 },
-    { name: "Events", value: 30 },
-    { name: "Surveys", value: 20 },
-    { name: "Announcements", value: 15 },
-  ],
 };
+
+export default Dashboard;

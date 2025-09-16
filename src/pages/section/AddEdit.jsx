@@ -133,8 +133,18 @@ const SectionAddEdit = () => {
   useEffect(() => {
     if (isEditMode && singleSection) {
       const section = singleSection;
+
+      const selectedOption =
+        sectionOptions.find((opt) => opt.label === section.name) || null;
+
+      if (section.widgets?.length > 0) {
+        setWidgetOptions(section.widgets);
+      }
+
+      console.log(widgetOptions, "singleSection data in useEffect");
+
       reset({
-        sectionName: section.section_id || "",
+        sectionName: selectedOption || "",
         sectionOrder: section.order_index || "",
         isCollapsible: section.is_collapsible || false,
         isCollapsed: section.is_collapsed || false,
@@ -148,9 +158,6 @@ const SectionAddEdit = () => {
         // params: section.params || [],
         widgets: section.widgets || [],
       });
-      if (section.widgets?.length) {
-        setWidgetPositions(section.widgets);
-      }
     } else {
       const section = payload;
       reset({

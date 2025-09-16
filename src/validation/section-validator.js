@@ -20,8 +20,8 @@ const apiEndpointRegex = /^\/[a-zA-Z0-9/_-]*$/;
 
 export const sectionSchema = yup.object().shape({
   sectionName: yup
-    .string()
-    .max(100, "Section name must be at most 100 characters")
+    .object()
+    // .max(100, "Section name must be at most 100 characters")
     .required("Section name is required"),
 
   sectionOrder: yup
@@ -31,32 +31,32 @@ export const sectionSchema = yup.object().shape({
     .max(100, "Section order must be at most 100")
     .required("Section order is required"),
 
-  isCollapsible: yup.boolean().required(),
+  // isCollapsible: yup.boolean().required(),
 
-  height: yup
-    .number()
-    .typeError("Height must be a number")
-    .min(50, "Height must be at least 50 pixels")
-    .max(2000, "Height must be at most 2000 pixels")
-    .nullable(),
+  // height: yup
+  //   .number()
+  //   .typeError("Height must be a number")
+  //   .min(50, "Height must be at least 50 pixels")
+  //   .max(2000, "Height must be at most 2000 pixels")
+  //   .nullable(),
 
-  backgroundColor: yup
-    .string()
-    .matches(colorRegex, "Must be a valid HEX or RGB color")
-    .nullable(),
+  // backgroundColor: yup
+  //   .string()
+  //   .matches(colorRegex, "Must be a valid HEX or RGB color")
+  //   .nullable(),
 
-  padding: yup
-    .string()
-    .matches(
-      cssLengthRegex,
-      "Padding must be a valid CSS length (e.g., 10px, 1rem)"
-    )
-    .nullable(),
+  // padding: yup
+  //   .string()
+  //   .matches(
+  //     cssLengthRegex,
+  //     "Padding must be a valid CSS length (e.g., 10px, 1rem)"
+  //   )
+  //   .nullable(),
 
-  borderRadius: yup
-    .string()
-    .matches(cssLengthRegex, "Border radius must be a valid CSS length")
-    .nullable(),
+  // borderRadius: yup
+  //   .string()
+  //   .matches(cssLengthRegex, "Border radius must be a valid CSS length")
+  //   .nullable(),
 
   apiEndpoint: yup
     .string()
@@ -67,8 +67,8 @@ export const sectionSchema = yup.object().shape({
     .nullable(),
 
   requestMethod: yup
-    .string()
-    .oneOf(["GET", "POST"], "Invalid request method")
+    .object()
+    // .oneOf(["GET", "POST"], "Invalid request method")
     .nullable(),
 
   refreshInterval: yup
@@ -78,7 +78,7 @@ export const sectionSchema = yup.object().shape({
     .max(86400, "Refresh interval must be less than 86400 seconds (24 hours)")
     .required(),
 
-  params: yup.array().nullable(),
+  // params: yup.array().nullable(),
 
   widget: yup
     .array()

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
@@ -8,11 +8,15 @@ import { RenderLableValue } from "../../components/labels";
 import { decrypt } from "../../functions";
 import { readSingleSection } from "../../redux/actions/section-action";
 import { CardWrapper } from "../../components/wrappers/card";
+import WidgetGrid from "./components/WidgetGrid";
 
 const SectionDetails = () => {
+  const [widgetPositions, setWidgetPositions] = useState([]);
+
+  const { singleSection, loading } = useSelector((state) => state.section);
+
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { singleSection, loading } = useSelector((state) => state.section);
 
   useEffect(() => {
     dispatch(readSingleSection({ id: id }));
@@ -45,7 +49,16 @@ const SectionDetails = () => {
                 Section Order - {singleSection?.order_index}
               </p>
             </CardWrapper>
-            <CardWrapper title="General">
+            <CardWrapper title="Widgets">
+              <WidgetGrid
+                data={singleSection?.widgets}
+                widgetPositions={widgetPositions}
+                setWidgetPositions={setWidgetPositions}
+                isDraggable={false}
+                isResizable={false}
+              />
+            </CardWrapper>
+            {/* <CardWrapper title="General">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
                 {RenderLableValue(
                   "Is Collapsible",
@@ -56,8 +69,8 @@ const SectionDetails = () => {
                   <span>{singleSection?.is_collapsed ? "Yes" : "No"}</span>
                 )}
               </div>
-            </CardWrapper>
-            <CardWrapper title="Configuration">
+            </CardWrapper> */}
+            {/* <CardWrapper title="Configuration">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
                 {RenderLableValue(
                   "Padding",
@@ -72,7 +85,7 @@ const SectionDetails = () => {
                   <span>{singleSection?.section_config?.backgroundColor}</span>
                 )}
               </div>
-            </CardWrapper>
+            </CardWrapper> */}
             <CardWrapper title="API Configuration">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
                 {RenderLableValue(
@@ -83,10 +96,10 @@ const SectionDetails = () => {
                   "Method",
                   <span>{singleSection?.method}</span>
                 )}
-                {RenderLableValue(
+                {/* {RenderLableValue(
                   "Response Type",
                   <span>{singleSection?.response_type ?? "N/A"}</span>
-                )}
+                )} */}
                 {RenderLableValue(
                   "Refresh Interval",
                   <span>{singleSection?.refresh_interval}</span>

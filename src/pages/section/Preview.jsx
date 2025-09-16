@@ -36,9 +36,12 @@ const SectionPreview = () => {
   };
 
   const handleSubmit = async (data) => {
+    let { section_id, ...rest } = data;
+
     const updatedPayload = {
-      ...data,
-      section_id: data?.section_id?.value,
+      ...rest,
+      ...(id == null ? { section_id: data?.section_id?.value } : {}),
+      params: [],
     };
 
     try {

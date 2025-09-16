@@ -61,19 +61,21 @@ export default function WidgetGrid({
 }) {
   // generate layout for grid
   function makeLayout(items) {
-    return items
-      ?.filter((w) => w.is_active)
-      ?.map((w) => {
-        const [x, y, wth, h] = w.position || [0, 0, 4, 2];
-        return {
-          i: w.widget_id,
-          x,
-          y,
-          w: wth,
-          h,
-          static: false,
-        };
-      });
+    return (
+      items
+        // ?.filter((w) => w.is_active)
+        ?.map((w) => {
+          const [x, y, wth, h] = w.position || [0, 0, 4, 2];
+          return {
+            i: w.widget_id,
+            x,
+            y,
+            w: wth,
+            h,
+            static: false,
+          };
+        })
+    );
   }
 
   const effectiveData = value?.length ? value : data;
@@ -132,9 +134,10 @@ export default function WidgetGrid({
         measureBeforeMount={false}
         useCSSTransforms={true}
         onLayoutChange={handleLayoutChange}
+        resizeHandles={["n", "s", "e", "w"]}
       >
         {effectiveData
-          ?.filter((d) => d.is_active)
+          // ?.filter((d) => d.is_active)
           ?.map((item) => (
             <div
               key={item.widget_id}
