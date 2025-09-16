@@ -154,6 +154,8 @@ const SectionPreview = () => {
               data={payload?.widgets}
               widgetPositions={widgetPositions}
               setWidgetPositions={setWidgetPositions}
+              isDraggable={false}
+              isResizable={false}
             />
           </CardWrapper>
 

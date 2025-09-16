@@ -51,7 +51,11 @@ const widgets = [
 ];
 
 export default function WidgetGrid({
+  value,
+  onChange,
   data = widgets,
+  isResizable = true,
+  isDraggable = true,
   widgetPositions,
   setWidgetPositions,
 }) {
@@ -72,10 +76,12 @@ export default function WidgetGrid({
       });
   }
 
+  const effectiveData = value?.length ? value : data;
+
   const layouts = {
-    lg: makeLayout(data),
-    md: makeLayout(data),
-    sm: makeLayout(data),
+    lg: makeLayout(effectiveData),
+    md: makeLayout(effectiveData),
+    sm: makeLayout(effectiveData),
   };
 
   const handleLayoutChange = (currentLayout) => {
@@ -84,7 +90,8 @@ export default function WidgetGrid({
       position: [l.x, l.y, l.w, l.h],
       is_active: 1,
     }));
-    setWidgetPositions(updated);
+    setWidgetPositions?.(updated);
+    onChange?.(updated);
   };
 
   const renderCard = (item) => (
@@ -119,13 +126,14 @@ export default function WidgetGrid({
         breakpoints={{ lg: 1200, md: 996, sm: 768 }}
         cols={{ lg: 12, md: 12, sm: 6 }}
         rowHeight={80}
-        isResizable={true}
+        isResizable={isResizable}
+        isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}
         useCSSTransforms={true}
         onLayoutChange={handleLayoutChange}
       >
-        {data
+        {effectiveData
           ?.filter((d) => d.is_active)
           ?.map((item) => (
             <div

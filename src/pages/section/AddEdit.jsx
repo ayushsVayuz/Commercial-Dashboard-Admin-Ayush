@@ -26,11 +26,12 @@ import WidgetGrid from "./components/WidgetGrid";
 
 const SectionAddEdit = () => {
   const [sectionOptions, setSectionsOptions] = useState([]);
+  const [selectedSection, setSelectedSection] = useState({});
+
   const [widgetOptions, setWidgetOptions] = useState([]);
   const [widgetPositions, setWidgetPositions] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const sectionId = searchParams.get("section_id");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,6 +50,7 @@ const SectionAddEdit = () => {
     formState: { errors, isValid },
     reset,
     trigger,
+    getValues,
   } = useForm({
     mode: "onChange",
     // resolver: yupResolver(sectionSchema),
@@ -67,6 +69,8 @@ const SectionAddEdit = () => {
       widgets: [],
     },
   });
+
+  const sectionId = selectedSection?.value || null;
 
   const { fields, replace } = useFieldArray({
     control,
@@ -88,7 +92,7 @@ const SectionAddEdit = () => {
             value: s.section_id,
           }));
           setSectionsOptions(options);
-          options.push({ label: "Other", value: "other" });
+          // options.push({ label: "Other", value: "other" });
         }
       } catch (err) {
         console.error("Error fetching widgets:", err);
@@ -144,6 +148,9 @@ const SectionAddEdit = () => {
         // params: section.params || [],
         widgets: section.widgets || [],
       });
+      if (section.widgets?.length) {
+        setWidgetPositions(section.widgets);
+      }
     } else {
       const section = payload;
       reset({
@@ -161,10 +168,14 @@ const SectionAddEdit = () => {
         // params: section.params || [],
         widgets: section.widgets || [],
       });
+      if (section.widgets?.length) {
+        setWidgetPositions(section.widgets);
+      }
     }
   }, [isEditMode, singleSection, payload, reset]);
 
   const onSubmit = async (data) => {
+    console.log("Form Data: ", data);
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
@@ -263,15 +274,16 @@ const SectionAddEdit = () => {
                   value={field.value || null}
                   onChange={(selectedOption) => {
                     field.onChange(selectedOption);
-                    setSearchParams((prev) => {
-                      const newParams = new URLSearchParams(prev);
-                      if (selectedOption?.label) {
-                        newParams.set("section_id", selectedOption.value);
-                      } else {
-                        newParams.delete("section_id");
-                      }
-                      return newParams;
-                    });
+                    setSelectedSection(selectedOption);
+                    // setSearchParams((prev) => {
+                    //   const newParams = new URLSearchParams(prev);
+                    //   if (selectedOption?.label) {
+                    //     newParams.set("section_id", selectedOption.value);
+                    //   } else {
+                    //     newParams.delete("section_id");
+                    //   }
+                    //   return newParams;
+                    // });
                   }}
                   errorContent={errors?.sectionName?.message}
                 />
@@ -295,11 +307,27 @@ const SectionAddEdit = () => {
           <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             Widgets
           </h5>
-          <WidgetGrid
-            data={widgetOptions}
-            widgetPositions={widgetPositions}
-            setWidgetPositions={setWidgetPositions}
-          />
+          {widgetOptions?.length > 0 ? (
+            <Controller
+              name="widgets"
+              control={control}
+              render={({ field }) => (
+                <WidgetGrid
+                  data={widgetOptions}
+                  widgetPositions={widgetPositions}
+                  setWidgetPositions={setWidgetPositions}
+                  value={widgetPositions}
+                  onChange={(newLayout) => setWidgetPositions(newLayout)}
+                  errorContent={errors?.widgets?.message}
+                />
+              )}
+            />
+          ) : (
+            <div className="w-full h-[300px] flex justify-center items-center">
+              No widgets to show
+            </div>
+          )}
+
           {/* <Controller
             name="widgets"
             control={control}
