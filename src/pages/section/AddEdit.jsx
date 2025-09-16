@@ -107,7 +107,7 @@ const SectionAddEdit = () => {
         const res = await dispatch(readWidget({ id: sectionId }));
         if (res?.payload) {
           const options = res.payload?.data?.map((w, index) => ({
-            title: w.title,
+            widget_name: w.widget_name,
             widget_id: w.widget_id,
             key_name: w.key_name,
             is_active: w.is_active,
@@ -160,6 +160,12 @@ const SectionAddEdit = () => {
       });
     } else {
       const section = payload;
+
+      console.log(widgetPositions, "payload data in useEffect");
+
+      if (section.widgets?.length) {
+        setWidgetPositions(section.widgets);
+      }
       reset({
         sectionName: section.section_id || "",
         sectionOrder: section.order_index || "",
@@ -175,9 +181,6 @@ const SectionAddEdit = () => {
         // params: section.params || [],
         widgets: section.widgets || [],
       });
-      if (section.widgets?.length) {
-        setWidgetPositions(section.widgets);
-      }
     }
   }, [isEditMode, singleSection, payload, reset]);
 
@@ -253,7 +256,6 @@ const SectionAddEdit = () => {
     [2, 2, 2, 2],
     [9, 2, 2, 2],
   ];
-
 
   console.log(widgetOptions, "widgetOptions");
 

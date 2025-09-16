@@ -59,6 +59,8 @@ export default function WidgetGrid({
   widgetPositions,
   setWidgetPositions,
 }) {
+
+  console.log(data, "data in widget grid");
   // generate layout for grid
   function makeLayout(items) {
     return (
@@ -89,6 +91,7 @@ export default function WidgetGrid({
   const handleLayoutChange = (currentLayout) => {
     const updated = currentLayout.map((l) => ({
       widget_id: l.i,
+      widget_name: l.widget_name,
       position: [l.x, l.y, l.w, l.h],
       is_active: 1,
     }));
@@ -105,7 +108,9 @@ export default function WidgetGrid({
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-base font-medium text-slate-800">{item.title}</h3>
+          <h3 className="text-base font-medium text-slate-800">
+            {item.title || item.widget_name}
+          </h3>
         </div>
         <div className="text-xs text-slate-500">
           #{item.position ? item.position.join("/") : "-"}
