@@ -254,6 +254,9 @@ const SectionAddEdit = () => {
     [9, 2, 2, 2],
   ];
 
+
+  console.log(widgetOptions, "widgetOptions");
+
   return (
     <section className="dark:bg-gray-800 dark:h-screen ">
       <MetaTitle title={`Section ${isEditMode ? "Edit" : "Add"} | Anarock`} />

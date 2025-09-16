@@ -31,7 +31,7 @@ export const MoreOption = ({ id, actionMenu }) => {
         <div
           ref={menuRef}
           id="dropdownHover"
-          class="absolute top-4 right-4 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700"
+          class="absolute top-6 right-16 overflow-hidden bg-white dark:bg-darkPrimary divide-y divide-gray-100 dark:divide-gray-700 border rounded-md shadow z-50 dark:border-gray-700"
         >
           <button className="hidden px-x py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
             <RxCross2 className="text-xl" />
