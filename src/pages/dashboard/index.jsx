@@ -95,7 +95,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <MicrofrontendLoader
+      {/* <MicrofrontendLoader
         // ref={tableRef}
 
         scriptUrl={
@@ -109,7 +109,7 @@ const Dashboard = () => {
         // propsToPass={staticProps}
       />
 
-      <div className="dashboardMF"></div>
+      <div className="dashboardMF"></div> */}
       {/* Section Tabs (draggable) */}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="sections" direction="horizontal">
