@@ -44,7 +44,7 @@ export const readWidget = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widgets/${id ? "" : "all-widgets"}/${id ? id : ""}${
+        `/widgets${id ? "" : "/all-widgets"}/${id ? id : ""}${
           queryString ? "?" + queryString : ""
         }`,
         {

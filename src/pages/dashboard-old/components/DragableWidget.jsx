@@ -280,10 +280,11 @@ export const DraggableWidget = ({
       )}
 
       {/* Widget Content Drag Handle */}
-      <div ref={widgetDragRef}
-      //  className={className}
-      className="w-full h-full flex items-center justify-center "
-       >
+      <div
+        ref={widgetDragRef}
+        //  className={className}
+        className="w-full h-full flex items-center justify-center "
+      >
         {/* {children} */}
         {widget.id}
       </div>
