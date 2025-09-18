@@ -19,14 +19,11 @@ export const createContainer = createAsyncThunk(
   "container/createContainer",
   async (containerData, { rejectWithValue, getState }) => {
     try {
-      const response = await client.post("/containers", containerData, {
+      const response = await client.post("/widget-containers", containerData, {
         headers: getAuthHeaders(getState),
       });
 
-      return {
-        id: response.data?.id,
-        description: response.data?.description,
-      };
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
@@ -39,15 +36,12 @@ export const updateContainer = createAsyncThunk(
   async ({ containerId, updatedData }, { rejectWithValue, getState }) => {
     try {
       const response = await client.put(
-        `/containers/${containerId}`,
+        `/widget-containers/${containerId}`,
         updatedData,
         { headers: getAuthHeaders(getState) }
       );
 
-      return {
-        id: response.data?.id,
-        description: response.data?.description,
-      };
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
@@ -77,13 +71,7 @@ export const readContainer = createAsyncThunk(
         }
       );
 
-      return {
-        data: response.data?.data?.map((c) => ({
-          id: c.id,
-          description: c.description,
-        })),
-        total: response.data?.total,
-      };
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
@@ -95,17 +83,11 @@ export const readSingleContainer = createAsyncThunk(
   "container/readSingleContainer",
   async ({ id }, { rejectWithValue, getState }) => {
     try {
-      const response = await client.get(`/containers/container-details/${id}`, {
+      const response = await client.get(`/widget-containers/${id}`, {
         headers: getAuthHeaders(getState),
       });
 
-      return {
-        data: {
-          id: response.data?.data?.id,
-          description: response.data?.data?.description,
-        },
-        total: response.data?.total,
-      };
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
@@ -117,14 +99,14 @@ export const deleteContainer = createAsyncThunk(
   "container/deleteContainer",
   async ({ containerId }, { rejectWithValue, getState }) => {
     try {
-      const response = await client.delete(`/containers/${containerId}`, {
-        headers: getAuthHeaders(getState),
-      });
+      const response = await client.delete(
+        `/widget-containers/${containerId}`,
+        {
+          headers: getAuthHeaders(getState),
+        }
+      );
 
-      return {
-        id: response.data?.id,
-        description: response.data?.description,
-      };
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }

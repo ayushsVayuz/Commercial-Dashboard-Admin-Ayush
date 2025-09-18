@@ -34,12 +34,11 @@ const ContainerPreview = () => {
       } else {
         res = await dispatch(createContainer(data));
       }
-
       if (
         res?.payload?.statusCode === 200 ||
         res?.payload?.statusCode === 201
       ) {
-        navigate("/container");
+        navigate("/containers");
         toast.success(
           `Container ${isEditMode ? "Updated" : "Created"} Successfully`
         );

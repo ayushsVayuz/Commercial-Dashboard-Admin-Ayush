@@ -75,12 +75,12 @@ const ContainersListing = () => {
   const getActionMenu = [
     {
       label: "Edit",
-      url: `/container/edit/`,
+      url: `/containers/edit/`,
       icon: <TbEdit className="text-xl" />,
     },
     {
       label: "View",
-      url: `/container/view/`,
+      url: `/containers/view/`,
       icon: <TbEye className="text-xl" />,
     },
   ];

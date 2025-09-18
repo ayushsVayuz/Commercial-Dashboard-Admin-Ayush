@@ -7,7 +7,7 @@ import { MetaTitle } from "../../components/metaTitle";
 import { Heading } from "../../components/heading";
 import { CardWrapper } from "../../components/wrappers/card";
 import { readSingleContainer } from "../../redux/actions/containers-action";
-import { setPreviewContainer } from "../../redux/slices/containerSlice";
+import { setContainerPayload } from "../../redux/slices/containerSlice";
 import { Input } from "../../components/inputs/input";
 import { Button } from "../../components/buttons";
 
@@ -27,7 +27,7 @@ const ContainerAddEdit = () => {
   // Load container if editing
   useEffect(() => {
     if (id) {
-      dispatch(readSingleContainer({ id }));
+      dispatch(readSingleContainer({ id: id }));
     }
   }, [id, dispatch]);
 
@@ -45,7 +45,7 @@ const ContainerAddEdit = () => {
 
   const onSubmit = (data) => {
     // Save form data for preview
-    dispatch(setPreviewContainer(data));
+    dispatch(setContainerPayload(data));
 
     // Go to preview page
     navigate(`/containers/preview${id ? `/${id}` : ""}`);
