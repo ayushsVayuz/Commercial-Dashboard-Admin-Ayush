@@ -56,7 +56,7 @@ const SectionAddEdit = () => {
     // resolver: yupResolver(sectionSchema),
     defaultValues: {
       section: "",
-      sectionOrder: "",
+      // sectionOrder: "",
       isCollapsible: "",
       isCollapsed: "",
       // backgroundColor: "",
@@ -147,7 +147,7 @@ const SectionAddEdit = () => {
 
       reset({
         sectionName: selectedOption || "",
-        sectionOrder: section.order_index || "",
+        // sectionOrder: section.order_index || "",
         isCollapsible: section.is_collapsible || false,
         isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
@@ -170,7 +170,7 @@ const SectionAddEdit = () => {
       }
       reset({
         sectionName: section.section_id || "",
-        sectionOrder: section.order_index || "",
+        // sectionOrder: section.order_index || "",
         isCollapsible: section.is_collapsible || false,
         isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
@@ -191,7 +191,7 @@ const SectionAddEdit = () => {
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
-      order_index: data?.sectionOrder,
+      // order_index: data?.sectionOrder,
       is_collapsible: data?.isCollapsible,
       is_collapsed: data?.isCollapsible,
       // section_config: {
@@ -303,7 +303,7 @@ const SectionAddEdit = () => {
                 />
               )}
             />
-
+{/* 
             <Controller
               name="sectionOrder"
               control={control}
@@ -316,7 +316,7 @@ const SectionAddEdit = () => {
                   errorContent={errors?.sectionOrder?.message}
                 />
               )}
-            />
+            /> */}
           </div>
           <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             Widgets

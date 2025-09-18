@@ -88,9 +88,9 @@ const SectionPreview = () => {
             <h5 className="font-semibold !text-3xl text-primaryText dark:text-white hover:text-primaryBg">
               {payload?.section_id?.label}
             </h5>
-            <p className="font-medium text-base dark:text-gray-200">
+            {/* <p className="font-medium text-base dark:text-gray-200">
               Section Order - {payload?.order_index}
-            </p>
+            </p> */}
           </CardWrapper>
 
           {/* <CardWrapper title="General">

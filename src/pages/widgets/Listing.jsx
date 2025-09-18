@@ -77,7 +77,14 @@ const WidgetsListing = () => {
     dispatch(readWidget(requestPayload));
   }, [currentPage, searchQuery, rowsPerPage]);
 
-  const headers = ["Sr No.", "Widget", "Section", "Type", "Status", "Action"];
+  const headers = [
+    "Sr No.",
+    "Name",
+    // "Section",
+    // "Type",
+    "Status",
+    // "Action",
+  ];
 
   const getActionMenu = [
     {
@@ -94,33 +101,36 @@ const WidgetsListing = () => {
 
   const dataToPass = widgetsData?.map((widget, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
-    widget: { content: widget?.name, link: `view/${widget?.id}` },
-    section: {
-      content: widget?.section?.name,
-      link: `/section/view/${widget?.section?.id}`,
+    name: {
+      content: widget?.title,
+      // link: `view/${widget?.widget_id}`
     },
-    type: { content: widget?.type },
+    // section: {
+    //   content: widget?.section?.name,
+    //   link: `/section/view/${widget?.section?.id}`,
+    // },
+    // type: { content: widget?.type },
     status: {
       component: (
         <>
-          {statusLoading == widget.id ? (
+          {statusLoading == widget.widget_id ? (
             <div className="flex justify-center items-center">
               <LuLoaderCircle size={24} />
             </div>
           ) : (
             <Toggle
-              value={widget.status == 1 ? true : false}
+              value={widget.is_active == 1 ? true : false}
               onChange={() =>
-                dispatch(changeStatusWidget({ widgetId: widget.id }))
+                dispatch(changeStatusWidget({ widgetId: widget.widget_id }))
               }
             />
           )}
         </>
       ),
     },
-    actions: {
-      component: <MoreOption id={widget?.id} actionMenu={getActionMenu} />,
-    },
+    // actions: {
+    //   component: <MoreOption id={widget?.widget_id} actionMenu={getActionMenu} />,
+    // },
   }));
 
   return (
@@ -133,7 +143,7 @@ const WidgetsListing = () => {
           parent="Widget"
           mainTitle="Widget Listing"
         />
-        <Button
+        {/* <Button
           className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           onClick={() => {
             navigate("/widget/add");
@@ -141,7 +151,7 @@ const WidgetsListing = () => {
           }}
         >
           Add Widget
-        </Button>
+        </Button> */}
       </div>
 
       <div className="flex sm:justify-end items-center gap-2">

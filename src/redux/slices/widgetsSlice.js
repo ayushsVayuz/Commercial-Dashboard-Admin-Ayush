@@ -103,8 +103,8 @@ const widgetsSlice = createSlice({
       })
       .addCase(changeStatusWidget.fulfilled, (state) => {
         state.widgets = state.widgets.map((widgets) =>
-          widgets.id === state.statusLoading
-            ? { ...widgets, status: widgets.status === 1 ? 0 : 1 }
+          widgets.widget_id === state.statusLoading
+            ? { ...widgets, is_active: widgets.is_active === 1 ? 0 : 1 }
             : widgets
         );
         state.statusLoading = {};

@@ -44,7 +44,9 @@ export const readWidget = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widgets/${id ? id : ""}${queryString ? "?" + queryString : ""}`,
+        `/widgets/${id ? "" : "all-widgets"}/${id ? id : ""}${
+          queryString ? "?" + queryString : ""
+        }`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
