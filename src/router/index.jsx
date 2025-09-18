@@ -14,6 +14,11 @@ import WidgetsListing from "../pages/widgets/Listing";
 import WidgetDetails from "../pages/widgets/Details";
 import WidgetPreview from "../pages/widgets/Preview";
 import WidgetAddEdit from "../pages/widgets/AddEdit";
+import WidgetCMSAddEdit from "../pages/widget-cms/AddEdit";
+import ContainersListing from "../pages/containers/Listing";
+import ContainerAddEdit from "../pages/containers/AddEdit";
+import ContainerPreview from "../pages/containers/Preview";
+import ContainerDetails from "../pages/containers/Details";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +92,14 @@ const router = createBrowserRouter([
                     element: <WidgetsListing />,
                   },
                   {
+                    path: "cms",
+                    element: <WidgetCMSAddEdit />,
+                  },
+                  {
+                    path: "cms/:id",
+                    element: <WidgetCMSAddEdit />,
+                  },
+                  {
                     path: "add",
                     element: <WidgetAddEdit />,
                   },
@@ -105,6 +118,39 @@ const router = createBrowserRouter([
                   {
                     path: "view/:id",
                     element: <WidgetDetails />,
+                  },
+                ],
+              },
+              //
+
+              {
+                path: "containers",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <ContainersListing />,
+                  },
+
+                  {
+                    path: "add",
+                    element: <ContainerAddEdit />,
+                  },
+                  {
+                    path: "edit/:id",
+                    element: <ContainerAddEdit />,
+                  },
+                  {
+                    path: "preview",
+                    element: <ContainerPreview />,
+                  },
+                  {
+                    path: "preview/:id",
+                    element: <ContainerPreview />,
+                  },
+                  {
+                    path: "view/:id",
+                    element: <ContainerDetails />,
                   },
                 ],
               },

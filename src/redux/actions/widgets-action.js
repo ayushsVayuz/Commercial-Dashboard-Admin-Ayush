@@ -26,6 +26,32 @@ export const createWidget = createAsyncThunk(
   }
 );
 
+export const updateWidgetCMS = createAsyncThunk(
+  "widget/updateWidgetCMS",
+  async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
+    console.log(widgetId, updatedData, "widgetid and updated data");
+    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+
+    try {
+      const response = await client.put(
+        `/widgets/update-widget/${widgetId}`,
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response, "response of edit");
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
 // Get widget list with query
 export const readWidget = createAsyncThunk(
   "widget/readWidget",
@@ -70,7 +96,7 @@ export const readSingleWidget = createAsyncThunk(
     const token = getTokenFromLocalStorage() || getState().auth.token;
 
     try {
-      const response = await client.get(`/widgets/${id}`, {
+      const response = await client.get(`/widgets/widget-details/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

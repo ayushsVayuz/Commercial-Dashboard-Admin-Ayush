@@ -39,7 +39,13 @@ export const MoreOption = ({ id, actionMenu }) => {
           {actionMenu?.map((data, index) => (
             <>
               <Link
-                to={`${data.url}${id}`}
+                to={`${data.url || ""}${id || ""}`}
+                // onClick={(event) => {
+                //   if (data.onClick) {
+                //     data.onClick(event); 
+                //   }
+                //   event.preventDefault(); 
+                // }}
                 key={index}
                 className="px-2.5 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center gap-2 dark:text-white hover:text-gray-500 dark:hover:text-gray-200"
               >

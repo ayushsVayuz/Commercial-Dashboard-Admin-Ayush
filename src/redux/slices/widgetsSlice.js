@@ -6,6 +6,7 @@ import {
   deleteWidget,
   readSingleWidget,
   changeStatusWidget,
+  updateWidgetCMS,
 } from "../actions/widgets-action";
 
 const initialState = {
@@ -96,6 +97,25 @@ const widgetsSlice = createSlice({
         state.error = action.payload?.message || "Failed to update widgets";
       });
 
+    builder
+      .addCase(updateWidgetCMS.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateWidgetCMS.fulfilled, (state, action) => {
+        state.loading = false;
+        // const index = state.widgets.findIndex(
+        //   (widgets) => widgets.id === action.payload.id
+        // );
+        // if (index !== -1) {
+        //   state.widgets[index] = action.payload;
+        // }
+      })
+      .addCase(updateWidgetCMS.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to update widgets";
+      });
+
     // Change status of widgets
     builder
       .addCase(changeStatusWidget.pending, (state, action) => {
@@ -135,5 +155,6 @@ const widgetsSlice = createSlice({
   },
 });
 
-export const { widgetPayload, resetWidgetPayload } = widgetsSlice.actions;
+export const { widgetPayload, resetWidgetPayload } =
+  widgetsSlice.actions;
 export default widgetsSlice.reducer;

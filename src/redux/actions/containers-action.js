@@ -1,0 +1,132 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import client from "../axios-baseurl";
+
+// Function to get token from local storage
+const getTokenFromLocalStorage = () => {
+  return localStorage.getItem("token");
+};
+
+// Helper to get token
+const getAuthHeaders = (getState) => {
+  const token = getTokenFromLocalStorage() || getState().auth.token;
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+// Create Container
+export const createContainer = createAsyncThunk(
+  "container/createContainer",
+  async (containerData, { rejectWithValue, getState }) => {
+    try {
+      const response = await client.post("/containers", containerData, {
+        headers: getAuthHeaders(getState),
+      });
+
+      return {
+        id: response.data?.id,
+        description: response.data?.description,
+      };
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Update Container
+export const updateContainer = createAsyncThunk(
+  "container/updateContainer",
+  async ({ containerId, updatedData }, { rejectWithValue, getState }) => {
+    try {
+      const response = await client.put(
+        `/containers/${containerId}`,
+        updatedData,
+        { headers: getAuthHeaders(getState) }
+      );
+
+      return {
+        id: response.data?.id,
+        description: response.data?.description,
+      };
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Get Container List
+export const readContainer = createAsyncThunk(
+  "container/readContainer",
+  async ({ id, queryArray }, { rejectWithValue, getState }) => {
+    try {
+      const queryString = queryArray
+        ?.map(
+          (query) =>
+            `${encodeURIComponent(query.field)}=${encodeURIComponent(
+              query.value
+            )}`
+        )
+        .join("&");
+
+      const response = await client.get(
+        `/widget-containers${id ? `/id` : ""}${
+          queryString ? "?" + queryString : ""
+        }`,
+        {
+          headers: getAuthHeaders(getState),
+        }
+      );
+
+      return {
+        data: response.data?.data?.map((c) => ({
+          id: c.id,
+          description: c.description,
+        })),
+        total: response.data?.total,
+      };
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Get Single Container
+export const readSingleContainer = createAsyncThunk(
+  "container/readSingleContainer",
+  async ({ id }, { rejectWithValue, getState }) => {
+    try {
+      const response = await client.get(`/containers/container-details/${id}`, {
+        headers: getAuthHeaders(getState),
+      });
+
+      return {
+        data: {
+          id: response.data?.data?.id,
+          description: response.data?.data?.description,
+        },
+        total: response.data?.total,
+      };
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Delete Container
+export const deleteContainer = createAsyncThunk(
+  "container/deleteContainer",
+  async ({ containerId }, { rejectWithValue, getState }) => {
+    try {
+      const response = await client.delete(`/containers/${containerId}`, {
+        headers: getAuthHeaders(getState),
+      });
+
+      return {
+        id: response.data?.id,
+        description: response.data?.description,
+      };
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);

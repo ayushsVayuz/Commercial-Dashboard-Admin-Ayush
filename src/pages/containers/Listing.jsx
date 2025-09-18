@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Heading } from "../../components/heading";
 import { Table } from "../../components/table";
 import { TbEdit, TbEye } from "react-icons/tb";
@@ -7,25 +7,18 @@ import { useEffect, useState } from "react";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import { Search } from "../../components/search";
-import {
-  changeStatusWidget,
-  readWidget,
-} from "../../redux/actions/widgets-action";
+import { readContainer } from "../../redux/actions/containers-action";
 import { MoreOption } from "../../components/moreOption";
-import { resetWidgetPayload } from "../../redux/slices/widgetsSlice";
 import { Button } from "../../components/buttons";
-import { LuLoaderCircle } from "react-icons/lu";
-import { Toggle } from "../../components/inputs/toogle";
 
-const WidgetsListing = () => {
+const ContainersListing = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    widgets: widgetsData,
+    containers: containersData,
     loading,
     totalCount,
-    statusLoading,
-  } = useSelector((state) => state.widget);
+  } = useSelector((state) => state.container);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -74,93 +67,57 @@ const WidgetsListing = () => {
       );
     }
 
-    dispatch(readWidget(requestPayload));
+    dispatch(readContainer(requestPayload));
   }, [currentPage, searchQuery, rowsPerPage]);
 
-  const headers = [
-    "Sr No.",
-    "Name",
-    "Container ID",
-    "Section",
-    "Status",
-    "Action",
-  ];
+  const headers = ["Sr No.", "Container ID", "Description", "Action"];
 
   const getActionMenu = [
     {
-      label: "CMS",
-      url: `/widget/cms/`,
+      label: "Edit",
+      url: `/container/edit/`,
       icon: <TbEdit className="text-xl" />,
     },
-    // {
-    //   label: "Edit",
-    //   url: `/widget/edit/`,
-    //   icon: <TbEdit className="text-xl" />,
-    // },
-    // {
-    //   label: "View",
-    //   url: `/widget/view/`,
-    //   icon: <TbEye className="text-xl" />,
-    // },
+    {
+      label: "View",
+      url: `/container/view/`,
+      icon: <TbEye className="text-xl" />,
+    },
   ];
 
-  const dataToPass = widgetsData?.map((widget, index) => ({
+  const dataToPass = containersData?.map((container, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
-    name: {
-      content: widget?.title,
-      // link: `view/${widget?.widget_id}`
-    },
-    containerID: { content: widget?.container_id },
-    section: {
-      content: widget?.section_name,
-      link: `/section/view/${widget?.section_id}`,
-    },
-    status: {
+    containerID: { content: container?.container_id },
+    description: { content: container?.description },
+    actions: {
       component: (
-        <>
-          {statusLoading == widget.widget_id ? (
-            <div className="flex justify-center items-center">
-              <LuLoaderCircle size={24} />
-            </div>
-          ) : (
-            <Toggle
-              value={widget.is_active == 1 ? true : false}
-              onChange={() =>
-                dispatch(changeStatusWidget({ widgetId: widget.widget_id }))
-              }
-            />
-          )}
-        </>
+        <MoreOption
+          id={`${container?.container_id}`}
+          actionMenu={getActionMenu}
+        />
       ),
     },
-    ...(!widget?.container_id && {
-      actions: {
-        component: (
-          <MoreOption id={`${widget?.widget_id}`} actionMenu={getActionMenu} />
-        ),
-      },
-    }),
   }));
 
   return (
     <section className="flex flex-col gap-4">
-      <MetaTitle title={"Widget | Anarock"} />
+      <MetaTitle title={"Container | Anarock"} />
 
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
         <Heading
-          sectionLink="/widget"
-          parent="Widget"
-          mainTitle="Widget Listing"
+          sectionLink="/container"
+          parent="Container"
+          mainTitle="Container Listing"
         />
-        {/* <Button
+        <Button
           className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           onClick={() => {
-            navigate("/widget/add");
-            dispatch(resetWidgetPayload());
+            navigate("/containers/add");
+            dispatch(resetContainerPayload());
           }}
         >
-          Add Widget
-        </Button> */}
+          Add Container
+        </Button>
       </div>
 
       <div className="flex sm:justify-end items-center gap-2">
@@ -176,7 +133,7 @@ const WidgetsListing = () => {
       ) : (
         <div className="card-body dark:dark:bg-slate-800 p-0">
           <Table
-            module="Widget"
+            module="Container"
             headers={headers}
             initialData={dataToPass}
             totalPages={totalPages}
@@ -192,4 +149,4 @@ const WidgetsListing = () => {
   );
 };
 
-export default WidgetsListing;
+export default ContainersListing;

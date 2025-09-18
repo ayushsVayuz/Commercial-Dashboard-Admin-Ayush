@@ -104,7 +104,6 @@ const SectionAddEdit = () => {
   useEffect(() => {
     const fetchWidgets = async () => {
       try {
-       
         const res = await dispatch(readWidget({ id: sectionId }));
         if (res?.payload) {
           const options = res.payload?.data?.map((w, index) => ({
@@ -114,7 +113,7 @@ const SectionAddEdit = () => {
             is_active: w.is_active,
             position: positions[index] || [0, 0, 2, 2],
           }));
-          setWidgetPositions([])
+          setWidgetPositions([]);
           setWidgetOptions(options);
         }
       } catch (err) {
@@ -289,21 +288,12 @@ const SectionAddEdit = () => {
                   onChange={(selectedOption) => {
                     field.onChange(selectedOption);
                     setSelectedSection(selectedOption);
-                    // setSearchParams((prev) => {
-                    //   const newParams = new URLSearchParams(prev);
-                    //   if (selectedOption?.label) {
-                    //     newParams.set("section_id", selectedOption.value);
-                    //   } else {
-                    //     newParams.delete("section_id");
-                    //   }
-                    //   return newParams;
-                    // });
                   }}
                   errorContent={errors?.sectionName?.message}
                 />
               )}
             />
-{/* 
+            {/* 
             <Controller
               name="sectionOrder"
               control={control}
@@ -546,7 +536,7 @@ const SectionAddEdit = () => {
             </div>
           </div> */}
           {/* API Configurations */}
-          <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+          {/* <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
             API Configurations
           </h5>
           <div className="p-4 border rounded-lg grid sm:grid-cols-2 gap-4">
@@ -615,8 +605,8 @@ const SectionAddEdit = () => {
               />
             </div>
 
-            {/* Params Table */}
-            {/* <div className="col-span-2">
+            
+            <div className="col-span-2">
               <h6 className="!font-medium text-lg !text-[#4D4D4F] dark:text-gray-200 mb-2">
                 Params
               </h6>
@@ -729,8 +719,8 @@ const SectionAddEdit = () => {
                   );
                 }}
               />
-            </div> */}
-          </div>
+            </div>
+          </div> */}
 
           <div className="mt-4 flex justify-end gap-4">
             <Button type="button" onClick={handleCancel} outLine={true}>

@@ -8,6 +8,7 @@ import authSlice from "./slices/authSlice";
 import dashboardSlice from "./slices/dashboardSlice";
 import sectionSlice from "./slices/sectionSlice";
 import widgetsSlice from "./slices/widgetsSlice";
+import containersSlice from "./slices/containerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     // auth: userAuthSlice,
     auth: authSlice,
     dashboard: dashboardSlice,
+    container: containersSlice,
     section: sectionSlice,
     widget: widgetsSlice,
   },
