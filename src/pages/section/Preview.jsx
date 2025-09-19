@@ -162,23 +162,23 @@ const SectionPreview = () => {
             />
           </CardWrapper>
 
-          <CardWrapper title="API Configuration">
+          {/* <CardWrapper title="API Configuration">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
               {RenderLableValue(
                 "API Endpoint",
                 <span>{payload?.api_endpoint}</span>
               )}
               {RenderLableValue("Method", <span>{payload?.method}</span>)}
-              {/* {RenderLableValue(
+              {RenderLableValue(
                 "Response Type",
                 <span>{payload?.response_type ?? "N/A"}</span>
-              )} */}
+              )}
               {RenderLableValue(
                 "Refresh Interval",
                 <span>{payload?.refresh_interval}</span>
               )}
             </div>
-          </CardWrapper>
+          </CardWrapper> */}
         </div>
       ) : (
         <div>NO DATA FOUND</div>

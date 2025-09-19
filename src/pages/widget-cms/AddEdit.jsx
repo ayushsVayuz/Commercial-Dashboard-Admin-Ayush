@@ -4,7 +4,6 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Button } from "../../components/buttons";
 import { useDispatch, useSelector } from "react-redux";
 import { MetaTitle } from "../../components/metaTitle";
-import { Input } from "../../components/inputs/input";
 import { Heading } from "../../components/heading";
 import { FormWrapper } from "../../components/wrappers/form";
 import { Selector } from "../../components/select";
@@ -13,9 +12,10 @@ import {
   updateWidgetCMS,
 } from "../../redux/actions/widgets-action";
 import { CardWrapper } from "../../components/wrappers/card";
-import { TextArea } from "../../components/textarea";
+import { readContainer } from "../../redux/actions/containers-action";
 
 const WidgetCMSAddEdit = () => {
+  const [containers, setContainers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -35,7 +35,6 @@ const WidgetCMSAddEdit = () => {
       sectionId: "",
       widgetId: "",
       containerId: "",
-      description: "",
     },
   });
 
@@ -43,10 +42,26 @@ const WidgetCMSAddEdit = () => {
     dispatch(readSingleWidget({ id: id }));
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await dispatch(readContainer({}));
+        const updatedObject = res?.payload?.data?.map((data) => ({
+          label: data?.container_id,
+          value: data?.container_id,
+        }));
+        setContainers(updatedObject);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const onSubmit = (data) => {
     const payload = {
       container_id: data.containerId,
-      description: data.description,
     };
     dispatch(
       updateWidgetCMS({
@@ -90,23 +105,13 @@ const WidgetCMSAddEdit = () => {
               name="containerId"
               control={control}
               render={({ field }) => (
-                <Input
+                <Selector
                   {...field}
+                  options={containers}
                   label="Container Id"
-                  placeholder="e.g., FACI20"
+                  // placeholder="e.g., FACI20"
                   errorContent={errors?.containerId?.message}
-                />
-              )}
-            />
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }) => (
-                <TextArea
-                  {...field}
-                  label="Description"
-                  placeholder="Description about widget"
-                  errorContent={errors?.description?.message}
+                  loading={loading}
                 />
               )}
             />
@@ -127,7 +132,6 @@ const WidgetCMSAddEdit = () => {
             </Button>
           </div>
         </form>
-        {error}
       </FormWrapper>
     </section>
   );

@@ -63,7 +63,7 @@ export const readContainer = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widget-containers${id ? `/id` : ""}${
+        `/widget-containers${id ? `/${id}` : ""}${
           queryString ? "?" + queryString : ""
         }`,
         {
