@@ -86,7 +86,7 @@ const SectionDetails = () => {
                 )}
               </div>
             </CardWrapper> */}
-            <CardWrapper title="API Configuration">
+            {/* <CardWrapper title="API Configuration">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6">
                 {RenderLableValue(
                   "API Endpoint",
@@ -96,16 +96,16 @@ const SectionDetails = () => {
                   "Method",
                   <span>{singleSection?.method}</span>
                 )}
-                {/* {RenderLableValue(
+                {RenderLableValue(
                   "Response Type",
                   <span>{singleSection?.response_type ?? "N/A"}</span>
-                )} */}
+                )}
                 {RenderLableValue(
                   "Refresh Interval",
                   <span>{singleSection?.refresh_interval}</span>
                 )}
               </div>
-            </CardWrapper>
+            </CardWrapper> */}
           </div>
         ) : (
           <div>NO DATA FOUND</div>

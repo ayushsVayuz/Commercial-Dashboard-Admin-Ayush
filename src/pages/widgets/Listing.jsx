@@ -133,13 +133,13 @@ const WidgetsListing = () => {
         </>
       ),
     },
-    ...(!widget?.container_id && {
-      actions: {
-        component: (
-          <MoreOption id={`${widget?.widget_id}`} actionMenu={getActionMenu} />
-        ),
-      },
-    }),
+    // ...(!widget?.container_id && {
+    actions: {
+      component: (
+        <MoreOption id={`${widget?.widget_id}`} actionMenu={getActionMenu} />
+      ),
+    },
+    // }),
   }));
 
   return (

@@ -14,14 +14,6 @@ import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import WidgetGrid from "./components/WidgetGrid";
 import { useState } from "react";
 
-const widgetNameMap = {
-  line_chart: "Line Chart",
-  bar_chart: "Bar Chart",
-  pie_chart: "Pie Chart",
-  table: "Table",
-  stat_card: "Stat Card",
-};
-
 const SectionPreview = () => {
   const [widgetPositions, setWidgetPositions] = useState([]);
   const { payload, loading } = useSelector((state) => state.section);
@@ -41,6 +33,11 @@ const SectionPreview = () => {
     const updatedPayload = {
       ...rest,
       ...(id == null ? { section_id: data?.section_id?.value } : {}),
+      method: "GET",
+      widgets: data.widgets.map((w) => ({
+        widget_id: w.widget_id,
+        position: w.position,
+      })),
       params: [],
     };
 
@@ -69,7 +66,7 @@ const SectionPreview = () => {
     }
   };
 
-  console.log(payload, "testets");
+  console.log(payload, "Section Preview");
 
   return (
     <section>

@@ -28,7 +28,7 @@ export const createWidget = createAsyncThunk(
 
 export const updateWidgetCMS = createAsyncThunk(
   "widget/updateWidgetCMS",
-  async ({ widgetId,  updatedData }, { rejectWithValue, getState }) => {
+  async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
     console.log(widgetId, updatedData, "widgetid and updated data");
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 
@@ -70,9 +70,41 @@ export const readWidget = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widgets${id ? "" : "/all-widgets"}/${id ? id : ""}${
-          queryString ? "?" + queryString : ""
-        }`,
+        `widgets/all-widgets/${queryString ? "?" + queryString : ""}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response, "responsee widget");
+
+      return response.data;
+    } catch (error) {
+      console.log("rannn2", error);
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+export const readMappedWidget = createAsyncThunk(
+  "widget/readMappedWidget",
+  async ({ queryArray }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+
+    try {
+      // Construct the query string from the array of query objects
+      const queryString = queryArray
+        ?.map(
+          (query) =>
+            `${encodeURIComponent(query.field)}=${encodeURIComponent(
+              query.value
+            )}`
+        )
+        .join("&");
+
+      const response = await client.get(
+        `/widgets${queryString ? "?" + queryString : ""}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

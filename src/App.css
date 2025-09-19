@@ -165,3 +165,7 @@ input[type="number"] {
   background-position: right 0.7em top 50%, 0 0 !important;
   background-size: 0.65em auto, 100% !important;
 } */
+
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}

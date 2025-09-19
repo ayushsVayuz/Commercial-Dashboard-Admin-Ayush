@@ -1,4 +1,3 @@
-// ContainerAddEdit.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,19 +26,21 @@ const ContainerAddEdit = () => {
   // Load container if editing
   useEffect(() => {
     if (id) {
-      dispatch(readSingleContainer({ id: id }));
+      dispatch(readSingleContainer({ id }));
     }
   }, [id, dispatch]);
 
-  // Prefill form on edit OR when coming back from preview
+  // Prefill form
   useEffect(() => {
-    if (payload) {
-      reset(payload); // from preview
-    } else if (id && singleContainer) {
+    if (id && singleContainer && Object.keys(singleContainer).length > 0) {
+      // Edit mode → API response
       reset({
         container_id: singleContainer.id || "",
         description: singleContainer.description || "",
       });
+    } else if (!id && payload && Object.keys(payload).length > 0) {
+      // Add mode → coming back from preview
+      reset(payload);
     }
   }, [id, payload, singleContainer, reset]);
 
@@ -81,9 +82,7 @@ const ContainerAddEdit = () => {
               name="container_id"
               control={control}
               rules={{ required: true }}
-              render={({ field }) => (
-                <Input {...field} type="text" disabled={!!id} />
-              )}
+              render={({ field }) => <Input {...field} type="text" />}
             />
           </div>
 
@@ -99,6 +98,7 @@ const ContainerAddEdit = () => {
               render={({ field }) => <Input {...field} type="text" />}
             />
           </div>
+
           <div className="mt-4 flex justify-end gap-4">
             <Button type="button" onClick={handleCancel} outLine={true}>
               Cancel
