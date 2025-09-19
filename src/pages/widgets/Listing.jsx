@@ -14,7 +14,7 @@ import {
 import { MoreOption } from "../../components/moreOption";
 import { resetWidgetPayload } from "../../redux/slices/widgetsSlice";
 import { Button } from "../../components/buttons";
-import { LuLoaderCircle } from "react-icons/lu";
+import { LuCircuitBoard, LuLoaderCircle } from "react-icons/lu";
 import { Toggle } from "../../components/inputs/toogle";
 
 const WidgetsListing = () => {
@@ -88,9 +88,9 @@ const WidgetsListing = () => {
 
   const getActionMenu = [
     {
-      label: "CMS",
+      label: "Container Mapping",
       url: `/widget/cms/`,
-      icon: <TbEdit className="text-xl" />,
+      icon: <LuCircuitBoard className="text-xl" />,
     },
     // {
     //   label: "Edit",

@@ -54,7 +54,7 @@ const widgets = [
 export default function WidgetGrid({
   value,
   onChange,
-  data = widgets,
+  data,
   isResizable = true,
   isDraggable = true,
   widgetPositions,
@@ -99,6 +99,9 @@ export default function WidgetGrid({
     setWidgetPositions?.(updated);
     onChange?.(updated);
   };
+
+  console.log(data, "payload in section add");
+  
 
   const renderCard = (item) => (
     <div

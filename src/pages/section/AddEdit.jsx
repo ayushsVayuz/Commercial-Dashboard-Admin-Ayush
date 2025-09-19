@@ -179,8 +179,6 @@ const SectionAddEdit = () => {
     } else {
       const section = payload;
 
-      console.log(widgetPositions, "payload data in useEffect");
-
       if (section.widgets?.length) {
         const mappedWidgets = section.widgets.map((w, index) => ({
           ...w,
@@ -203,6 +201,7 @@ const SectionAddEdit = () => {
         // params: section.params || [],
         widgets: section.widgets || [],
       });
+
       setSelectedWidgets(
         section?.widgets?.map((w) => ({
           label: w.widget_name,
@@ -318,8 +317,6 @@ const SectionAddEdit = () => {
     [2, 2, 2, 2],
     [9, 2, 2, 2],
   ];
-
-  console.log(widgetPositions, "widgets option");
 
   return (
     <section className="dark:bg-gray-800 dark:h-screen ">
