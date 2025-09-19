@@ -51,7 +51,7 @@ export const updateContainer = createAsyncThunk(
 // Get Container List
 export const readContainer = createAsyncThunk(
   "container/readContainer",
-  async ({ id, queryArray }, { rejectWithValue, getState }) => {
+  async ({ queryArray }, { rejectWithValue, getState }) => {
     try {
       const queryString = queryArray
         ?.map(
@@ -63,9 +63,7 @@ export const readContainer = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/widget-containers${id ? `/${id}` : ""}${
-          queryString ? "?" + queryString : ""
-        }`,
+        `/widget-containers${queryString ? "?" + queryString : ""}`,
         {
           headers: getAuthHeaders(getState),
         }

@@ -112,8 +112,8 @@ const WidgetsListing = () => {
     },
     containerID: { content: widget?.container_id },
     section: {
-      content: widget?.section_name,
-      link: `/section/view/${widget?.section_id}`,
+      content: widget?.section?.name,
+      link: `/section/view/${widget?.section?.id}`,
     },
     status: {
       component: (

@@ -28,7 +28,7 @@ export const createWidget = createAsyncThunk(
 
 export const updateWidgetCMS = createAsyncThunk(
   "widget/updateWidgetCMS",
-  async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
+  async ({ widgetId,  updatedData }, { rejectWithValue, getState }) => {
     console.log(widgetId, updatedData, "widgetid and updated data");
     const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
 

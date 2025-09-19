@@ -45,7 +45,14 @@ const WidgetCMSAddEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await dispatch(readContainer({}));
+        const payload = {
+          queryArray: [
+            { field: "mapped", value: false },
+            { field: "skip", value: 0 },
+            { field: "limit", value: 1000 },
+          ],
+        };
+        const res = await dispatch(readContainer(payload));
         const updatedObject = res?.payload?.data?.map((data) => ({
           label: data?.container_id,
           value: data?.container_id,
@@ -61,7 +68,7 @@ const WidgetCMSAddEdit = () => {
 
   const onSubmit = (data) => {
     const payload = {
-      container_id: data.containerId,
+      container_id: data.containerId?.value,
     };
     dispatch(
       updateWidgetCMS({
@@ -78,7 +85,7 @@ const WidgetCMSAddEdit = () => {
   };
 
   return (
-    <section className="dark:bg-gray-800 dark:h-screen">
+    <section className="dark:bg-gray-800 min-h-screen">
       <MetaTitle title={`Widget Mapping | Anarock`} />
       <Heading
         containerClassName={"my-4"}

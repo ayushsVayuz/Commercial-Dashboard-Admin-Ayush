@@ -29,7 +29,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
       child: [
         { title: "Container", to: "/containers", icon: <LuLayoutDashboard size={iconSize} />},
         { title: "Section", to: "/section", icon: <LuLayoutDashboard size={iconSize} />},
-        { title: "Widget", to: "/widget", icon: <LuArrowRight size={iconSize} /> },
+        { title: "Widget", to: "/widget", icon: <LuLayoutDashboard size={iconSize} /> },
       ],
       isPinned: false,
     },

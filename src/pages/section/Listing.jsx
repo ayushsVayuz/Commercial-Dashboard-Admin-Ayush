@@ -78,8 +78,8 @@ const SectionListing = () => {
     "Sr No.",
     "Section Name",
     "Order",
-    "Collapsible",
-    "Collapsed",
+    // "Collapsible",
+    // "Collapsed",
     "Status",
     "Action",
   ];
@@ -101,14 +101,14 @@ const SectionListing = () => {
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
     name: { content: section.name, link: `view/${section.id}` },
     order: { content: section.order_index?.toString() },
-    isCollapsible: {
-      content: section.is_collapsible ? "Yes" : "No",
-      type: "status",
-    },
-    isCollapsed: {
-      content: section.is_collapsed ? "Yes" : "No",
-      type: "status",
-    },
+    // isCollapsible: {
+    //   content: section.is_collapsible ? "Yes" : "No",
+    //   type: "status",
+    // },
+    // isCollapsed: {
+    //   content: section.is_collapsed ? "Yes" : "No",
+    //   type: "status",
+    // },
     status: {
       component: (
         <>
