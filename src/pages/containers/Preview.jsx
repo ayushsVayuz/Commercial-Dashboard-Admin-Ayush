@@ -34,6 +34,7 @@ const ContainerPreview = () => {
       } else {
         res = await dispatch(createContainer(data));
       }
+
       if (
         res?.payload?.statusCode === 200 ||
         res?.payload?.statusCode === 201
@@ -42,6 +43,10 @@ const ContainerPreview = () => {
         toast.success(
           `Container ${isEditMode ? "Updated" : "Created"} Successfully`
         );
+      } else if (res?.payload?.statusCode === 500) {
+        toast.error(res?.payload?.message);
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");

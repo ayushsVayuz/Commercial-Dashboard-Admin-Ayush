@@ -10,6 +10,7 @@ import { Search } from "../../components/search";
 import { readContainer } from "../../redux/actions/containers-action";
 import { MoreOption } from "../../components/moreOption";
 import { Button } from "../../components/buttons";
+import { resetContainerPayload } from "../../redux/slices/containerSlice";
 
 const ContainersListing = () => {
   const dispatch = useDispatch();

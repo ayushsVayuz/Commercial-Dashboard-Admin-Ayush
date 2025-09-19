@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import WidgetGrid from "../section/components/WidgetGrid";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { NoData } from "../../components/noDara";
 
 const Dashboard = () => {
   const [sections, setSections] = useState([]);
@@ -92,57 +93,63 @@ const Dashboard = () => {
   if (loading) return <div>Loading Dashboard...</div>;
 
   return (
-    <div>
-      {/* Section Tabs (draggable) */}
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="sections" direction="horizontal">
-          {(provided) => (
-            <div
-              className="flex gap-4 mb-6"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {sections.map((section, index) => (
-                <Draggable
-                  key={section.section_id}
-                  draggableId={section.section_id}
-                  index={index}
+    <>
+      {sections?.length > 0 ? (
+        <div>
+          {/* Section Tabs (draggable) */}
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="sections" direction="horizontal">
+              {(provided) => (
+                <div
+                  className="flex gap-4 mb-6"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
                 >
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={`px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-600 border-gray-200 ${
-                        snapshot.isDragging ? "shadow-md" : ""
-                      }`}
+                  {sections.map((section, index) => (
+                    <Draggable
+                      key={section.section_id}
+                      draggableId={section.section_id}
+                      index={index}
                     >
-                      {section.name}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`px-4 py-2 rounded-lg border text-sm font-medium bg-white text-gray-600 border-gray-200 ${
+                            snapshot.isDragging ? "shadow-md" : ""
+                          }`}
+                        >
+                          {section.name}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          {/* Render all sections with their widgets */}
+          {sections.map((section) => (
+            <div key={section.section_id} className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
+              {section.widgets && section.widgets.length > 0 ? (
+                <WidgetGrid
+                  data={section.widgets}
+                  isDraggable={false}
+                  isResizable={false}
+                />
+              ) : (
+                <div>No widgets found</div>
+              )}
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {/* Render all sections with their widgets */}
-      {sections.map((section) => (
-        <div key={section.section_id} className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
-          {section.widgets && section.widgets.length > 0 ? (
-            <WidgetGrid
-              data={section.widgets}
-              isDraggable={false}
-              isResizable={false}
-            />
-          ) : (
-            <div>No widgets found</div>
-          )}
+          ))}
         </div>
-      ))}
-    </div>
+      ) : (
+        <NoData />
+      )}
+    </>
   );
 };
 
