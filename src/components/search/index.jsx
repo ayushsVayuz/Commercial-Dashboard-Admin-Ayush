@@ -81,13 +81,18 @@ export const Search = (props) => {
           // searchParams.get("search")
           query !== "" && (
             <button
-              className="absolute top-1/2 -translate-y-1/2 right-2 dark:text-white"
+              className={`${
+                props.filter ? "right-6" : "right-2"
+              } absolute top-1/2 -translate-y-1/2 dark:text-white`}
               onClick={handleClearSearch}
             >
               <RxCross2 size={18} />
             </button>
           )
         }
+        {props.filter && (
+          <>{props.filter}</>
+        )}
       </div>
     </div>
   );

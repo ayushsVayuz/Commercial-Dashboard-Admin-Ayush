@@ -35,7 +35,7 @@ const ContainerAddEdit = () => {
     if (id && singleContainer && Object.keys(singleContainer).length > 0) {
       // Edit mode → API response
       reset({
-        container_id: singleContainer.id || "",
+        container_id: singleContainer.container_id || "",
         description: singleContainer.description || "",
       });
     } else if (!id && payload && Object.keys(payload).length > 0) {
@@ -81,7 +81,6 @@ const ContainerAddEdit = () => {
             <Controller
               name="container_id"
               control={control}
-              rules={{ required: true }}
               render={({ field }) => <Input {...field} type="text" />}
             />
           </div>

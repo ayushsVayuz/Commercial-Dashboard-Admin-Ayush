@@ -16,8 +16,16 @@ import { resetWidgetPayload } from "../../redux/slices/widgetsSlice";
 import { Button } from "../../components/buttons";
 import { LuCircuitBoard, LuLoaderCircle } from "react-icons/lu";
 import { Toggle } from "../../components/inputs/toogle";
+import { Filter } from "../../components/filters";
+import {
+  readSection,
+  readSectionListing,
+} from "../../redux/actions/section-action";
 
 const WidgetsListing = () => {
+  const [filterMenu, setFilterMenu] = useState(false);
+  const [sectionOptions, setSectionsOptions] = useState([]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -38,6 +46,8 @@ const WidgetsListing = () => {
   const [currentPage, setCurrentPage] = useState(currentPageFromUrl);
 
   const totalPages = totalCount ? Math.ceil(totalCount / rowsPerPage) : 0;
+
+  const sectionId = searchParams.get("section_id");
 
   // keep URL params in sync
   useEffect(() => {
@@ -74,8 +84,15 @@ const WidgetsListing = () => {
       );
     }
 
+    if (sectionId) {
+      requestPayload.queryArray.push({
+        field: "section_id",
+        value: sectionId,
+      });
+    }
+
     dispatch(readWidget(requestPayload));
-  }, [currentPage, searchQuery, rowsPerPage]);
+  }, [currentPage, searchQuery, rowsPerPage, sectionId]);
 
   const headers = [
     "Sr No.",
@@ -142,6 +159,28 @@ const WidgetsListing = () => {
     // }),
   }));
 
+  useEffect(() => {
+    const requestPayload = {
+      id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
+      queryArray: [],
+    };
+    const fetchSections = async () => {
+      try {
+        const res = await dispatch(readSection(requestPayload));
+        if (res?.payload) {
+          const options = res.payload?.data?.map((s) => ({
+            label: s.name,
+            value: s.id,
+          }));
+          setSectionsOptions(options);
+        }
+      } catch (err) {
+        console.error("Error fetching sections:", err);
+      }
+    };
+    fetchSections();
+  }, []);
+
   return (
     <section className="flex flex-col gap-4">
       <MetaTitle title={"Widget | Anarock"} />
@@ -168,6 +207,20 @@ const WidgetsListing = () => {
           containerClassName="w-full sm:w-auto mb-2 rounded px"
           placeholder="Search"
           label="search"
+          filter={
+            <Filter
+              filterMenu={filterMenu}
+              setFilterMenu={setFilterMenu}
+              filters={[
+                {
+                  type: "select",
+                  key: "section_id",
+                  placeholder: "Select Section",
+                  options: sectionOptions,
+                },
+              ]}
+            />
+          }
         />
       </div>
 

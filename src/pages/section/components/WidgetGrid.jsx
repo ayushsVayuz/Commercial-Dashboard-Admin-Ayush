@@ -101,7 +101,6 @@ export default function WidgetGrid({
   };
 
   console.log(data, "payload in section add");
-  
 
   const renderCard = (item) => (
     <div
@@ -123,7 +122,6 @@ export default function WidgetGrid({
     </div>
   );
 
-
   return (
     <div className="min-h-[370px]">
       <ResponsiveGridLayout
@@ -131,7 +129,7 @@ export default function WidgetGrid({
         layouts={layouts}
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }} // Changed xl from 16 to 8
-        rowHeight={80}
+        rowHeight={10}
         isResizable={isResizable}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
