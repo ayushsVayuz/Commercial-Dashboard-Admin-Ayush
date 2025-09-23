@@ -36,6 +36,8 @@ import {
   SingleStats,
   EngagementStatsGrid,
 } from "@anarock/widgets";
+import { dummyDashboardData } from "./Data";
+
 
 const widgets = [
   {
@@ -201,12 +203,12 @@ const widgetMinWidth = {
 };
 
 const widgetMinHeights = {
-  OVERVIEW_FACILITIES: 14,
-  OVERVIEW_COMMUNITY: 8,
+  OVERVIEW_FACILITIES: 16,
+  OVERVIEW_COMMUNITY: 10,
   OVERVIEW_ENGAGEMENT: 14,
   OVERVIEW_GATE_UPDATE: 10,
-  OVERVIEW_INCOME_EXPENDITURE: 12,
-  OVERVIEW_HELPDESK: 8,
+  OVERVIEW_INCOME_EXPENDITURE: 19,
+  OVERVIEW_HELPDESK: 10,
 
   COMMUNITY_UNIT_STATUS: 10,
   COMMUNITY_OCCUPANCY_OVERVIEW: 10,
@@ -250,6 +252,100 @@ const widgetMinHeights = {
   HELPDESK_COMPLAINTS: 15,
   HELPDESK_REQUESTBOX: 15,
   HELPDESK_COMPLAINTS_BY_LEVEL: 15,
+};
+
+const widgetDataMap = {
+  OVERVIEW_INCOME_EXPENDITURE: {
+    incomeSummary: {
+      opening_balance: 50000,
+      income: 120000,
+      collection: 90000,
+      closing_balance: 80000,
+    },
+    expenditureSummary: {
+      opening_balance: 40000,
+      expenditure: 70000,
+      payment: 50000,
+      outstanding: 20000,
+    },
+  },
+  OVERVIEW_FACILITIES: {
+    totalBookings: 45,
+    totalSlots: 60,
+    utilizationRate: 75.5,
+    slots: [
+      {
+        slot_start_time: "08:00",
+        slot_end_time: "09:00",
+        slot_bookings: 5,
+        total_slots: 8,
+      },
+      {
+        slot_start_time: "09:00",
+        slot_end_time: "10:00",
+        slot_bookings: 8,
+        total_slots: 8,
+      },
+      {
+        slot_start_time: "10:00",
+        slot_end_time: "11:00",
+        slot_bookings: 10,
+        total_slots: 8,
+      },
+      {
+        slot_start_time: "11:00",
+        slot_end_time: "12:00",
+        slot_bookings: 7,
+        total_slots: 8,
+      },
+      {
+        slot_start_time: "12:00",
+        slot_end_time: "13:00",
+        slot_bookings: 15,
+        total_slots: 8,
+      },
+    ],
+  },
+  OVERVIEW_HELPDESK: {
+    openComplaints: 5,
+    resolvedComplaints: 15,
+    pendingRequests: 3,
+  },
+  OVERVIEW_GATE_UPDATE: {
+    summary: {
+      activeWalkins: { visitor_in: 12, total_pass: 20 },
+      preApprovedCheckins: {
+        expected_pass_scanned: 8,
+        total_expected_pass: 15,
+      },
+    },
+    chart: [
+      { hour: 8, walkins: 5, preApproved: 3 },
+      { hour: 9, walkins: 8, preApproved: 5 },
+      { hour: 10, walkins: 12, preApproved: 7 },
+      { hour: 11, walkins: 15, preApproved: 9 },
+      { hour: 12, walkins: 10, preApproved: 6 },
+      { hour: 13, walkins: 6, preApproved: 4 },
+      { hour: 14, walkins: 9, preApproved: 5 },
+      { hour: 15, walkins: 14, preApproved: 10 },
+      { hour: 16, walkins: 11, preApproved: 8 },
+      { hour: 17, walkins: 7, preApproved: 5 },
+    ],
+  },
+  OVERVIEW_COMMUNITY: {
+    thisMonthMoveIns: 25,
+    thisMonthMoveOuts: 15,
+    moveInPercentChange: 12,
+    moveOutPercentChange: -5,
+    lastMonthMoveIns: 20,
+    lastMonthMoveOuts: 18,
+  },
+  OVERVIEW_ENGAGEMENT: {
+    total_notices: 15,
+    total_topics: 30,
+    total_polls: 12,
+    total_surveys: 8,
+  },
 };
 
 export default function WidgetGrid({
@@ -314,7 +410,7 @@ export default function WidgetGrid({
     }
 
     return (
-      <div className="h-full w-full border">
+      <div className="h-full w-full relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF]">
         <WidgetComponent
           data={item.data || {}}
           config={item.config || {}}
@@ -326,7 +422,7 @@ export default function WidgetGrid({
 
   const renderPlaceholderCard = (item) => (
     <div
-      className={`h-full p-4 rounded-xl drop-shadow-md border-[0.5px] border-[#EBEBEB] bg-white flex flex-col`}
+      className={`h-full p-4 relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF] flex flex-col`}
       role="region"
       aria-label={item.widget_name}
     >
@@ -371,6 +467,8 @@ export default function WidgetGrid({
             item.position[2] < minWidth ? minWidth : item.position[2];
           const actualHeight =
             item.position[3] < minHeight ? minHeight : item.position[3];
+
+          const widgetData = widgetDataMap[item.container_id] || {};
           return (
             <div
               key={item.widget_id}
@@ -383,7 +481,7 @@ export default function WidgetGrid({
             >
               <div className="h-full flex flex-col">
                 <div className="flex-1 drag-handle cursor-move">
-                  {renderWidget(item)}
+                  {renderWidget({ ...item, data: widgetData })}
                 </div>
               </div>
             </div>
