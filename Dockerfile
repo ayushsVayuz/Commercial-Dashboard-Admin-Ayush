@@ -1,25 +1,35 @@
-FROM node:20-alpine AS client
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Set environment variable for port (optional, helpful for app code)
 ENV PORT=4000
 
-# Copy package files and install deps
+# ----------------------
+# 1. Copy root/package.json and install client deps
+# ----------------------
 COPY package*.json ./
 RUN npm install --legacy-peer-deps && npm cache clean --force
 
-# Copy the rest of the app
+# ----------------------
+# 2. Copy client code and build
+# ----------------------
 COPY . .
-
-# Build the client (if needed)
 RUN npm run build
 
-# Move to server directory
+# ----------------------
+# 3. Copy server package.json and install server deps
+# ----------------------
 WORKDIR /app/server
+COPY server/package*.json ./
+RUN npm install --legacy-peer-deps && npm cache clean --force
 
-# You can expose a default port here (just for documentation)
+# ----------------------
+# 4. Copy server code
+# ----------------------
+COPY server/ ./
+
+# ----------------------
+# 5. Expose and run
+# ----------------------
 EXPOSE ${PORT}
-
-# Start the app (this uses the ENV PORT)
-CMD ["sh", "-c", "node index.js"]
+CMD ["node", "index.js"]
