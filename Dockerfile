@@ -7,7 +7,7 @@ ENV PORT=4000
 
 # Copy package files and install deps
 COPY package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps && npm cache clean --force
 
 # Copy the rest of the app
 COPY . .
