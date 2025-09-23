@@ -130,7 +130,7 @@ export default function WidgetGrid({
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }} // Changed xl from 16 to 8
         rowHeight={10}
-        isResizable={isResizable}
+        isResizable={false}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}

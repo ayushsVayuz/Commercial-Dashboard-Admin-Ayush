@@ -9,21 +9,20 @@ import Facilities from "./components/widgets/Facilities";
 import CommunityStats from "./components/widgets/CommunityStats";
 import Helpdesk from "./components/widgets/Helpdesk";
 import Engagement from "./components/widgets/Engagement";
+import { Community } from "@anarock/widgets";
 
 const widgetsDummyArray = [
-    { id: "A", x: 0, y: 0, w: 4, h: 1, groupId: "group1" },
-    { id: "B", x: 0, y: 1, w: 4, h: 1, groupId: "group1" },
-    { id: "C", x: 4, y: 0, w: 4, h: 2 },
-    { id: "D", x: 8, y: 0, w: 4, h: 2 },
-    { id: "E", x: 0, y: 2, w: 6, h: 2, groupId: "group2" },
-    { id: "F", x: 6, y: 2, w: 6, h: 2, groupId: "group2" },
-  ];
+  { id: "A", x: 0, y: 0, w: 4, h: 1, groupId: "group1" },
+  { id: "B", x: 0, y: 1, w: 4, h: 1, groupId: "group1" },
+  { id: "C", x: 4, y: 0, w: 4, h: 2 },
+  { id: "D", x: 8, y: 0, w: 4, h: 2 },
+  { id: "E", x: 0, y: 2, w: 6, h: 2, groupId: "group2" },
+  { id: "F", x: 6, y: 2, w: 6, h: 2, groupId: "group2" },
+];
 
 export default function Dashboard() {
   const [widgets, setWidgets] = useState(widgetsDummyArray);
   const [selectedCommunity, setSelectedCommunity] = useState(null);
-
-  
 
   // useEffect(() => {
   //   async function fetchDashboard() {
@@ -119,6 +118,10 @@ export default function Dashboard() {
       <Card title="Engagement">
         <Engagement data={dashboardData} />
       </Card> */}
+      {/* <div className="">
+
+      <Community />
+      </div> */}
 
       <div className="p-4 max-w-6xl mx-auto border-2 border-gray-300 bg-slate-100">
         <DndProvider backend={HTML5Backend}>

@@ -25,11 +25,11 @@ const MicrofrontendLoader = forwardRef(
       }
 
       script.onload = () => {
-        console.log('loaaddd')
+        console.log("loaaddd");
         const RemoteComponent = window[globalVarName];
         if (onLoad) onLoad();
         if (RemoteComponent) {
-          console.log('loaaddd 2')
+          console.log("loaaddd 2");
 
           setComponent(() => RemoteComponent);
         } else {
@@ -59,17 +59,21 @@ const MicrofrontendLoader = forwardRef(
     }));
 
     if (!Component) {
-      return <div className="w-full h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-      </div>;
-    }
-
-    return (
-      <Suspense fallback={
+      return (
         <div className="w-full h-screen flex items-center justify-center">
           <div className="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
         </div>
-      }>
+      );
+    }
+
+    return (
+      <Suspense
+        fallback={
+          <div className="w-full h-screen flex items-center justify-center">
+            <div className="w-12 h-12 border-4 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+          </div>
+        }
+      >
         <Component {...dynamicProps} />
       </Suspense>
     );

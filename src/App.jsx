@@ -10,24 +10,37 @@ import { OnlineStatus } from "./components/onlineStatus";
 import { ScrollToTopButton } from "./components/scrollToTop";
 
 import React from "react";
+import ReactDOM from "react-dom/client";
+
+// Chart.js v4+
+import * as ChartJs from "chart.js";
+import { Chart as ReactChart } from "react-chartjs-2";
+
+// MUI + Icons
 import * as MaterialUI from "@mui/material";
-import ReactDOM from "react-dom";
+import * as MuiIcons from "@mui/icons-material";
+
+// Emotion
 import * as EmotionReact from "@emotion/react";
 import * as EmotionStyled from "@emotion/styled";
-import * as MuiIcons from "@mui/icons-material";
-import * as ReactRouterDOM from "react-router-dom";
-import * as ReactHotToast from "react-hot-toast";
+
+// React Grid Layout
+import * as ReactGridLayout from "react-grid-layout";
 
 function App() {
-  window.EmotionReact = EmotionReact;
-  window.EmotionStyled = EmotionStyled;
-  window.MuiIcons = MuiIcons;
-  window.process = { env: {} };
+  // Expose globals for MF bundle
   window.React = React;
   window.ReactDOM = ReactDOM;
+  window.ChartJs = ChartJs;
+  window.ReactChartJs2 = { Chart: ReactChart };
   window.MaterialUI = MaterialUI;
-  window.ReactRouterDOM = ReactRouterDOM;
-  window.ReactHotToast = ReactHotToast;
+  window.MuiIcons = MuiIcons;
+  window.EmotionReact = EmotionReact;
+  window.EmotionStyled = EmotionStyled;
+  window.ReactGridLayout = ReactGridLayout;
+  window.WidthProvider = ReactGridLayout.WidthProvider;
+  window.Responsive = ReactGridLayout.Responsive;
+  window.process = { env: {} };
   
   return (
     <>
