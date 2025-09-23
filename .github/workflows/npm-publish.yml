@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: docker login
         env:
-          DOCKER_USER: "saurabhVayuz"
+          DOCKER_USER: "saurabhvayuz"
           DOCKER_PASSWORD: "Saurabh@2714"
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
