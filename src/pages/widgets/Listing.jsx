@@ -98,7 +98,7 @@ const WidgetsListing = () => {
     "Sr No.",
     "Name",
     "Container ID",
-    "Section",
+    // "Section",
     "Status",
     "Action",
   ];
@@ -128,10 +128,10 @@ const WidgetsListing = () => {
       // link: `view/${widget?.widget_id}`
     },
     containerID: { content: widget?.container_id },
-    section: {
-      content: widget?.section?.name,
-      link: `/section/view/${widget?.section?.id}`,
-    },
+    // section: {
+    //   content: widget?.section?.name,
+    //   link: `/section/view/${widget?.section?.id}`,
+    // },
     status: {
       component: (
         <>

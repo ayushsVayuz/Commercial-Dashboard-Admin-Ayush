@@ -99,7 +99,7 @@ const SectionListing = () => {
 
   const tableData = sections?.map((section, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
-    name: { content: section.name, link: `view/${section.id}` },
+    name: { content: section.section_name, link: `view/${section.section_id}` },
     order: { content: section.order_index?.toString() },
     // isCollapsible: {
     //   content: section.is_collapsible ? "Yes" : "No",
@@ -112,7 +112,7 @@ const SectionListing = () => {
     status: {
       component: (
         <>
-          {statusLoading == section.id ? (
+          {statusLoading == section.section_id ? (
             <div className="flex justify-center items-center">
               <LuLoaderCircle size={24} />
             </div>
@@ -120,7 +120,7 @@ const SectionListing = () => {
             <Toggle
               value={section.status == 1 ? true : false}
               onChange={() =>
-                dispatch(changeStatusSection({ sectionId: section.id }))
+                dispatch(changeStatusSection({ sectionId: section.section_id }))
               }
             />
           )}
@@ -128,7 +128,7 @@ const SectionListing = () => {
       ),
     },
     actions: {
-      component: <MoreOption id={section.id} actionMenu={actionMenu} />,
+      component: <MoreOption id={section.section_id} actionMenu={actionMenu} />,
     },
   }));
 

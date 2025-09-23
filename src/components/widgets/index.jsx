@@ -40,7 +40,7 @@ import {
   EngagementStatsGrid,
 } from "@anarock/widgets";
 
-import Nowidget from "../../components/ui/Nowidget";
+// import Nowidget from "../../components/ui/Nowidget";
 import axios from "axios";
 
 const widgetMinHeights = {

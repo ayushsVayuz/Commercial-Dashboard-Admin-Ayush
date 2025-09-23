@@ -89,7 +89,7 @@ const domainSlice = createSlice({
       .addCase(updateSection.fulfilled, (state, action) => {
         state.loading = false;
         const index = state.sections.findIndex(
-          (section) => section.id === action.payload.id
+          (section) => section.section_id === action.payload.id
         );
         if (index !== -1) {
           state.sections[index] = action.payload;

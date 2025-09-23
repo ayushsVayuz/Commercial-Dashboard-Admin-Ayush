@@ -115,8 +115,9 @@ const SectionAddEdit = () => {
             widget_id: w.widget_id,
             key_name: w.key_name,
             is_active: w.is_active,
-            label: w.widget_name || w.title, // for Selector component
-            value: w.widget_id, // for Selector component
+            label: w.widget_name || w.title,
+            value: w.widget_id,
+            container_id: w.container_id,
           }));
           setWidgetOptions(options);
         }
@@ -144,6 +145,7 @@ const SectionAddEdit = () => {
         const mappedWidgets = section?.widgets?.map((w, index) => ({
           ...w,
           position: w.position || positions[index] || [0, 0, 2, 2],
+          container_id: w.container_id,
         }));
         setWidgetPositions(mappedWidgets);
         setSelectedWidgets(section.widgets);
@@ -174,6 +176,7 @@ const SectionAddEdit = () => {
           widget_name: w.widget_name,
           key_name: w.key_name,
           is_active: w.is_active,
+          container_id: w.container_id,
         }))
       );
     } else {
@@ -210,6 +213,7 @@ const SectionAddEdit = () => {
           widget_name: w.widget_name,
           key_name: w.key_name,
           is_active: w.is_active,
+          container_id: w.container_id,
         }))
       );
     }
@@ -227,6 +231,12 @@ const SectionAddEdit = () => {
       );
       if (existingPosition) return existingPosition;
 
+      // Get widgets data from API
+
+      const widgetDataFromApi = widgetOptions.find(
+        (w) => w.widget_id === widget.value
+      );
+
       // Create new position for newly added widgets
       const row = Math.floor(index / 3);
       const col = index % 3;
@@ -239,6 +249,7 @@ const SectionAddEdit = () => {
         key_name: widget.key_name,
         is_active: widget.is_active,
         position: defaultPositions[index] || [col * 3, row * 3, 2, 2],
+        container_id: widgetDataFromApi.container_id || null,
       };
     });
 

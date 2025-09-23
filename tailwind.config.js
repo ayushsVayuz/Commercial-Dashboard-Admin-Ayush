@@ -31,10 +31,10 @@ export default {
         primaryText: "var(--text-primary-color)",
         secondaryText: "var(--text-secondary-color)",
       },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        serif: ["Inter", "serif"],
-      },
+      // fontFamily: {
+      //   sans: ["Inter", "sans-serif"],
+      //   serif: ["Inter", "serif"],
+      // },
       scale: {
         75: "0.75",
       },

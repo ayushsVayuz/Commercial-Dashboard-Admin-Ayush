@@ -1,9 +1,41 @@
-import React from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-
-const ResponsiveGridLayout = WidthProvider(Responsive);
+import {
+  Community,
+  Engagement,
+  Facilities,
+  FinanceSummary,
+  GateUpdates,
+  Helpdesk,
+  UnitStatus,
+  OccupancyOverview,
+  ResidentOverview,
+  MoveInOutTrends,
+  BlockWiseOccupancy,
+  Accounting,
+  Budgets,
+  CashBankBalance,
+  DuesAgeing,
+  ExpenseCategories,
+  IncomeExpenditure,
+  AssetValueBreakdown,
+  RevenuebyCategory,
+  StatsGrid as FacilitiesStatsGrid,
+  GuardPatrols,
+  HourlyTrafficFlow,
+  IncidentReports,
+  StaffAttendance,
+  GateAndSecurityStatsGrid,
+  Complaints,
+  ComplaintsByLevel,
+  RequestBox,
+  HelpdeskStatsGrid,
+  EventsUtilisation,
+  NoticeBoardStatus,
+  SingleStats,
+  EngagementStatsGrid,
+} from "@anarock/widgets";
 
 const widgets = [
   {
@@ -51,6 +83,175 @@ const widgets = [
   },
 ];
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
+// Widget mapping based on key_name
+const widgetComponents = {
+  // Overview widgets
+  OVERVIEW_FACILITIES: Facilities,
+  OVERVIEW_COMMUNITY: Community,
+  OVERVIEW_ENGAGEMENT: Engagement,
+  OVERVIEW_GATE_UPDATE: GateUpdates,
+  OVERVIEW_INCOME_EXPENDITURE: FinanceSummary,
+  OVERVIEW_HELPDESK: Helpdesk,
+
+  // Community/Resident widgets
+  COMMUNITY_UNIT_STATUS: UnitStatus,
+  COMMUNITY_OCCUPANCY_OVERVIEW: OccupancyOverview,
+  COMMUNITY_RESIDENT_OVERVIEW: ResidentOverview,
+  COMMUNITY_MOVEIN_OUT_TRENDS: MoveInOutTrends,
+  COMMUNITY_BLOCK_WISE_OCCUPANCY: BlockWiseOccupancy,
+
+  // Financial widgets
+  FINANCIALS_ACCOUNTING: Accounting,
+  FINANCIALS_BUDGET_VS_ACTUALS: Budgets,
+  FINANCIALS_CASH_AND_BANK_BALANCE: CashBankBalance,
+  FINANCIALS_DUES_AGEING: DuesAgeing,
+  FINANCIALS_EXPENSECATEGORIES: ExpenseCategories,
+  FACILITIES_ASSET_VALUE_BREAKDOWN: AssetValueBreakdown,
+  FACILITIES_REVENUE_BY_CATEGORY: RevenuebyCategory,
+
+  // Engagement widgets
+  ENGAGEMENT_NOTICE: SingleStats,
+  ENGAGEMENT_POST: SingleStats,
+  ENGAGEMENT_POLL: SingleStats,
+  ENGAGEMENT_SURVEY: SingleStats,
+  ENGAGEMENT_NOTICE_BOARD_STATUS: NoticeBoardStatus,
+  ENGAGEMENT_EVENTS_UTILISATION: EventsUtilisation,
+
+  // Facility widgets
+  FACILITIES_TOTAL_BOOKINGS: SingleStats,
+  FACILITIES_UTILISATION_RATE: SingleStats,
+  FACILITIES_REVENUE: SingleStats,
+  FACILITIES_PENDING_DUES: SingleStats,
+
+  // Gate/Security widgets
+  GATE_AND_SECURITY_TOTAL_VISITORS: SingleStats,
+  GATE_AND_SECURITY_ACTIVE_INCIDENTS: SingleStats,
+  GATE_AND_SECURITY_MISSING_PATROLS: SingleStats,
+  GATE_AND_SECURITY_PARKING_USAGE: SingleStats,
+  GATE_AND_SECURITY_GUARDPATROLS: GuardPatrols,
+  GATE_AND_SECURITY_HOURLY_TRAFFIC_FLOW: HourlyTrafficFlow,
+  GATE_AND_SECURITY_INCIDENTREPORTS: IncidentReports,
+  GATE_AND_SECURITY_STAFFATTENDANCE: StaffAttendance,
+
+  // Helpdesk widgets
+  HELPDESK_OPEN_COMPLAINTS: SingleStats,
+  HELPDESK_PENDING_REQUESTS: SingleStats,
+  HELPDESK_AVG_RESPONSE_TIME: SingleStats,
+  HELPDESK_RESOLUTION_RATE: SingleStats,
+  HELPDESK_COMPLAINTS: Complaints,
+  HELPDESK_REQUESTBOX: RequestBox,
+  HELPDESK_COMPLAINTS_BY_LEVEL: ComplaintsByLevel,
+
+  // Fallback
+  // DEFAULT: Nowidget,
+};
+
+const widgetMinWidth = {
+  OVERVIEW_FACILITIES: 2,
+  OVERVIEW_COMMUNITY: 2,
+  OVERVIEW_ENGAGEMENT: 2,
+  OVERVIEW_GATE_UPDATE: 2,
+  OVERVIEW_INCOME_EXPENDITURE: 2,
+  OVERVIEW_HELPDESK: 2,
+
+  // COMMUNITY_UNIT_STATUS: 10,
+  // COMMUNITY_OCCUPANCY_OVERVIEW: 10,
+  // COMMUNITY_RESIDENT_OVERVIEW: 10,
+  // COMMUNITY_MOVEIN_OUT_TRENDS: 10,
+  // COMMUNITY_BLOCK_WISE_OCCUPANCY: 10,
+
+  // FINANCIALS_ACCOUNTING: 25,
+  // FINANCIALS_EXPENSECATEGORIES: 25,
+  // FINANCIALS_CASH_AND_BANK_BALANCE: 20,
+  // FINANCIALS_DUES_AGEING: 20,
+  // FINANCIALS_BUDGET_VS_ACTUALS: 20,
+
+  // ENGAGEMENT_NOTICE: 8,
+  // ENGAGEMENT_POST: 8,
+  // ENGAGEMENT_POLL: 8,
+  // ENGAGEMENT_SURVEY: 8,
+  // ENGAGEMENT_NOTICE_BOARD_STATUS: 13,
+  // ENGAGEMENT_EVENTS_UTILISATION: 13,
+
+  // FACILITIES_TOTAL_BOOKINGS: 8,
+  // FACILITIES_UTILISATION_RATE: 8,
+  // FACILITIES_REVENUE: 8,
+  // FACILITIES_PENDING_DUES: 8,
+  // FACILITIES_ASSET_VALUE_BREAKDOWN: 15,
+  // FACILITIES_REVENUE_BY_CATEGORY: 15,
+
+  // GATE_AND_SECURITY_TOTAL_VISITORS: 8,
+  // GATE_AND_SECURITY_ACTIVE_INCIDENTS: 8,
+  // GATE_AND_SECURITY_MISSING_PATROLS: 8,
+  // GATE_AND_SECURITY_PARKING_USAGE: 8,
+  // GATE_AND_SECURITY_GUARDPATROLS: 15,
+  // GATE_AND_SECURITY_HOURLY_TRAFFIC_FLOW: 15,
+  // GATE_AND_SECURITY_INCIDENTREPORTS: 15,
+  // GATE_AND_SECURITY_STAFFATTENDANCE: 15,
+
+  // HELPDESK_OPEN_COMPLAINTS: 8,
+  // HELPDESK_PENDING_REQUESTS: 8,
+  // HELPDESK_AVG_RESPONSE_TIME: 8,
+  // HELPDESK_RESOLUTION_RATE: 8,
+  // HELPDESK_COMPLAINTS: 15,
+  // HELPDESK_REQUESTBOX: 15,
+  // HELPDESK_COMPLAINTS_BY_LEVEL: 15,
+};
+
+const widgetMinHeights = {
+  OVERVIEW_FACILITIES: 14,
+  OVERVIEW_COMMUNITY: 8,
+  OVERVIEW_ENGAGEMENT: 14,
+  OVERVIEW_GATE_UPDATE: 10,
+  OVERVIEW_INCOME_EXPENDITURE: 12,
+  OVERVIEW_HELPDESK: 8,
+
+  COMMUNITY_UNIT_STATUS: 10,
+  COMMUNITY_OCCUPANCY_OVERVIEW: 10,
+  COMMUNITY_RESIDENT_OVERVIEW: 10,
+  COMMUNITY_MOVEIN_OUT_TRENDS: 10,
+  COMMUNITY_BLOCK_WISE_OCCUPANCY: 10,
+
+  FINANCIALS_ACCOUNTING: 25,
+  FINANCIALS_EXPENSECATEGORIES: 25,
+  FINANCIALS_CASH_AND_BANK_BALANCE: 20,
+  FINANCIALS_DUES_AGEING: 20,
+  FINANCIALS_BUDGET_VS_ACTUALS: 20,
+
+  ENGAGEMENT_NOTICE: 8,
+  ENGAGEMENT_POST: 8,
+  ENGAGEMENT_POLL: 8,
+  ENGAGEMENT_SURVEY: 8,
+  ENGAGEMENT_NOTICE_BOARD_STATUS: 13,
+  ENGAGEMENT_EVENTS_UTILISATION: 13,
+
+  FACILITIES_TOTAL_BOOKINGS: 8,
+  FACILITIES_UTILISATION_RATE: 8,
+  FACILITIES_REVENUE: 8,
+  FACILITIES_PENDING_DUES: 8,
+  FACILITIES_ASSET_VALUE_BREAKDOWN: 15,
+  FACILITIES_REVENUE_BY_CATEGORY: 15,
+
+  GATE_AND_SECURITY_TOTAL_VISITORS: 8,
+  GATE_AND_SECURITY_ACTIVE_INCIDENTS: 8,
+  GATE_AND_SECURITY_MISSING_PATROLS: 8,
+  GATE_AND_SECURITY_PARKING_USAGE: 8,
+  GATE_AND_SECURITY_GUARDPATROLS: 15,
+  GATE_AND_SECURITY_HOURLY_TRAFFIC_FLOW: 15,
+  GATE_AND_SECURITY_INCIDENTREPORTS: 15,
+  GATE_AND_SECURITY_STAFFATTENDANCE: 15,
+
+  HELPDESK_OPEN_COMPLAINTS: 8,
+  HELPDESK_PENDING_REQUESTS: 8,
+  HELPDESK_AVG_RESPONSE_TIME: 8,
+  HELPDESK_RESOLUTION_RATE: 8,
+  HELPDESK_COMPLAINTS: 15,
+  HELPDESK_REQUESTBOX: 15,
+  HELPDESK_COMPLAINTS_BY_LEVEL: 15,
+};
+
 export default function WidgetGrid({
   value,
   onChange,
@@ -91,6 +292,7 @@ export default function WidgetGrid({
       return {
         widget_id: l.i,
         widget_name: matchedWidget?.widget_name || "",
+        container_id: matchedWidget?.container_id || "",
         position: [l.x, l.y, l.w, l.h],
         is_active: 1,
       };
@@ -102,9 +304,28 @@ export default function WidgetGrid({
 
   console.log(data, "payload in section add");
 
-  const renderCard = (item) => (
+  const renderWidget = (item) => {
+    // Get the component based on key_name
+    const WidgetComponent = widgetComponents[item.container_id];
+
+    if (!WidgetComponent) {
+      // Fallback to placeholder if widget component not found
+      return renderPlaceholderCard(item);
+    }
+
+    return (
+      <div className="h-full w-full border">
+        <WidgetComponent
+          data={item.data || {}}
+          config={item.config || {}}
+          {...(item.props || {})}
+        />
+      </div>
+    );
+  };
+
+  const renderPlaceholderCard = (item) => (
     <div
-      key={item.widget_id}
       className={`h-full p-4 rounded-xl drop-shadow-md border-[0.5px] border-[#EBEBEB] bg-white flex flex-col`}
       role="region"
       aria-label={item.widget_name}
@@ -114,10 +335,14 @@ export default function WidgetGrid({
           <h3 className="text-base font-medium text-slate-800">
             {item.title || item.widget_name}
           </h3>
+          <p className="text-xs text-slate-500 mt-1">Key: {item.key_name}</p>
         </div>
         <div className="text-xs text-slate-500">
           #{item.position ? item.position.join("/") : "-"}
         </div>
+      </div>
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-sm text-slate-400">Widget Preview</p>
       </div>
     </div>
   );
@@ -128,34 +353,42 @@ export default function WidgetGrid({
         className="layout"
         layouts={layouts}
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
-        cols={{ xl: 6, lg: 6, md: 6, sm: 6 }} // Changed xl from 16 to 8
+        cols={{ xl: 6, lg: 6, md: 6, sm: 6 }}
         rowHeight={10}
-        isResizable={false}
+        isResizable={true}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}
         useCSSTransforms={true}
         onLayoutChange={handleLayoutChange}
         resizeHandles={["n", "s", "e", "w"]}
-        margin={[10, 10]} // Reduced margins
+        margin={[10, 10]}
       >
-        {effectiveData?.map((item) => (
-          <div
-            key={item.widget_id}
-            data-grid={{
-              x: item.position[0],
-              y: item.position[1],
-              w: item.position[2],
-              h: item.position[3],
-            }}
-          >
-            <div className="h-full flex flex-col">
-              <div className="flex-1 drag-handle cursor-move">
-                {renderCard(item)}
+        {effectiveData?.map((item) => {
+          const minWidth = widgetMinWidth[item.container_id] || 2;
+          const minHeight = widgetMinHeights[item.container_id] || 2;
+          const actualWidth =
+            item.position[2] < minWidth ? minWidth : item.position[2];
+          const actualHeight =
+            item.position[3] < minHeight ? minHeight : item.position[3];
+          return (
+            <div
+              key={item.widget_id}
+              data-grid={{
+                x: item.position[0],
+                y: item.position[1],
+                w: actualWidth,
+                h: actualHeight,
+              }}
+            >
+              <div className="h-full flex flex-col">
+                <div className="flex-1 drag-handle cursor-move">
+                  {renderWidget(item)}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </ResponsiveGridLayout>
     </div>
   );
