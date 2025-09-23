@@ -1,16 +1,24 @@
-#Stage1 : Building client Image
-FROM node:alpine3.12 as client
-ENV PORT=8000
-#FROM node:16-alpine as client
-WORKDIR /app
-COPY package*.json ./
-RUN npm install && npm cache clean --force
-COPY ./ ./
-RUN ls
-RUN npm run build
-RUN ls
-WORKDIR /app/server
-RUN npm install && npm cache clean --force
-RUN ls
-EXPOSE $PORT
-CMD ["node","index.js"]
+name: Anarock Admin
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: "saurabhVayuz"
+          DOCKER_PASSWORD: "Saurabh@2714"
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag saurabhvayuz/anarock_admin:0.1
+
+      - name: Docker Push
+        run: docker push saurabhvayuz/anarock_admin:0.1
