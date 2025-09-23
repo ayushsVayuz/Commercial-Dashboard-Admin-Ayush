@@ -1,5 +1,5 @@
 #Stage1 : Building client Image
-FROM node:alpine3.12 as client
+FROM node:alpine3.12 AS client
 ENV PORT=8000
 #FROM node:16-alpine as client
 WORKDIR /app
