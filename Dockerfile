@@ -1,32 +1,25 @@
-# Stage 1: Build React client
-FROM node:20-alpine AS client
-ENV PORT=8000
+FROM node:18 as client
 
 WORKDIR /app
 
-# Install dependencies
+# Set environment variable for port (optional, helpful for app code)
+ENV PORT=4000
+
+# Copy package files and install deps
 COPY package*.json ./
-RUN npm install --legacy-peer-deps && npm cache clean --force
+RUN npm install
 
-# Copy source code
-COPY ./ ./
+# Copy the rest of the app
+COPY . .
 
-# Build React app
+# Build the client (if needed)
 RUN npm run build
 
-# Stage 2: Production server
-FROM node:20-alpine AS server
-ENV PORT=8000
-
-WORKDIR /app
-
-# Copy only server files
-COPY --from=client /app/server ./server
-COPY --from=client /app/build ./client/build
-
-# Install server dependencies
+# Move to server directory
 WORKDIR /app/server
-RUN npm install --legacy-peer-deps && npm cache clean --force
 
-EXPOSE $PORT
-CMD ["node", "index.js"]
+# You can expose a default port here (just for documentation)
+EXPOSE ${PORT}
+
+# Start the app (this uses the ENV PORT)
+CMD ["sh", "-c", "node index.js"]
