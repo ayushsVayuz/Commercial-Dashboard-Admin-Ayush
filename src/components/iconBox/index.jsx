@@ -164,7 +164,7 @@ export const IconBox = ({
         <>
           {child && (
             <>
-              <ul className={`mt-2.5 ${!collapse && "space-y-2"}`}>
+              <ul className={`mt-2.5 space-y-0.5 ${!collapse && "mb-3"}`}>
                 {child.map((data, index) => {
                   return (
                     <li

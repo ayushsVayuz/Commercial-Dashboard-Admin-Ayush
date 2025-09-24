@@ -87,7 +87,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
             )}
           </button>
         </div>
-        <div className="space-y-2">
+        <div className=" ">
           {items?.map((item, index) => (
             <>
               <IconBox
