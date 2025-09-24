@@ -9,7 +9,7 @@ const Dashboard = () => {
   // API Configuration
   const API_BASE_URL =
     process.env.REACT_APP_API_BASE_URL ||
-    "https://whitelabels-1.apnacomplex.com/dashboard-api/v1";
+    "https://apnacomplex.vayuz.com/dashboard-api/v1";
   const DASHBOARD_ENDPOINT =
     "/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details";
 

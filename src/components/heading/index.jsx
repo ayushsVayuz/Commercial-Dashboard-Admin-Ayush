@@ -17,10 +17,10 @@ export const Heading = ({ parent, mainTitle, className, sectionLink }) => {
           <li class="breadcrumb-item sm:text-base text-xs">
             <Link to={sectionLink}>{parent}</Link>
           </li>
-          <li class="active breadcrumb-item dark:!text-white text-xs sm:text-base">{mainTitle}</li>
+          <li class="active breadcrumb-item text-black dark:text-white text-xs sm:text-base">{mainTitle}</li>
         </ol>
       </nav>
-      <h3 className={`${className} dark:text-white `}> {mainTitle}</h3>
+      <h3 className={`${className} text-black dark:text-white `}> {mainTitle}</h3>
     </div>
   );
 };

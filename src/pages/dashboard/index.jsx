@@ -11,7 +11,7 @@ const Dashboard = () => {
     const fetchDashboard = async () => {
       try {
         const res = await fetch(
-          "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
+          "https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
         );
         const result = await res.json();
 
@@ -24,8 +24,8 @@ const Dashboard = () => {
               widgets:
                 s.widgets?.map((w) => ({
                   widget_id: w.widget_id,
-                  key_name: w.key_name,
-                  title: w.widget_name,
+                  widget_name: w.widget_id,
+                  container_id: w.container_id,
                   is_active: w.is_active,
                   position: w.position || [0, 0, 4, 2],
                 })) || [],
@@ -61,17 +61,17 @@ const Dashboard = () => {
 
     // prepare payload for API
     const payload = updated.map((s) => ({
-      id: s.section_id,
-      order_index: s.order_index,
+      id: s?.section_id,
+      order_index: s?.order_index,
     }));
 
     console.log("Saving to backend:", payload);
 
     try {
       const res = await fetch(
-        "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save",
+        `https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save`,
         {
-          method: "PUT", // or PUT/PATCH based on your API spec
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -131,10 +131,10 @@ const Dashboard = () => {
             </Droppable>
           </DragDropContext>
           {/* Render all sections with their widgets */}
-          {sections.map((section) => (
+          {sections?.map((section) => (
             <div key={section.section_id} className="mb-6">
               <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
-              {section.widgets && section.widgets.length > 0 ? (
+              {section?.widgets && section?.widgets?.length > 0 ? (
                 <WidgetGrid
                   data={section.widgets}
                   isDraggable={false}
