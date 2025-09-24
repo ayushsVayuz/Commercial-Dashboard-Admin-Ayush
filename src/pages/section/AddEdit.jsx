@@ -26,6 +26,7 @@ import {
   readWidget,
 } from "../../redux/actions/widgets-action";
 import WidgetGrid from "./components/WidgetGrid";
+import WidgetGridDND from "./components/WidgetDND";
 
 const SectionAddEdit = () => {
   const [sectionOptions, setSectionsOptions] = useState([]);
@@ -403,17 +404,30 @@ const SectionAddEdit = () => {
             name="widgets"
             control={control}
             render={({ field }) => (
-              <WidgetGrid
-                data={selectedWidgets}
-                widgetPositions={widgetPositions}
-                setWidgetPositions={setWidgetPositions}
-                value={widgetPositions}
-                onChange={(newLayout) => {
-                  setWidgetPositions(newLayout);
-                  field.onChange(newLayout);
-                }}
-                errorContent={errors?.widgets?.message}
-              />
+              <>
+                <WidgetGrid
+                  data={selectedWidgets}
+                  widgetPositions={widgetPositions}
+                  setWidgetPositions={setWidgetPositions}
+                  value={widgetPositions}
+                  onChange={(newLayout) => {
+                    setWidgetPositions(newLayout);
+                    field.onChange(newLayout);
+                  }}
+                  errorContent={errors?.widgets?.message}
+                />
+                {/* <WidgetGridDND
+                  data={selectedWidgets}
+                  widgetPositions={widgetPositions}
+                  setWidgetPositions={setWidgetPositions}
+                  value={widgetPositions}
+                  onChange={(newLayout) => {
+                    setWidgetPositions(newLayout);
+                    field.onChange(newLayout);
+                  }}
+                  errorContent={errors?.widgets?.message}
+                /> */}
+              </>
             )}
           />
 
