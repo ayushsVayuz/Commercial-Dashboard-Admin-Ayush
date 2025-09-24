@@ -207,7 +207,7 @@ const widgetMinHeights = {
   OVERVIEW_ENGAGEMENT: 14,
   OVERVIEW_GATE_UPDATE: 10,
   OVERVIEW_INCOME_EXPENDITURE: 19,
-  OVERVIEW_HELPDESK: 10,
+  OVERVIEW_HELPDESK: 2,
 
   COMMUNITY_UNIT_STATUS: 10,
   COMMUNITY_OCCUPANCY_OVERVIEW: 10,
@@ -254,12 +254,12 @@ const widgetMinHeights = {
 };
 
 const widgetPositionMap = {
-  OVERVIEW_FACILITIES: [0, 0, 2, 2],
+  OVERVIEW_FACILITIES: [2, 0, 2, 2],
   OVERVIEW_COMMUNITY: [2, 0, 2, 2],
-  OVERVIEW_ENGAGEMENT: [4, 0, 2, 2],
-  OVERVIEW_GATE_UPDATE: [6, 0, 2, 2],
-  OVERVIEW_INCOME_EXPENDITURE: [8, 0, 2, 2],
-  OVERVIEW_HELPDESK: [10, 0, 2, 2],
+  OVERVIEW_ENGAGEMENT: [4, 4, 2, 2],
+  OVERVIEW_GATE_UPDATE: [0, 6, 2, 2],
+  OVERVIEW_INCOME_EXPENDITURE: [0, 0, 2, 2],
+  OVERVIEW_HELPDESK: [6, 0, 2, 4],
 
   COMMUNITY_UNIT_STATUS: [0, 2, 2, 2],
   COMMUNITY_OCCUPANCY_OVERVIEW: [2, 2, 2, 2],
@@ -520,16 +520,26 @@ export default function WidgetGrid({
           const actualHeight =
             item.position[3] < minHeight ? minHeight : item?.position[3];
 
-          // const positionX = widgetPositionMap[item?.container_id][0] || item?.position[0];
-          // const positionY = widgetPositionMap[item?.container_id][1] || item?.position[1];
+          const positionX =
+            widgetPositionMap[item?.container_id]?.[0] || item?.position[0];
+          const positionY =
+            widgetPositionMap[item?.container_id]?.[1] || item?.position[1];
 
           const widgetData = widgetDataMap[item?.container_id] || {};
+
+          console.log(
+            item?.position,
+            item?.widget_name,
+            positionX,
+            positionY,
+            "each widget item position"
+          );
           return (
             <div
               key={item.widget_id}
               data-grid={{
-                x: item.position[0],
-                y: item.position[1],
+                x: positionX,
+                y: positionY,
                 w: actualWidth,
                 h: actualHeight,
               }}

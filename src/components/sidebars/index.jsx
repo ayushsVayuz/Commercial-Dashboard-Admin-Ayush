@@ -6,7 +6,7 @@ import { useState } from "react";
 import {
   LuAlignJustify,
   LuDatabase,
-  LuHouse ,
+  LuHouse,
   LuLayoutDashboard,
   LuPanelLeftClose,
   LuArrowRight,
@@ -89,21 +89,23 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
         </div>
         <div className=" ">
           {items?.map((item, index) => (
-            <IconBox
-              containerClassName="px-4 py-2"
-              titleClassName={
-                item.to == null && "font-semibold text-primary uppercase "
-              }
-              className={item.className}
-              item={item}
-              key={index}
-              to={item.to}
-              icon={item.icon}
-              title={!collapse ? item.title : ""}
-              child={item.child}
-              setPin={() => handlePinToggle(item.title)}
-              collapse={collapse}
-            />
+            <>
+              <IconBox
+                containerClassName="px-4 py-2"
+                titleClassName={
+                  item.to == null && "font-semibold text-primary uppercase "
+                }
+                className={item.className}
+                item={item}
+                key={index}
+                to={item.to}
+                icon={item.icon}
+                title={!collapse ? item.title : ""}
+                child={item.child}
+                setPin={() => handlePinToggle(item.title)}
+                collapse={collapse}
+              />
+            </>
           ))}
         </div>
       </motion.div>

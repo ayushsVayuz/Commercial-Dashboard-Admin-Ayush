@@ -108,7 +108,7 @@ export const Selector = ({
             control: () =>
               "!w-full !min-h-[49px] !bg-transparent !border-none !rounded-[8px]",
             menu: () =>
-              "dark:!bg-gray-900 dark:!text-gray-500 focus:!shadow-none focus:!outline-none",
+              "bg-gray-200 dark:bg-gray-900 dark:!text-gray-500 focus:!shadow-none focus:!outline-none",
             option: (state) =>
               `${state.isSelected && "!text-white dark:!text-white"}`,
             singleValue: () => "!text-black dark:!text-white",

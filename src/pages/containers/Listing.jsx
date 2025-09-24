@@ -132,7 +132,7 @@ const ContainersListing = () => {
       {loading ? (
         <TableShimmer />
       ) : (
-        <div className="card-body dark:dark:bg-slate-800 p-0">
+        <div className="card-body bg-[#F9FAFC] dark:dark:bg-slate-800 p-0">
           <Table
             module="Container"
             headers={headers}
