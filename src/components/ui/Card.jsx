@@ -8,7 +8,7 @@ const Card = ({
   childrenClassName,
 }) => (
   <div
-    className={`relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF] p-4 flex flex-col gap-6 ${className} `}
+    className={`relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF] p-4 flex flex-col gap-6 ${className} h-full `}
     >
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
