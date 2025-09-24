@@ -21,6 +21,7 @@ import {
   readSection,
   readSectionListing,
 } from "../../redux/actions/section-action";
+import { clearSingleWidget } from "../../redux/slices/widgetsSlice";
 
 const WidgetsListing = () => {
   const [filterMenu, setFilterMenu] = useState(false);
@@ -63,10 +64,19 @@ const WidgetsListing = () => {
       ([key, value]) => existingParams[key] !== value
     );
 
+   
     if (hasChanged) {
       setSearchParams(newParams);
     }
   }, [currentPage, rowsPerPage, searchQuery]);
+
+
+   useEffect(() => {
+        
+        dispatch(clearSingleWidget());
+        
+       
+      }, []);
 
   // fetch data on change
   useEffect(() => {

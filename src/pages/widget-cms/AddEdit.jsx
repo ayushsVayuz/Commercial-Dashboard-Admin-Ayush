@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { MetaTitle } from "../../components/metaTitle";
 import { Heading } from "../../components/heading";
 import { FormWrapper } from "../../components/wrappers/form";
-import { Selector } from "../../components/select";
+// import { Selector } from "../../components/select";
 import {
   readSingleWidget,
   updateWidgetCMS,
 } from "../../redux/actions/widgets-action";
 import { CardWrapper } from "../../components/wrappers/card";
 import { readContainer } from "../../redux/actions/containers-action";
+import { Input } from "../../components/inputs/input";
+import { Selector } from "../../components/select";
+import { clearSingleWidget } from "../../redux/slices/widgetsSlice";
 
 const WidgetCMSAddEdit = () => {
   const [containers, setContainers] = useState([]);
@@ -20,7 +23,7 @@ const WidgetCMSAddEdit = () => {
   const location = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
-
+const [containerValue, setContainerValue] = useState("");
   const { singleWidget, error, loading } = useSelector((state) => state.widget);
 
   const {
@@ -38,9 +41,37 @@ const WidgetCMSAddEdit = () => {
     },
   });
 
+  // useEffect(() => {
+  //   dispatch(readSingleWidget({ id: id }));
+  // }, []);
   useEffect(() => {
+    
+    dispatch(clearSingleWidget());
+    setContainerValue("");
+    reset({
+      sectionId: "",
+      widgetId: "",
+      containerId: "",
+    });
+    
+   
     dispatch(readSingleWidget({ id: id }));
-  }, []);
+  }, [id, reset]);
+
+ useEffect(() => {
+  if (singleWidget?.container_id) {
+    console.log(singleWidget?.container_id, "in use effect ");
+    setContainerValue(singleWidget.container_id);
+    
+    reset({
+      sectionId: "",
+      widgetId: "",
+      containerId: singleWidget.container_id,
+    });
+  }
+}, [singleWidget, reset]);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +99,7 @@ const WidgetCMSAddEdit = () => {
 
   const onSubmit = (data) => {
     const payload = {
-      container_id: data.containerId?.value,
+      container_id: data.containerId,
     };
     dispatch(
       updateWidgetCMS({
@@ -108,7 +139,7 @@ const WidgetCMSAddEdit = () => {
             General
           </h5>
           <div className="grid sm:grid-cols-1 gap-4">
-            <Controller
+            {/* <Controller
               name="containerId"
               control={control}
               render={({ field }) => (
@@ -121,7 +152,23 @@ const WidgetCMSAddEdit = () => {
                   loading={loading}
                 />
               )}
-            />
+            /> */}
+            <Controller
+  name="containerId"
+  control={control}
+  render={({ field }) => (
+    <Input
+      {...field}
+      label="Container Id"
+      value={containerValue}
+      onChange={(e) => {
+        setContainerValue(e.target.value);
+        field.onChange(e.target.value);
+      }}
+      errorContent={errors?.containerId?.message}
+    />
+  )}
+/>
           </div>
 
           {/* Action buttons */}
