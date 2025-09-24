@@ -38,7 +38,6 @@ import {
 } from "@anarock/widgets";
 import { dummyDashboardData } from "./Data";
 
-
 const widgets = [
   {
     widget_id: "d94e5bbe-8fb3-11f0-a613-0277871623b0",
@@ -254,6 +253,58 @@ const widgetMinHeights = {
   HELPDESK_COMPLAINTS_BY_LEVEL: 15,
 };
 
+const widgetPositionMap = {
+  OVERVIEW_FACILITIES: [0, 0, 2, 2],
+  OVERVIEW_COMMUNITY: [2, 0, 2, 2],
+  OVERVIEW_ENGAGEMENT: [4, 0, 2, 2],
+  OVERVIEW_GATE_UPDATE: [6, 0, 2, 2],
+  OVERVIEW_INCOME_EXPENDITURE: [8, 0, 2, 2],
+  OVERVIEW_HELPDESK: [10, 0, 2, 2],
+
+  COMMUNITY_UNIT_STATUS: [0, 2, 2, 2],
+  COMMUNITY_OCCUPANCY_OVERVIEW: [2, 2, 2, 2],
+  COMMUNITY_RESIDENT_OVERVIEW: [4, 2, 2, 2],
+  COMMUNITY_MOVEIN_OUT_TRENDS: [6, 2, 2, 2],
+  COMMUNITY_BLOCK_WISE_OCCUPANCY: [8, 2, 2, 2],
+
+  FINANCIALS_ACCOUNTING: [0, 4, 2, 2],
+  FINANCIALS_EXPENSECATEGORIES: [2, 4, 2, 2],
+  FINANCIALS_CASH_AND_BANK_BALANCE: [4, 4, 2, 2],
+  FINANCIALS_DUES_AGEING: [6, 4, 2, 2],
+  FINANCIALS_BUDGET_VS_ACTUALS: [8, 4, 2, 2],
+
+  ENGAGEMENT_NOTICE: [0, 6, 2, 2],
+  ENGAGEMENT_POST: [2, 6, 2, 2],
+  ENGAGEMENT_POLL: [4, 6, 2, 2],
+  ENGAGEMENT_SURVEY: [6, 6, 2, 2],
+  ENGAGEMENT_NOTICE_BOARD_STATUS: [8, 6, 2, 2],
+  ENGAGEMENT_EVENTS_UTILISATION: [10, 6, 2, 2],
+
+  FACILITIES_TOTAL_BOOKINGS: [0, 8, 2, 2],
+  FACILITIES_UTILISATION_RATE: [2, 8, 2, 2],
+  FACILITIES_REVENUE: [4, 8, 2, 2],
+  FACILITIES_PENDING_DUES: [6, 8, 2, 2],
+  FACILITIES_ASSET_VALUE_BREAKDOWN: [8, 8, 2, 2],
+  FACILITIES_REVENUE_BY_CATEGORY: [10, 8, 2, 2],
+
+  GATE_AND_SECURITY_TOTAL_VISITORS: [0, 10, 2, 2],
+  GATE_AND_SECURITY_ACTIVE_INCIDENTS: [2, 10, 2, 2],
+  GATE_AND_SECURITY_MISSING_PATROLS: [4, 10, 2, 2],
+  GATE_AND_SECURITY_PARKING_USAGE: [6, 10, 2, 2],
+  GATE_AND_SECURITY_GUARDPATROLS: [8, 10, 2, 2],
+  GATE_AND_SECURITY_HOURLY_TRAFFIC_FLOW: [10, 10, 2, 2],
+  GATE_AND_SECURITY_INCIDENTREPORTS: [12, 10, 2, 2],
+  GATE_AND_SECURITY_STAFFATTENDANCE: [14, 10, 2, 2],
+
+  HELPDESK_OPEN_COMPLAINTS: [0, 12, 2, 2],
+  HELPDESK_PENDING_REQUESTS: [2, 12, 2, 2],
+  HELPDESK_AVG_RESPONSE_TIME: [4, 12, 2, 2],
+  HELPDESK_RESOLUTION_RATE: [6, 12, 2, 2],
+  HELPDESK_COMPLAINTS: [8, 12, 2, 2],
+  HELPDESK_REQUESTBOX: [10, 12, 2, 2],
+  HELPDESK_COMPLAINTS_BY_LEVEL: [12, 12, 2, 2],
+};
+
 const widgetDataMap = {
   OVERVIEW_INCOME_EXPENDITURE: {
     incomeSummary: {
@@ -357,6 +408,7 @@ export default function WidgetGrid({
   widgetPositions,
   setWidgetPositions,
 }) {
+  console.log(data, "widget grid data");
   // generate layout for grid
   function makeLayout(items) {
     return items?.map((w) => {
@@ -444,14 +496,14 @@ export default function WidgetGrid({
   );
 
   return (
-    <div className="min-h-[370px]">
+    <div className="">
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }}
         rowHeight={10}
-        isResizable={true}
+        isResizable={false}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}
@@ -461,14 +513,17 @@ export default function WidgetGrid({
         margin={[10, 10]}
       >
         {effectiveData?.map((item) => {
-          const minWidth = widgetMinWidth[item.container_id] || 2;
-          const minHeight = widgetMinHeights[item.container_id] || 2;
+          const minWidth = widgetMinWidth[item?.container_id] || 2;
+          const minHeight = widgetMinHeights[item?.container_id] || 2;
           const actualWidth =
-            item.position[2] < minWidth ? minWidth : item.position[2];
+            item.position[2] < minWidth ? minWidth : item?.position[2];
           const actualHeight =
-            item.position[3] < minHeight ? minHeight : item.position[3];
+            item.position[3] < minHeight ? minHeight : item?.position[3];
 
-          const widgetData = widgetDataMap[item.container_id] || {};
+          // const positionX = widgetPositionMap[item?.container_id][0] || item?.position[0];
+          // const positionY = widgetPositionMap[item?.container_id][1] || item?.position[1];
+
+          const widgetData = widgetDataMap[item?.container_id] || {};
           return (
             <div
               key={item.widget_id}

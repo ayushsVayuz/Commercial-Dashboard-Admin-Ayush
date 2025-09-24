@@ -233,7 +233,7 @@
 // export const fetchCommunity = async () => {
 //   try {
 //     const res = await axios.get(
-//       "https://whitelabels-1.apnacomplex.com/dashboard-api/v1/community/all-communities"
+//       "https://apnacomplex.vayuz.com/dashboard-api/v1/community/all-communities"
 //     );
 //     return res.data?.data || [];
 //   } catch (err) {
@@ -245,7 +245,7 @@
 // export const fetchSummary = async (communityId, endpoint) => {
 //   if (!communityId || !endpoint) return {};
 //   try {
-//     const url = `https://whitelabels-1.apnacomplex.com/dashboard-api/v1${endpoint}?community_id=${communityId}`;
+//     const url = `https://apnacomplex.vayuz.com/dashboard-api/v1${endpoint}?community_id=${communityId}`;
 //     const res = await axios.get(url);
 //     return res.data?.data || {};
 //   } catch (err) {
