@@ -116,7 +116,7 @@ const [containerValue, setContainerValue] = useState("");
   };
 
   return (
-    <section className="dark:bg-gray-800 min-h-screen">
+    <section className="dark:bg-gray-800 min-h-screen bg-white">
       <MetaTitle title={`Widget Mapping | Anarock`} />
       <Heading
         containerClassName={"my-4"}
