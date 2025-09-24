@@ -30,6 +30,9 @@ const widgetsSlice = createSlice({
     resetWidgetPayload: (state) => {
       state.payload = {};
     },
+    clearSingleWidget: (state) => {
+      state.singleWidget = {};
+    },
   },
   extraReducers: (builder) => {
     // Create Widget
@@ -155,6 +158,6 @@ const widgetsSlice = createSlice({
   },
 });
 
-export const { widgetPayload, resetWidgetPayload } =
+export const { widgetPayload, resetWidgetPayload, clearSingleWidget } =
   widgetsSlice.actions;
 export default widgetsSlice.reducer;

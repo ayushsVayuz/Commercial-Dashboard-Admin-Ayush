@@ -27,21 +27,9 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
       title: "My Data",
       icon: <LuDatabase size={iconSize} />,
       child: [
-        {
-          title: "Container",
-          to: "/containers",
-          icon: <LuLayoutDashboard size={iconSize} />,
-        },
-        {
-          title: "Section",
-          to: "/section",
-          icon: <LuLayoutDashboard size={iconSize} />,
-        },
-        {
-          title: "Widget",
-          to: "/widget",
-          icon: <LuLayoutDashboard size={iconSize} />,
-        },
+        // { title: "Container", to: "/containers", icon: <LuLayoutDashboard size={iconSize} />},
+        { title: "Section", to: "/section", icon: <LuLayoutDashboard size={iconSize} />},
+        { title: "Widget", to: "/widget", icon: <LuLayoutDashboard size={iconSize} /> },
       ],
       isPinned: false,
     },
