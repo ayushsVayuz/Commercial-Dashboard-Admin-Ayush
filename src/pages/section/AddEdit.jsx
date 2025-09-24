@@ -330,7 +330,7 @@ const SectionAddEdit = () => {
   ];
 
   return (
-    <section className="dark:bg-gray-800 dark:h-screen ">
+    <section>
       <MetaTitle title={`Section ${isEditMode ? "Edit" : "Add"} | Anarock`} />
       <Heading
         containerClassName={"my-4"}
