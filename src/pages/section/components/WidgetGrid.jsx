@@ -59,7 +59,7 @@ export default function WidgetGrid({
   console.log(data, "payload in section add");
 
   const renderWidget = (item) => {
-    console.log(item?.container_id, "each widget item in render");
+    console.log(item, "each widget item in render");
     // Get the component based on key_name
     const WidgetComponent = AllWidgetMapping[item.container_id]?.component;
 
@@ -110,7 +110,7 @@ export default function WidgetGrid({
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }}
         rowHeight={10}
-        isResizable={false}
+        isResizable={true}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}
@@ -121,19 +121,23 @@ export default function WidgetGrid({
       >
         {effectiveData?.map((item) => {
           console.log(item, "each widget item");
-          const minWidth = AllWidgetMapping[item?.container_id] || 2;
-          const minHeight = AllWidgetMapping[item?.container_id] || 2;
+          const minWidth = AllWidgetMapping[item?.container_id]?.minWidth || 2;
+          const minHeight =
+            AllWidgetMapping[item?.container_id]?.minHeight || 2;
+            
           const actualWidth =
             item.position[2] < minWidth ? minWidth : item?.position[2];
           const actualHeight =
             item.position[3] < minHeight ? minHeight : item?.position[3];
 
           const positionX =
-            AllWidgetMapping[item?.container_id]?.[0] || item?.position[0];
+            AllWidgetMapping[item?.container_id]?.position?.[0] ||
+            item?.position[0];
           const positionY =
-            AllWidgetMapping[item?.container_id]?.[1] || item?.position[1];
+            AllWidgetMapping[item?.container_id]?.position?.[1] ||
+            item?.position[1];
 
-          const widgetData = AllWidgetMapping[item?.container_id] || {};
+          const widgetData = AllWidgetMapping[item?.container_id]?.data || {};
 
           return (
             <div

@@ -39,7 +39,7 @@ export const AllWidgetMapping = {
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 16,
+    minHeight: 2,
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,
@@ -155,8 +155,8 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: 2,
-    position: [6, 0, 2, 4],
+    minHeight: 10,
+    position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
       resolvedComplaints: 15,
