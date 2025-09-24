@@ -39,7 +39,7 @@ export const AllWidgetMapping = {
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 2,
+    minHeight: 14,
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,

@@ -14,7 +14,6 @@ export default function WidgetGrid({
   widgetPositions,
   setWidgetPositions,
 }) {
-  console.log(data, "widget grid data");
   // generate layout for grid
   function makeLayout(items) {
     return items?.map((w) => {
@@ -41,6 +40,7 @@ export default function WidgetGrid({
   };
 
   const handleLayoutChange = (currentLayout) => {
+    console.log(currentLayout, "current layout on change");
     const updated = currentLayout.map((l) => {
       const matchedWidget = data?.find((item) => item?.widget_id == l?.i);
       return {
@@ -110,7 +110,7 @@ export default function WidgetGrid({
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }}
         rowHeight={10}
-        isResizable={true}
+        isResizable={isResizable}
         isDraggable={isDraggable}
         draggableHandle={".drag-handle"}
         measureBeforeMount={false}
