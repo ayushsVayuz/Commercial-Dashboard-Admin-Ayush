@@ -6,7 +6,7 @@ import { useState } from "react";
 import {
   LuAlignJustify,
   LuDatabase,
-  LuHouse ,
+  LuHouse,
   LuLayoutDashboard,
   LuPanelLeftClose,
   LuArrowRight,
@@ -27,9 +27,21 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
       title: "My Data",
       icon: <LuDatabase size={iconSize} />,
       child: [
-        { title: "Container", to: "/containers", icon: <LuLayoutDashboard size={iconSize} />},
-        { title: "Section", to: "/section", icon: <LuLayoutDashboard size={iconSize} />},
-        { title: "Widget", to: "/widget", icon: <LuLayoutDashboard size={iconSize} /> },
+        {
+          title: "Container",
+          to: "/containers",
+          icon: <LuLayoutDashboard size={iconSize} />,
+        },
+        {
+          title: "Section",
+          to: "/section",
+          icon: <LuLayoutDashboard size={iconSize} />,
+        },
+        {
+          title: "Widget",
+          to: "/widget",
+          icon: <LuLayoutDashboard size={iconSize} />,
+        },
       ],
       isPinned: false,
     },
@@ -89,21 +101,23 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
         </div>
         <div className="space-y-2">
           {items?.map((item, index) => (
-            <IconBox
-              containerClassName="px-4 py-2"
-              titleClassName={
-                item.to == null && "font-semibold text-primary uppercase "
-              }
-              className={item.className}
-              item={item}
-              key={index}
-              to={item.to}
-              icon={item.icon}
-              title={!collapse ? item.title : ""}
-              child={item.child}
-              setPin={() => handlePinToggle(item.title)}
-              collapse={collapse}
-            />
+            <>
+              <IconBox
+                containerClassName="px-4 py-2"
+                titleClassName={
+                  item.to == null && "font-semibold text-primary uppercase "
+                }
+                className={item.className}
+                item={item}
+                key={index}
+                to={item.to}
+                icon={item.icon}
+                title={!collapse ? item.title : ""}
+                child={item.child}
+                setPin={() => handlePinToggle(item.title)}
+                collapse={collapse}
+              />
+            </>
           ))}
         </div>
       </motion.div>

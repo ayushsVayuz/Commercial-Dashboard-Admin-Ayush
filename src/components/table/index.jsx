@@ -175,7 +175,7 @@ export const Table = ({
               {totalPages > 1 && (
                 <div className="px-2 my-4 flex flex-col sm:flex-row justify-start items-center gap-4">
                   <div className="flex items-center">
-                    <p className="text-xs dark:text-white">Rows per page:</p>
+                    <p className="text-xs text-black dark:text-white">Rows per page:</p>
                     <select
                       className="focus:outline-none text-xs px-2"
                       value={selectedValue}
@@ -191,10 +191,10 @@ export const Table = ({
                   {/* <p className="text-xs dark:text-white">1-10 of 22</p> */}
                   <ReactPaginate
                     previousLabel={
-                      <IoIosArrowBack className="text-xs dark:text-white" />
+                      <IoIosArrowBack className="text-xs text-black dark:text-white" />
                     }
                     nextLabel={
-                      <IoIosArrowForward className="text-xs dark:text-white" />
+                      <IoIosArrowForward className="text-xs text-black dark:text-white" />
                     }
                     breakLabel={"..."}
                     pageCount={totalPages}
@@ -204,7 +204,7 @@ export const Table = ({
                     onPageChange={handlePageChange}
                     activeLinkClassName=" px-2"
                     containerClassName={
-                      "pagination my-2 flex justify-center items-center gap-2 dark:text-white"
+                      "pagination my-2 flex justify-center items-center gap-2 text-black dark:text-white"
                     }
                     activeClassName={"active text-primaryText"}
                   />
