@@ -80,7 +80,7 @@ export const Table = ({
           {initialData?.length > 0 ? (
             <>
               <div className="overflow-x-auto min-h-52 mx-auto w-full">
-                <table className="min-w-full bg-white dark:bg-slate-800 table-striped">
+                <table className="min-w-full bg-white  dark:bg-slate-800 table-striped">
                   <thead>
                     <tr className="w-full bg-[#F0F0F0] dark:bg-gray-900">
                       {headers?.map((header, index) => (
@@ -173,7 +173,7 @@ export const Table = ({
               </div>
 
               {totalPages > 1 && (
-                <div className="px-2 my-4 flex flex-col sm:flex-row justify-start items-center gap-4">
+                <div className="px-2 py-4 flex flex-col sm:flex-row justify-start items-center gap-4 bg-white dark:bg-slate-800">
                   <div className="flex items-center">
                     <p className="text-xs text-black dark:text-white">Rows per page:</p>
                     <select
