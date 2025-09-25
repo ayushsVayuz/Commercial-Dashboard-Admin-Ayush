@@ -258,8 +258,8 @@ export const AllWidgetMapping = {
   },
   FINANCIALS_BUDGET_VS_ACTUALS: {
     component: Budgets,
-    minWidth: 2,
-    minHeight: 20,
+    minWidth: 6,
+    minHeight: 18.5,
     position: [8, 4, 2, 2],
   },
 
