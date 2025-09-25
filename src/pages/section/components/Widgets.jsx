@@ -1,38 +1,38 @@
-import {
-  // Community,
-  // Engagement,
-  // Facilities,
-  // FinanceSummary,
-  // GateUpdates,
-  // Helpdesk,
-  UnitStatus,
-  OccupancyOverview,
-  ResidentOverview,
-  MoveInOutTrends,
-  BlockWiseOccupancy,
-  Accounting,
-  Budgets,
-  CashBankBalance,
-  DuesAgeing,
-  ExpenseCategories,
-  IncomeExpenditure,
-  AssetValueBreakdown,
-  RevenuebyCategory,
-  StatsGrid as FacilitiesStatsGrid,
-  GuardPatrols,
-  HourlyTrafficFlow,
-  IncidentReports,
-  StaffAttendance,
-  GateAndSecurityStatsGrid,
-  Complaints,
-  ComplaintsByLevel,
-  RequestBox,
-  HelpdeskStatsGrid,
-  EventsUtilisation,
-  NoticeBoardStatus,
-  SingleStats,
-  EngagementStatsGrid,
-} from "@anarock/widgets";
+// import {
+// Community,
+// Engagement,
+// Facilities,
+// FinanceSummary,
+// GateUpdates,
+// Helpdesk,
+//   UnitStatus,
+//   OccupancyOverview,
+//   ResidentOverview,
+//   MoveInOutTrends,
+//   BlockWiseOccupancy,
+//   Accounting,
+//   Budgets,
+//   CashBankBalance,
+//   DuesAgeing,
+//   ExpenseCategories,
+//   IncomeExpenditure,
+//   AssetValueBreakdown,
+//   RevenuebyCategory,
+//   StatsGrid as FacilitiesStatsGrid,
+//   GuardPatrols,
+//   HourlyTrafficFlow,
+//   IncidentReports,
+//   StaffAttendance,
+//   GateAndSecurityStatsGrid,
+//   Complaints,
+//   ComplaintsByLevel,
+//   RequestBox,
+//   HelpdeskStatsGrid,
+//   EventsUtilisation,
+//   NoticeBoardStatus,
+//   SingleStats,
+//   EngagementStatsGrid,
+// } from "@anarock/widgets";
 
 import Community from "./widgets/overview/components/Community";
 import Engagement from "./widgets/overview/components/Engagement";
@@ -40,6 +40,34 @@ import Facilities from "./widgets/overview/components/Facilities";
 import FinanceSummary from "./widgets/overview/components/FinanceSummary";
 import GateUpdates from "./widgets/overview/components/GateUpdates";
 import Helpdesk from "./widgets/overview/components/Helpdesk";
+
+import UnitStatus from "./widgets/community/components/UnitStatusPie";
+import OccupancyOverview from "./widgets/community/components/OccupancyOverviewCard";
+import ResidentOverview from "./widgets/community/components/ResidentOverviewCard";
+import MoveInOutTrends from "./widgets/community/components/MoveInOutTrendsCard";
+import BlockWiseOccupancy from "./widgets/community/components/BlockWiseOccupancyCard";
+
+import Accounting from "./widgets/financials/component/AccountingCard";
+import ExpenseCategories from "./widgets/financials/component/ExpenseCategories";
+import CashBankBalance from "./widgets/financials/component/CashBankBalance";
+import DuesAgeing from "./widgets/financials/component/DuesAgeing";
+import Budgets from "./widgets/financials/component/Budgets";
+
+import NoticeBoardStatus from "./widgets/engagement/component/NoticeBoardStatus";
+import EventsUtilisation from "./widgets/engagement/component/EventsUtilisation";
+import SingleStats from "./widgets/engagement/component/SingleStats";
+
+import AssetValueBreakdown from "./widgets/facilities/component/AssetValueBreakdown";
+import RevenuebyCategory from "./widgets/facilities/component/RevenuebyCategory";
+
+import GuardPatrols from "./widgets/gate-and-security/component/GuardPatrols";
+import HourlyTrafficFlow from "./widgets/gate-and-security/component/HourlyTrafficFlow";
+import IncidentReports from "./widgets/gate-and-security/component/IncidentReports";
+import StaffAttendance from "./widgets/gate-and-security/component/StaffAttendance";
+
+import Complaints from "./widgets/helpdesk/component/Complaints";
+import RequestBox from "./widgets/helpdesk/component/RequestBox";
+import ComplaintsByLevel from "./widgets/helpdesk/component/ComplaintsbyLevel";
 
 export const AllWidgetMapping = {
   // ============ OVERVIEW ============ //
@@ -241,24 +269,28 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 6, 2, 2],
+     data: "Notice",
   },
   ENGAGEMENT_POST: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 6, 2, 2],
+     data: "Post",
   },
   ENGAGEMENT_POLL: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 6, 2, 2],
+     data: "Poll",
   },
   ENGAGEMENT_SURVEY: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 6, 2, 2],
+     data: "Survey",
   },
   ENGAGEMENT_NOTICE_BOARD_STATUS: {
     component: NoticeBoardStatus,
@@ -279,24 +311,28 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 8, 2, 2],
+     data: "Total Bookings",
   },
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 8, 2, 2],
+     data: "Utilisation Rate",
   },
   FACILITIES_REVENUE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 8, 2, 2],
+     data: "Facilities Revenue",
   },
   FACILITIES_PENDING_DUES: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 8, 2, 2],
+     data: "Pending Dues",
   },
   FACILITIES_ASSET_VALUE_BREAKDOWN: {
     component: AssetValueBreakdown,
@@ -317,24 +353,28 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 10, 2, 2],
+     data: "Total Visitors",
   },
   GATE_AND_SECURITY_ACTIVE_INCIDENTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 10, 2, 2],
+     data: "Active Incidents",
   },
   GATE_AND_SECURITY_MISSING_PATROLS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 10, 2, 2],
+     data: "Missing Patrols",
   },
   GATE_AND_SECURITY_PARKING_USAGE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 10, 2, 2],
+     data: "Parking Usage",
   },
   GATE_AND_SECURITY_GUARDPATROLS: {
     component: GuardPatrols,
@@ -367,24 +407,28 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 12, 2, 2],
+     data: "Complaints",
   },
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 12, 2, 2],
+     data: "Pending Requests",
   },
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 12, 2, 2],
+     data: "Avg Response Time",
   },
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 12, 2, 2],
+     data: "Resolution Rate",
   },
   HELPDESK_COMPLAINTS: {
     component: Complaints,
