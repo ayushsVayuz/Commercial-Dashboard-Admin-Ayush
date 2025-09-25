@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-
+import toast from "react-hot-toast";
 // Function to get token from local storage
 const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
@@ -47,6 +47,7 @@ export const updateWidgetCMS = createAsyncThunk(
 
       return response.data;
     } catch (error) {
+         toast.error(error?.response?.data?.message)
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
   }

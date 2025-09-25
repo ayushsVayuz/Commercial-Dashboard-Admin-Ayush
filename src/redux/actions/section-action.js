@@ -157,7 +157,9 @@ export const changeStatusSection = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      return {
+        statusCode: response.data.statusCode
+      };
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }

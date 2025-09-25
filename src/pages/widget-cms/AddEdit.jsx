@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MetaTitle } from "../../components/metaTitle";
 import { Heading } from "../../components/heading";
 import { FormWrapper } from "../../components/wrappers/form";
+import toast from "react-hot-toast";
 // import { Selector } from "../../components/select";
 import {
   readSingleWidget,
@@ -16,7 +17,7 @@ import { readContainer } from "../../redux/actions/containers-action";
 import { Input } from "../../components/inputs/input";
 import { Selector } from "../../components/select";
 import { clearSingleWidget } from "../../redux/slices/widgetsSlice";
-
+import { Loader } from "../../components/loader";
 const WidgetCMSAddEdit = () => {
   const [containers, setContainers] = useState([]);
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const WidgetCMSAddEdit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 const [containerValue, setContainerValue] = useState("");
-  const { singleWidget, error, loading } = useSelector((state) => state.widget);
+  const { singleWidget, error, loading , singleWidgetLoading} = useSelector((state) => state.widget);
 
   const {
     control,
@@ -97,17 +98,27 @@ const [containerValue, setContainerValue] = useState("");
     fetchData();
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const payload = {
       container_id: data.containerId,
     };
-    dispatch(
+    try {
+    const response = await dispatch(
       updateWidgetCMS({
         widgetId: singleWidget?.widget_id,
         updatedData: payload,
       })
-    );
-    navigate(`/widget`);
+    ).unwrap(); 
+           
+    
+
+    
+    if (response?.statusCode === 200 || response?.statusCode === 201) {
+      navigate("/widget");
+    }
+  } catch (error) {
+    console.error("Update failed:", error);
+  }
   };
 
   const handleCancel = () => {
@@ -115,8 +126,13 @@ const [containerValue, setContainerValue] = useState("");
     navigate("/widget");
   };
 
-  return (
-    <section className="dark:bg-gray-800 min-h-screen bg-white">
+  return  singleWidgetLoading ? (
+       <div className="flex justify-center items-center h-screen w-full">
+    <Loader />
+  </div>
+  ) : (
+
+   <section className="dark:bg-gray-800 min-h-screen bg-white">
       <MetaTitle title={`Widget Mapping | Anarock`} />
       <Heading
         containerClassName={"my-4"}
@@ -188,7 +204,8 @@ const [containerValue, setContainerValue] = useState("");
         </form>
       </FormWrapper>
     </section>
-  );
+
+  )
 };
 
 export default WidgetCMSAddEdit;
