@@ -1,10 +1,10 @@
 import {
-  Community,
-  Engagement,
-  Facilities,
-  FinanceSummary,
-  GateUpdates,
-  Helpdesk,
+  // Community,
+  // Engagement,
+  // Facilities,
+  // FinanceSummary,
+  // GateUpdates,
+  // Helpdesk,
   UnitStatus,
   OccupancyOverview,
   ResidentOverview,
@@ -34,12 +34,19 @@ import {
   EngagementStatsGrid,
 } from "@anarock/widgets";
 
+import Community from "./widgets/overview/components/Community";
+import Engagement from "./widgets/overview/components/Engagement";
+import Facilities from "./widgets/overview/components/Facilities";
+import FinanceSummary from "./widgets/overview/components/FinanceSummary";
+import GateUpdates from "./widgets/overview/components/GateUpdates";
+import Helpdesk from "./widgets/overview/components/Helpdesk";
+
 export const AllWidgetMapping = {
   // ============ OVERVIEW ============ //
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 16,
+    minHeight: 18,
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,
@@ -82,7 +89,7 @@ export const AllWidgetMapping = {
   OVERVIEW_COMMUNITY: {
     component: Community,
     minWidth: 2,
-    minHeight: 10,
+    minHeight: 12.5,
     position: [2, 0, 2, 2],
     data: {
       thisMonthMoveIns: 25,
@@ -96,7 +103,7 @@ export const AllWidgetMapping = {
   OVERVIEW_ENGAGEMENT: {
     component: Engagement,
     minWidth: 2,
-    minHeight: 14,
+    minHeight: 19,
     position: [4, 4, 2, 2],
     data: {
       total_notices: 15,
@@ -108,7 +115,7 @@ export const AllWidgetMapping = {
   OVERVIEW_GATE_UPDATE: {
     component: GateUpdates,
     minWidth: 2,
-    minHeight: 10,
+    minHeight: 12,
     position: [0, 6, 2, 2],
     data: {
       summary: {
@@ -135,7 +142,7 @@ export const AllWidgetMapping = {
   OVERVIEW_INCOME_EXPENDITURE: {
     component: FinanceSummary,
     minWidth: 2,
-    minHeight: 19,
+    minHeight: 12,
     position: [0, 0, 2, 2],
     data: {
       incomeSummary: {
@@ -155,8 +162,8 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: 2,
-    position: [6, 0, 2, 4],
+    minHeight: 12.5,
+    position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
       resolvedComplaints: 15,

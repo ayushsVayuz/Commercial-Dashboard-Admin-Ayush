@@ -14,11 +14,10 @@ export default function WidgetGrid({
   widgetPositions,
   setWidgetPositions,
 }) {
-  console.log(data, "widget grid data");
-  // generate layout for grid
+  // ---------- Helpers ----------
   function makeLayout(items) {
     return items?.map((w) => {
-      const [x, y, wth, h] = w.position || [0, 0, 2, 2];
+      const [x, y, wth, h] = w?.position || [0, 0, 2, 2];
       return {
         i: w.widget_id,
         x,
@@ -32,7 +31,6 @@ export default function WidgetGrid({
 
   const effectiveData = value?.length ? value : data;
 
-  // Use fewer columns for xl breakpoint to make widgets larger
   const layouts = {
     xl: makeLayout(effectiveData),
     lg: makeLayout(effectiveData),
@@ -42,7 +40,7 @@ export default function WidgetGrid({
 
   const handleLayoutChange = (currentLayout) => {
     const updated = currentLayout.map((l) => {
-      const matchedWidget = data?.find((item) => item?.widget_id == l?.i);
+      const matchedWidget = data?.find((item) => item?.widget_id === l?.i);
       return {
         widget_id: l.i,
         widget_name: matchedWidget?.widget_name || "",
@@ -51,37 +49,30 @@ export default function WidgetGrid({
         is_active: 1,
       };
     });
-
     setWidgetPositions?.(updated);
     onChange?.(updated);
   };
 
-  console.log(data, "payload in section add");
-
+  // ---------- Render ----------
   const renderWidget = (item) => {
-    console.log(item?.container_id, "each widget item in render");
-    // Get the component based on key_name
     const WidgetComponent = AllWidgetMapping[item.container_id]?.component;
 
-    if (!WidgetComponent) {
-      // Fallback to placeholder if widget component not found
-      return renderPlaceholderCard(item);
-    }
+    if (!WidgetComponent) return renderPlaceholderCard(item);
 
     return (
-      <div className="h-full w-full relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF]">
+      // <div className="h-full w-full relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF]">
         <WidgetComponent
           data={item.data || {}}
           config={item.config || {}}
           {...(item.props || {})}
         />
-      </div>
+      //  </div>
     );
   };
 
   const renderPlaceholderCard = (item) => (
     <div
-      className={`h-full p-4 relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF] flex flex-col`}
+      className="h-full p-4 relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF] flex flex-col"
       role="region"
       aria-label={item.widget_name}
     >
@@ -110,44 +101,31 @@ export default function WidgetGrid({
         breakpoints={{ xl: 1300, lg: 1200, md: 996, sm: 768 }}
         cols={{ xl: 6, lg: 6, md: 6, sm: 6 }}
         rowHeight={10}
-        isResizable={false}
+        isResizable={isResizable}
         isDraggable={isDraggable}
-        draggableHandle={".drag-handle"}
+        draggableHandle=".drag-handle"
         measureBeforeMount={false}
-        useCSSTransforms={true}
+        useCSSTransforms
         onLayoutChange={handleLayoutChange}
         resizeHandles={["n", "s", "e", "w"]}
         margin={[10, 10]}
       >
         {effectiveData?.map((item) => {
-          console.log(item, "each widget item");
-          const minWidth = AllWidgetMapping[item?.container_id] || 2;
-          const minHeight = AllWidgetMapping[item?.container_id] || 2;
-          const actualWidth =
-            item.position[2] < minWidth ? minWidth : item?.position[2];
-          const actualHeight =
-            item.position[3] < minHeight ? minHeight : item?.position[3];
+          const mapping = AllWidgetMapping[item?.container_id] || {};
+          const [defX, defY, defW, defH] = mapping.position || [0, 0, 2, 2];
 
-          const positionX =
-            AllWidgetMapping[item?.container_id]?.[0] || item?.position[0];
-          const positionY =
-            AllWidgetMapping[item?.container_id]?.[1] || item?.position[1];
+          const x = item?.position?.[0] ?? defX;
+          const y = item?.position?.[1] ?? defY;
+          const w = Math.max(item?.position?.[2] ?? defW, mapping.minWidth || 2);
+          const h = Math.max(item?.position?.[3] ?? defH, mapping.minHeight || 2);
 
-          const widgetData = AllWidgetMapping[item?.container_id] || {};
+          const mergedData = { ...mapping.data, ...item?.data };
 
           return (
-            <div
-              key={item?.widget_id}
-              data-grid={{
-                x: positionX,
-                y: positionY,
-                w: actualWidth,
-                h: actualHeight,
-              }}
-            >
+            <div key={item?.widget_id} data-grid={{ x, y, w, h }}>
               <div className="h-full flex flex-col">
                 <div className="flex-1 drag-handle cursor-move">
-                  {renderWidget({ ...item, data: widgetData })}
+                  {renderWidget({ ...item, data: mergedData })}
                 </div>
               </div>
             </div>
