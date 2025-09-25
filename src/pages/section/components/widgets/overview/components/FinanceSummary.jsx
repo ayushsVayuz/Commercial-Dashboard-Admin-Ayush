@@ -30,7 +30,7 @@ function FinanceSummary({  financial,data  }) {
       title="Income"
       period="This Month"
       icon={<LuReceiptText className="text-2xl text-green-600" />}
-      className="mb-4 break-inside-avoid h-[236px] overflow-hidden"
+      className="mb-4 break-inside-avoid h-[232px] overflow-hidden"
     >
       <div className="grid grid-cols-4 text-xs text-gray-500 mb-2">
         <div>Opening</div>
@@ -39,7 +39,7 @@ function FinanceSummary({  financial,data  }) {
         <div>Closing</div>
       </div>
 
-      <div className="grid grid-cols-4 text-sm font-medium text-gray-900 mb-4">
+      <div className="grid grid-cols-4 text-xs font-medium text-gray-900 mb-4">
         <div>{formatCurrency(income.opening_balance)} AED</div>
         <div>{formatCurrency(income.income)} AED</div>
         <div>{formatCurrency(income.collection)} AED</div>
@@ -71,7 +71,7 @@ function FinanceSummary({  financial,data  }) {
         <div>Outstanding</div>
       </div>
 
-      <div className="grid grid-cols-4 text-sm font-medium text-gray-900">
+      <div className="grid grid-cols-4 text-xs font-medium text-gray-900">
         <div>{formatCurrency(expenditure.opening_balance)} AED</div>
         <div>{formatCurrency(expenditure.expenditure)} AED</div>
         <div>{formatCurrency(expenditure.payment)} AED</div>

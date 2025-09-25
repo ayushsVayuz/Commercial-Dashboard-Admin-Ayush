@@ -89,7 +89,7 @@ function Community({ isStatic, community }) {
               {moveIns + moveOuts}
             </p>
           </div>
-          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B] space-x-1">
+          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B] space-x-1 flex items-center">
             <Chip value={((moveInChange + moveOutChange) / 2).toFixed(2)} />
             <div className="whitespace-nowrap">Compared to last month</div>
           </div>

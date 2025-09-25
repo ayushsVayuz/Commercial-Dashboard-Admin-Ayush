@@ -72,11 +72,11 @@ const DuesAgeing = () => {
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
-      childrenClassName="space-y-5"
+      childrenClassName="space-y-2"
     >
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 md:grid-cols-4 gap-3">
         {labels.map((label, i) => (
-          <div key={label} className="p-3 rounded-lg bg-slate-50">
+          <div key={label} className="p-2 rounded-lg bg-slate-50">
             <div className="flex justify-between items-start">
               <div className="font-semibold">{label}</div>
               <div className="text-right">
@@ -90,7 +90,7 @@ const DuesAgeing = () => {
         ))}
       </div>
 
-      <div className="h-[70%]">
+      <div className="h-[192px]">
         <Bar data={data} options={options} />
       </div>
     </Card>
