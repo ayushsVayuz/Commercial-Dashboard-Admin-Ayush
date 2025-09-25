@@ -1,4 +1,5 @@
-import Card from "../../components/Card";
+import React from "react";
+import Card from "../../componets/Card";
 import { LuDoorOpen } from "react-icons/lu";
 import {
   LineChart,
@@ -10,13 +11,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Facilities({ isStatic, data }) {
-  const totalBookings = Number(data.totalBookings || 0);
-  const totalSlots = Number(data.totalSlots || 0);
-  const utilizationRate = Number(data.utilizationRate || 0);
+function Facilities({ isStatic, facility }) {
+  const totalBookings = Number(facility?.totalBookings || 0);
+  const totalSlots = Number(facility?.totalSlots || 0);
+  const utilizationRate = Number(facility?.utilizationRate || 0);
 
   const chartData =
-    data?.slots?.map((slot, index) => ({
+    facility?.slots?.map((slot, index) => ({
       time: slot?.slot_start_time
         ? `${slot.slot_start_time} - ${slot.slot_end_time}`
         : `Slot ${index + 1}`,
@@ -53,9 +54,7 @@ function Facilities({ isStatic, data }) {
       title="Facilities"
       period="Today"
       icon={<LuDoorOpen className="text-2xl text-[#8B5CF6]" />}
-      className={`${
-        isStatic && "max-h-[305px]"
-      } h-[305px] mb-4 break-inside-avoid`}
+      className={`${isStatic && "max-h-[305px]"} h-[305px] mb-4 break-inside-avoid`}
     >
       <div className="grid grid-cols-3 gap-6 mb-4">
         <div className="flex flex-col gap-1">

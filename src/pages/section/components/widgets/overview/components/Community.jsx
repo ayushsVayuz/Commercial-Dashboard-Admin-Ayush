@@ -1,4 +1,5 @@
-import Card from "../../components/Card";
+import React from "react";
+import Card from "../../componets/Card";
 import { LuBuilding } from "react-icons/lu";
 import {
   PieChart,
@@ -8,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Community({ isStatic, data }) {
+function Community({ isStatic, community }) {
   const Chip = ({ value }) => {
     const isPositive = value >= 0;
     return (
@@ -24,16 +25,18 @@ function Community({ isStatic, data }) {
     );
   };
 
-  const moveIns = Number(data?.thisMonthMoveIns ?? data?.lastMonthMoveIns ?? 0);
+  const moveIns = Number(
+    community?.thisMonthMoveIns ?? community?.lastMonthMoveIns ?? 0
+  );
   const moveOuts = Number(
-    data?.thisMonthMoveOuts ?? data?.lastMonthMoveOuts ?? 0
+    community?.thisMonthMoveOuts ?? community?.lastMonthMoveOuts ?? 0
   );
 
   const moveInChange = Number(
-    data?.moveInPercentChange ?? data?.moveInChange ?? 0
+    community?.moveInPercentChange ?? community?.moveInChange ?? 0
   );
   const moveOutChange = Number(
-    data?.moveOutPercentChange ?? data?.moveOutChange ?? 0
+    community?.moveOutPercentChange ?? community?.moveOutChange ?? 0
   );
 
   const communitySplit = [
@@ -51,8 +54,8 @@ function Community({ isStatic, data }) {
     return (
       <div className="bg-black text-white text-xs px-3 py-2 rounded-lg shadow-lg">
         {payload.map((item, i) => (
-          <div key={i} className="capitalize leading-relaxed">
-            <div
+          <p key={i} className="capitalize leading-relaxed">
+            <span
               style={{
                 display: "inline-block",
                 width: 8,
@@ -61,9 +64,9 @@ function Community({ isStatic, data }) {
                 backgroundColor: item.color,
                 marginRight: 6,
               }}
-            ></div>
+            ></span>
             {item.name}: <span className="font-semibold">{item.value}</span>
-          </div>
+          </p>
         ))}
       </div>
     );
@@ -74,19 +77,17 @@ function Community({ isStatic, data }) {
       title="Community"
       period="This Month"
       icon={<LuBuilding className="text-2xl text-[#329DFF]" />}
-      className={`${
-        isStatic && "max-h-[184px]"
-      } h-[184px] mb-4 break-inside-avoid`}
+      className={`${isStatic && "max-h-[184px]"} h-[184px] mb-4 break-inside-avoid`}
     >
       <div className="flex">
-        <div className="w-[50%] flex flex-col gap-4">
+        <div className="w-[50%] flex flex-col gap-7">
           <div className="flex flex-col gap-2">
             <div className="!m-0 !text-xs !leading-[16px] !text-[#64748B]">
               Move-in/Out Count
             </div>
-            <div className="!m-0 !text-[28px] !leading-[32px] !font-medium !text-[#8B5CF6]">
+            <p className="!m-0 !text-[28px] !leading-[32px] !font-medium !text-[#8B5CF6]">
               {moveIns + moveOuts}
-            </div>
+            </p>
           </div>
           <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B] space-x-1">
             <Chip value={((moveInChange + moveOutChange) / 2).toFixed(2)} />

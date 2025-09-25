@@ -41,11 +41,11 @@ import FinanceSummary from "./widgets/overview/components/FinanceSummary";
 import GateUpdates from "./widgets/overview/components/GateUpdates";
 import Helpdesk from "./widgets/overview/components/Helpdesk";
 
-import UnitStatus from "./widgets/community/components/UnitStatusPie";
-import OccupancyOverview from "./widgets/community/components/OccupancyOverviewCard";
-import ResidentOverview from "./widgets/community/components/ResidentOverviewCard";
-import MoveInOutTrends from "./widgets/community/components/MoveInOutTrendsCard";
-import BlockWiseOccupancy from "./widgets/community/components/BlockWiseOccupancyCard";
+import UnitStatus from "./widgets/community/component/UnitStatusPie";
+import OccupancyOverview from "./widgets/community/component/OccupancyOverviewCard";
+import ResidentOverview from "./widgets/community/component/ResidentOverviewCard";
+import MoveInOutTrends from "./widgets/community/component/MoveInOutTrendsCard";
+import BlockWiseOccupancy from "./widgets/community/component/BlockWiseOccupancyCard";
 
 import Accounting from "./widgets/financials/component/AccountingCard";
 import ExpenseCategories from "./widgets/financials/component/ExpenseCategories";

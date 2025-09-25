@@ -1,6 +1,6 @@
 import React from "react";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 import IncomeExpenditure from "./IncomeExpenditure";
 
 function StatusCard({
@@ -14,10 +14,10 @@ function StatusCard({
 }) {
   return (
     <div className={`rounded-lg p-4 ${bgColor}`}>
-      <h3 className={`text-sm font-medium ${textColor}`}>{label}</h3>
+      <div className={`text-sm font-medium ${textColor}`}>{label}</div>
       <div className="mt-1 text-2xl font-semibold text-[#121212]">{value}</div>
       <div className="mt-2 flex items-center gap-2 text-sm">
-        <span
+        <div
           className={
             positive
               ? "text-emerald-600 font-medium"
@@ -25,8 +25,8 @@ function StatusCard({
           }
         >
           {delta}
-        </span>
-        <span className="text-slate-500">{deltaLabel}</span>
+        </div>
+        <div className="text-slate-500">{deltaLabel}</div>
       </div>
     </div>
   );
@@ -36,7 +36,7 @@ export default function AccountingCard() {
   return (
     <Card
       title="Accounting"
-      className="w-full"
+      className="w-full h-[523px]"
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }

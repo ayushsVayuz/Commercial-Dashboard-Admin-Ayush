@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const data = [
@@ -20,6 +20,7 @@ function AssetValueBreakdown() {
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
+      className="h-[362px]"
     >
       <div className="flex flex-col items-center justify-center">
         <div className="w-[214px] h-[181px] relative">
@@ -42,12 +43,12 @@ function AssetValueBreakdown() {
           </ResponsiveContainer>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="font-semibold text-base sm:text-sm">
+            <div className="font-semibold text-base sm:text-sm">
               AED {(total / 1000000).toFixed(2)}M
-            </span>
-            <span className="text-xs sm:text-sm text-gray-500">
+            </div>
+            <div className="text-xs sm:text-sm text-gray-500">
               Total Assets
-            </span>
+            </div>
           </div>
         </div>
 
@@ -55,11 +56,11 @@ function AssetValueBreakdown() {
           <div className="flex flex-col gap-2">
             {data.slice(0, 3).map((item) => (
               <div key={item.name} className="flex items-center gap-2">
-                <span
+                <div
                   className="inline-block w-2 h-2 rotate-45"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-gray-600 text-xs">{item.name}</span>
+                <div className="text-gray-600 text-xs">{item.name}</div>
               </div>
             ))}
           </div>
@@ -67,11 +68,11 @@ function AssetValueBreakdown() {
           <div className="flex flex-col gap-2 items-start">
             {data.slice(3).map((item) => (
               <div key={item.name} className="flex items-center gap-2">
-                <span
+                <div
                   className="inline-block w-2 h-2 rotate-45"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-gray-600 text-xs">{item.name}</span>
+                <div className="text-gray-600 text-xs">{item.name}</div>
               </div>
             ))}
           </div>

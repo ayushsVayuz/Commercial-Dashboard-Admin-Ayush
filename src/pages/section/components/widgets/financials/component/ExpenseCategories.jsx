@@ -2,7 +2,7 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -59,7 +59,7 @@ const ExpenseCategories = () => {
   return (
     <Card
       title="Expense Categories"
-      className="w-full"
+      className="w-full h-[523px]"
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
@@ -69,10 +69,10 @@ const ExpenseCategories = () => {
         <Doughnut data={data} options={options} />
 
         <div className="absolute text-center">
-          <p className="text-xl font-bold">
+          <div className="text-xl font-bold">
             AED {(total / 1000000).toFixed(2)}M
-          </p>
-          <p className="text-gray-500 text-sm">Total Expenses</p>
+          </div>
+          <div className="text-gray-500 text-sm">Total Expenses</div>
         </div>
       </div>
 
@@ -83,15 +83,15 @@ const ExpenseCategories = () => {
             className="flex justify-between items-center text-sm pb-2"
           >
             <div className="flex items-center gap-2">
-              <span
+              <div
                 className="w-3 h-3 rotate-45"
                 style={{ backgroundColor: data.datasets[0].backgroundColor[i] }}
-              ></span>
+              ></div>
               {label}
             </div>
-            <span className="font-semibold text-gray-400">
+            <div className="font-semibold text-gray-400">
               AED {(values[i] / 1000).toFixed(0)}K
-            </span>
+            </div>
           </div>
         ))}
       </div>

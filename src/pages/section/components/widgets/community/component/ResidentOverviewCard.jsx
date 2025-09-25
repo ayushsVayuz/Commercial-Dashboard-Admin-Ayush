@@ -2,7 +2,7 @@ import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { GoHome } from "react-icons/go";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -80,7 +80,8 @@ const ResidentOverviewCard = ({
     <Card
       title="Resident Overview"
       icon={<GoHome className="h-6 w-6 text-purple-600" />}
-      childrenClassName="flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
+      className="h-[238px]"
+      childrenClassName=" flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
     >
       <div className="col-span-5 space-y-3">
         <div>
@@ -95,14 +96,14 @@ const ResidentOverviewCard = ({
             {tenantCount}
           </div>
         </div>
-        <div className="text-xs text-emerald-600">
+        <div className="text-xs text-emerald-600 flex">
           {growthPct}{" "}
-          <span className="text-slate-500">Compared to last month</span>
+          <div className="text-slate-500">Compared to last month</div>
         </div>
       </div>
 
       <div className="col-span-7">
-        <div className="h-[162px] w-[163px] ml-auto mr-2">
+        <div className="h-[162px] w-[162px] ml-auto mr-2">
           <Doughnut
             data={data}
             options={options}

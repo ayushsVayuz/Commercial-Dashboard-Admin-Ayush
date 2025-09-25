@@ -8,7 +8,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
@@ -89,7 +89,7 @@ const BlockWiseOccupancyCard = ({
   return (
     <Card
       title="Complaints by Level"
-      className="w-full"
+      className="w-full h-[362px]"
       period={<OpenInNewOutlinedIcon className="text-xl text-[#884EA7]" />}
     >
       <Bar data={data} options={options} />

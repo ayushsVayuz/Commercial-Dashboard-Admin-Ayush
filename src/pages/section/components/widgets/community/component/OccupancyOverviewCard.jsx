@@ -1,6 +1,6 @@
 import React from "react";
 import { GoPeople } from "react-icons/go";
-import Card from "../../components/Card";
+import Card from "../../componets/Card";
 const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
   const pct = Math.max(0, Math.min(100, (value / (total || 1)) * 100));
 
@@ -25,7 +25,7 @@ const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
 };
 
 const StatTile = ({ title, value, suffix, valueClass = "" }) => (
-  <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] p-4">
+  <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] h-[84px] p-4">
     <div className="text-xs text-black font-semibold mb-1">{title}</div>
     <div className={`text-3xl font-semibold ${valueClass}`}>
       {value}{" "}
@@ -49,6 +49,7 @@ const OccupancyOverviewCard = ({
       <Card
         title="Occupancy Overview"
         icon={<GoPeople className="h-6 w-6 text-indigo-600" />}
+        className="h-[238px]"
       >
         <div className="flex items-center flex-wrap justify-between gap-6">
           <div>
@@ -76,7 +77,6 @@ const OccupancyOverviewCard = ({
             />
           </div>
         </div>
-      </Card>
       <div className="grid grid-cols-2 gap-6">
         <StatTile
           title="Avg Residents Per Unit"
@@ -90,6 +90,7 @@ const OccupancyOverviewCard = ({
           valueClass="text-[#E7A015]"
         />
       </div>
+      </Card>
     </div>
   );
 };
