@@ -12,6 +12,7 @@ import { Button } from "../../components/buttons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   readSectionListing,
+  readSectionWidgetsPosition,
   readSingleSection,
 } from "../../redux/actions/section-action";
 import { MetaTitle } from "../../components/metaTitle";
@@ -43,9 +44,8 @@ const SectionAddEdit = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { payload, singleSection, error, loading } = useSelector(
-    (state) => state.section
-  );
+  const { payload, singleSection, sectionWidgetPosition, error, loading } =
+    useSelector((state) => state.section);
 
   const isEditMode = location.pathname.includes("/edit");
 
@@ -62,14 +62,14 @@ const SectionAddEdit = () => {
     defaultValues: {
       section: "",
       // sectionOrder: "",
-      isCollapsible: "",
-      isCollapsed: "",
+      // isCollapsible: "",
+      // isCollapsed: "",
       // backgroundColor: "",
       // padding: "",
       // borderRadius: "",
-      apiEndpoint: "",
-      requestMethod: "",
-      refreshInterval: "",
+      // apiEndpoint: "",
+      // requestMethod: "",
+      // refreshInterval: "",
       // params: [],
       widgets: [],
     },
@@ -135,12 +135,41 @@ const SectionAddEdit = () => {
     }
   }, [isEditMode, id]);
 
+  // Fetch widgets when section changes
+  useEffect(() => {
+    if (selectedSection?.value) {
+      dispatch(readSectionWidgetsPosition({ id: selectedSection.value }));
+    }
+  }, [selectedSection, dispatch]);
+
+  // Update UI when Redux gives us the positions
+  useEffect(() => {
+    if (sectionWidgetPosition?.length > 0) {
+      const mappedWidgets = sectionWidgetPosition.map((w, index) => ({
+        ...w,
+        position: w.position || positions[index] || [0, 0, 2, 2],
+        container_id: w.container_id,
+      }));
+      setWidgetPositions(mappedWidgets);
+      setSelectedWidgets(
+        mappedWidgets.map((w) => ({
+          label: w.widget_name,
+          value: w.widget_id,
+          widget_id: w.widget_id,
+          widget_name: w.widget_name,
+          key_name: w.key_name,
+          is_active: w.is_active,
+          container_id: w.container_id,
+        }))
+      );
+    }
+  }, [sectionWidgetPosition]);
+
   useEffect(() => {
     if (isEditMode && singleSection) {
       const section = singleSection;
 
       const selectedOption = { label: section.name, value: section.id };
-      // sectionOptions.find((opt) => opt.value === section.name) || null;
 
       if (section?.widgets?.length > 0) {
         const mappedWidgets = section?.widgets?.map((w, index) => ({
@@ -157,15 +186,15 @@ const SectionAddEdit = () => {
       reset({
         sectionName: selectedOption || "",
         // sectionOrder: section.order_index || "",
-        isCollapsible: section.is_collapsible || false,
-        isCollapsed: section.is_collapsed || false,
+        // isCollapsible: section.is_collapsible || false,
+        // isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
         // backgroundColor: section.section_config?.backgroundColor || "",
         // padding: section.section_config?.padding || "",
         // borderRadius: section.section_config?.borderRadius || "",
-        apiEndpoint: section.api_endpoint || "",
-        requestMethod: section.method,
-        refreshInterval: section.refresh_interval || 0,
+        // apiEndpoint: section.api_endpoint || "",
+        // requestMethod: section.method,
+        // refreshInterval: section.refresh_interval || 0,
         // params: section.params || [],
         widgets: section.widgets || [],
       });
@@ -193,15 +222,15 @@ const SectionAddEdit = () => {
       reset({
         sectionName: section.section_id || "",
         // sectionOrder: section.order_index || "",
-        isCollapsible: section.is_collapsible || false,
-        isCollapsed: section.is_collapsed || false,
+        // isCollapsible: section.is_collapsible || false,
+        // isCollapsed: section.is_collapsed || false,
         // height: section?.section_config?.height || "",
         // backgroundColor: section.section_config?.backgroundColor || "",
         // padding: section.section_config?.padding || "",
         // borderRadius: section.section_config?.borderRadius || "",
-        apiEndpoint: section.api_endpoint || "",
-        requestMethod: section.method || {},
-        refreshInterval: section.refresh_interval || 0,
+        // apiEndpoint: section.api_endpoint || "",
+        // requestMethod: section.method || {},
+        // refreshInterval: section.refresh_interval || 0,
         // params: section.params || [],
         widgets: section.widgets || [],
       });
@@ -261,7 +290,7 @@ const SectionAddEdit = () => {
     console.log("Form Data: ", data);
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-      // section_id: data?.sectionName,
+      section_id: data?.sectionName,
       // order_index: data?.sectionOrder,
       // is_collapsible: data?.isCollapsible,
       // is_collapsed: data?.isCollapsible,

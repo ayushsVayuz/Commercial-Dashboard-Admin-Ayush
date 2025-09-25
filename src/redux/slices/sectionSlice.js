@@ -6,11 +6,13 @@ import {
   deleteSection,
   readSingleSection,
   changeStatusSection,
+  readSectionWidgetsPosition,
 } from "../actions/section-action";
 
 const initialState = {
   sections: [],
   singleSection: {},
+  sectionWidgetPosition: {},
   payload: {},
   loading: false,
   statusLoading: {},
@@ -80,6 +82,21 @@ const domainSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message || "Failed to fetch sections";
       });
+
+    // Read Single Section Widgets Position
+    builder
+      .addCase(readSectionWidgetsPosition.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(readSectionWidgetsPosition.fulfilled, (state, action) => {
+        state.loading = false;
+        state.sectionWidgetPosition = action.payload.data;
+      })
+      .addCase(readSectionWidgetsPosition.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to fetch sections";
+      });
     // Update Section
     builder
       .addCase(updateSection.pending, (state) => {
@@ -104,29 +121,26 @@ const domainSlice = createSlice({
       .addCase(changeStatusSection.pending, (state, action) => {
         state.statusLoading = action.meta.arg.sectionId;
       })
-      .addCase(changeStatusSection.fulfilled, (state,action) => {
+      .addCase(changeStatusSection.fulfilled, (state, action) => {
         // state.sections = state.sections.map((section) =>
         //   section.id === state.statusLoading
         //     ? { ...section, status: section.status === 1 ? 0 : 1 }
         //     : section
         // );
         // state.statusLoading = {};
-       ;
-    const { statusCode } = action.payload;
-        
-  
-  if (statusCode === 200 || statusCode === 201) {
-    state.sections = state.sections.map((section) =>
-      section.section_id === state.statusLoading 
-        ? { ...section, status: section.status === 1 ? 0 : 1 } 
-        : section
-    );
-  }
-  
-  // Clear loading after toggle
-  state.statusLoading = {};
-  state.error = null;
-        
+        const { statusCode } = action.payload;
+
+        if (statusCode === 200 || statusCode === 201) {
+          state.sections = state.sections.map((section) =>
+            section.section_id === state.statusLoading
+              ? { ...section, status: section.status === 1 ? 0 : 1 }
+              : section
+          );
+        }
+
+        // Clear loading after toggle
+        state.statusLoading = {};
+        state.error = null;
       })
       .addCase(changeStatusSection.rejected, (state, action) => {
         state.statusLoading = {};
