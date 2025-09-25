@@ -9,7 +9,7 @@ export default function WidgetGrid({
   value,
   onChange,
   data,
-  isResizable = true,
+  isResizable = false,
   isDraggable = true,
   widgetPositions,
   setWidgetPositions,
