@@ -11,6 +11,39 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+function formatHourToAMPM(hour) {
+  const meridian = hour >= 12 ? "PM" : "AM";
+  let h = hour % 12;
+  if (h === 0) h = 12;
+  return `${h} ${meridian}`;
+}
+
+function groupGateDataIntoFourHours(data) {
+  const bucketSize = 4;
+  const grouped = {};
+
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    const hour = Number(item.hour ?? 0);
+    const bucketStart = Math.floor(hour / bucketSize) * bucketSize;
+    const bucketEnd = bucketStart + bucketSize;
+    const key = bucketEnd;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        time: formatHourToAMPM(bucketEnd),
+        walkins: 0,
+        checkins: 0,
+      };
+    }
+
+    grouped[key].walkins += Number(item.walkins ?? 0);
+    grouped[key].checkins += Number(item.preApproved ?? 0);
+  }
+
+  return Object.values(grouped);
+}
+
 function GateUpdates({ isStatic, gate }) {
   const COLORS = {
     green: "#12B981",
@@ -30,11 +63,9 @@ function GateUpdates({ isStatic, gate }) {
   const preApproved = gate?.summary?.preApprovedCheckins || {};
   const staffAttendance = gate?.summary?.staffAttendance || {};
   const chartData =
-    gate?.chart?.map((d) => ({
-      time: `${d?.hour ?? 0}:00`,
-      walkins: Number(d?.walkins ?? 0),
-      checkins: Number(d?.preApproved ?? 0),
-    })) ?? [];
+    gate?.chart?.length > 0
+      ? groupGateDataIntoFourHours(gate.chart)
+      : [];
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
@@ -67,7 +98,7 @@ function GateUpdates({ isStatic, gate }) {
       icon={<LuWaves className="text-2xl text-[#37CC6D]" />}
       className={`${isStatic ? "max-h-[303px]" : ""} h-[251px] mb-4 break-inside-avoid`}
     >
-      <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2 ">
+      <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2">
         <div className="flex flex-col gap-2">
           <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
             Active Walk-ins
@@ -94,7 +125,7 @@ function GateUpdates({ isStatic, gate }) {
 
         <div className="flex flex-col gap-2">
           <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
-            Staff Attedance
+            Staff Attendance
           </div>
           <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
             {activeWalkins.visitor_in ?? 0}
@@ -104,7 +135,6 @@ function GateUpdates({ isStatic, gate }) {
           </div>
         </div>
       </div>
-      
 
       <ResponsiveContainer width="100%" height="60%">
         <LineChart
@@ -135,9 +165,7 @@ function GateUpdates({ isStatic, gate }) {
             width={25}
           />
           <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-
           <RTooltip content={<CustomTooltip />} />
-
           <Line
             type="monotone"
             dataKey="walkins"
