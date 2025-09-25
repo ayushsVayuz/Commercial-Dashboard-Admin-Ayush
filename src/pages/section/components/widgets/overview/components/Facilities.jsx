@@ -1,4 +1,4 @@
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 import { LuDoorOpen } from "react-icons/lu";
 import {
   LineChart,
@@ -53,7 +53,9 @@ function Facilities({ isStatic, data }) {
       title="Facilities"
       period="Today"
       icon={<LuDoorOpen className="text-2xl text-[#8B5CF6]" />}
-      className={`${isStatic && "max-h-[305px]"} h-[305px] mb-4 break-inside-avoid`}
+      className={`${
+        isStatic && "max-h-[305px]"
+      } h-[305px] mb-4 break-inside-avoid`}
     >
       <div className="grid grid-cols-3 gap-6 mb-4">
         <div className="flex flex-col gap-1">

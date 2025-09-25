@@ -1,5 +1,5 @@
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 function StatusCard({ label, value, subLabel, bgColor, textColor }) {
   return (
     <div className={`rounded-lg p-4 ${bgColor}`}>

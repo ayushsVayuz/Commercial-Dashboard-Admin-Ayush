@@ -1,4 +1,4 @@
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 import { LuBuilding } from "react-icons/lu";
 import {
   PieChart,
@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 function Community({ isStatic, data }) {
-
   const Chip = ({ value }) => {
     const isPositive = value >= 0;
     return (
@@ -75,7 +74,9 @@ function Community({ isStatic, data }) {
       title="Community"
       period="This Month"
       icon={<LuBuilding className="text-2xl text-[#329DFF]" />}
-      className={`${isStatic && "max-h-[184px]"} h-[184px] mb-4 break-inside-avoid`}
+      className={`${
+        isStatic && "max-h-[184px]"
+      } h-[184px] mb-4 break-inside-avoid`}
     >
       <div className="flex">
         <div className="w-[50%] flex flex-col gap-4">

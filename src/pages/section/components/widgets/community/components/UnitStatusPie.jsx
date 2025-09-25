@@ -2,7 +2,7 @@ import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { FaRegBuilding } from "react-icons/fa";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

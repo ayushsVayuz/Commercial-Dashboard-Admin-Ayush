@@ -1,6 +1,6 @@
 import React from "react";
 import { GoPeople } from "react-icons/go";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
   const pct = Math.max(0, Math.min(100, (value / (total || 1)) * 100));
 

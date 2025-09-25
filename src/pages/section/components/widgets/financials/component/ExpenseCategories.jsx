@@ -2,7 +2,7 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

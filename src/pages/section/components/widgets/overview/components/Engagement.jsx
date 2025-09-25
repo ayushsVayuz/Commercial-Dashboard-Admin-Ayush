@@ -1,4 +1,4 @@
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 import { LuMessageSquare } from "react-icons/lu";
 import {
   Cell,
@@ -12,7 +12,6 @@ import {
 } from "recharts";
 
 function Engagement({ isStatic, data }) {
-
   const engagementBars = [
     { name: "Notice", value: Number(data?.total_notices || 10) },
     { name: "Post", value: Number(data?.total_topics || 20) },

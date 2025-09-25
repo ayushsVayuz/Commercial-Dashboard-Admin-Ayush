@@ -1,6 +1,6 @@
 import { DescriptionOutlined as DescriptionOutlinedIcon } from "@mui/icons-material";
 import { RiBillLine } from "react-icons/ri";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 
 function StatCardGrid({
   title,

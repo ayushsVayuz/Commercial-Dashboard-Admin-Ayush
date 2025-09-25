@@ -1,4 +1,4 @@
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 import { LuWrench } from "react-icons/lu";
 import {
   PieChart,
@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 function Helpdesk({ isStatic, data }) {
-
   const Chip = ({ value }) => {
     if (value === null || value === undefined || isNaN(value)) {
       return null;
@@ -72,7 +71,9 @@ function Helpdesk({ isStatic, data }) {
       title="Helpdesk"
       period="Today"
       icon={<LuWrench className="text-2xl text-[#FA7E28]" />}
-      className={`${isStatic && "max-h-[186px]"} h-[186px] overflow-hidden mb-4 break-inside-avoid`}
+      className={`${
+        isStatic && "max-h-[186px]"
+      } h-[186px] overflow-hidden mb-4 break-inside-avoid`}
     >
       <div className="flex gap-3 h-fit">
         <div className="w-[50%] flex flex-col gap-7">

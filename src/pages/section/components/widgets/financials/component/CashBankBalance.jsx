@@ -1,6 +1,6 @@
 import React from "react";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../components/Card";
 
 const CashBankBalance = () => {
   const accounts = [
