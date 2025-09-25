@@ -311,7 +311,7 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 8, 2, 2],
-     data: "Total Bookings",
+    // data: "Total Bookings",
   },
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
