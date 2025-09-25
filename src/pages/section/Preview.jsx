@@ -33,12 +33,12 @@ const SectionPreview = () => {
     const updatedPayload = {
       ...rest,
       ...(id == null ? { section_id: data?.section_id?.value } : {}),
-      method: "GET",
+      // method: "GET",
       widgets: data.widgets.map((w) => ({
         widget_id: w.widget_id,
         position: w.position,
       })),
-      params: [],
+      // params: [],
     };
 
     try {

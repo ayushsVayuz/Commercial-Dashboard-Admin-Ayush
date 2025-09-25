@@ -261,10 +261,10 @@ const SectionAddEdit = () => {
     console.log("Form Data: ", data);
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
-      section_id: data?.sectionName,
+      // section_id: data?.sectionName,
       // order_index: data?.sectionOrder,
-      is_collapsible: data?.isCollapsible,
-      is_collapsed: data?.isCollapsible,
+      // is_collapsible: data?.isCollapsible,
+      // is_collapsed: data?.isCollapsible,
       // section_config: {
       //   height: data?.height,
       //   backgroundColor: data?.backgroundColor,
@@ -272,9 +272,9 @@ const SectionAddEdit = () => {
       //   borderRadius: data?.borderRadius,
       // },
       // api_endpoint: data?.apiEndpoint || "",
-      method: data?.requestMethod,
-      refresh_interval: data?.refreshInterval,
-      response_type: "json",
+      // method: data?.requestMethod,
+      // refresh_interval: data?.refreshInterval,
+      // response_type: "json",
       // params: data?.params || [],
       widgets: widgetPositions,
     };

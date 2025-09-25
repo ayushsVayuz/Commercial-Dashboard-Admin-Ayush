@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice , current} from "@reduxjs/toolkit";
 import {
   createWidget,
   readWidget,
@@ -12,6 +12,7 @@ import {
 const initialState = {
   widgets: [],
   singleWidget: {},
+  singleWidgetLoading : false,
   payload: {},
   loading: false,
   statusLoading: {},
@@ -68,16 +69,16 @@ const widgetsSlice = createSlice({
     // Read Single Widget
     builder
       .addCase(readSingleWidget.pending, (state) => {
-        state.loading = true;
+        state.singleWidgetLoading = true;
         state.error = null;
       })
       .addCase(readSingleWidget.fulfilled, (state, action) => {
-        state.loading = false;
+        state.singleWidgetLoading = false;
         state.singleWidget = action.payload.data;
         state.totalPages = action.payload.total;
       })
       .addCase(readSingleWidget.rejected, (state, action) => {
-        state.loading = false;
+        state.singleWidgetLoading = false;
         state.error = action.payload?.message || "Failed to fetch widgets";
       });
     // Update Widget
@@ -106,35 +107,22 @@ const widgetsSlice = createSlice({
         state.error = null;
       })
       .addCase(updateWidgetCMS.fulfilled, (state, action) => {
-        state.loading = false;
-        // const index = state.widgets.findIndex(
-        //   (widgets) => widgets.id === action.payload.id
-        // );
-        // if (index !== -1) {
-        //   state.widgets[index] = action.payload;
-        // }
-        console.log('updateWidgetCMS.fulfilled - action.payload:', action.payload);
-  console.log('Current widgets state:', state.widgets);
-  console.log('updateWidgetCMS.fulfilled - action.payload:', action.payload);
-  console.log('Widget data from API:', action.payload.data);
+  state.loading = false;
   
-  const updatedWidget = action.payload.data; // API response ka actual data
+  const { widgetId, updatedData } = action.meta.arg;
   
   const index = state.widgets.findIndex(
-    (widget) => widget.widget_id === updatedWidget.widget_id
+    (widget) => widget.widget_id === widgetId
   );
   
-  console.log('Looking for widget_id:', updatedWidget.widget_id);
-  console.log('Found index:', index);
-  
   if (index !== -1) {
-    console.log('Before update:', state.widgets[index]);
-    state.widgets[index] = { ...state.widgets[index], ...updatedWidget };
-    console.log('After update:', state.widgets[index]);
-  } else {
-    console.log('Widget not found in current state');
+    state.widgets[index] = { 
+      ...state.widgets[index], 
+      ...updatedData,
+      
+    };
   }
-      })
+})
       .addCase(updateWidgetCMS.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to update widgets";
