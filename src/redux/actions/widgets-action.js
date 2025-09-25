@@ -14,7 +14,7 @@ export const createWidget = createAsyncThunk(
     try {
       const response = await client.post("/widgets", sectionData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
       console.log(response, "slow days");
@@ -38,7 +38,7 @@ export const updateWidgetCMS = createAsyncThunk(
         updatedData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -73,7 +73,7 @@ export const readWidget = createAsyncThunk(
         `widgets/all-widgets/${queryString ? "?" + queryString : ""}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -107,7 +107,7 @@ export const readMappedWidget = createAsyncThunk(
         `/widgets${queryString ? "?" + queryString : ""}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -130,7 +130,7 @@ export const readSingleWidget = createAsyncThunk(
     try {
       const response = await client.get(`/widgets/widget-details/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
       console.log(response, "responsee widget");
@@ -153,7 +153,7 @@ export const updateWidget = createAsyncThunk(
     try {
       const response = await client.put(`/widgets/${widgetId}`, updatedData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
 
@@ -175,7 +175,7 @@ export const changeStatusWidget = createAsyncThunk(
     try {
       const response = await client.put(`/widgets/update-status/${widgetId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
 
@@ -200,7 +200,7 @@ export const deleteWidget = createAsyncThunk(
         updatedData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
         }
       );

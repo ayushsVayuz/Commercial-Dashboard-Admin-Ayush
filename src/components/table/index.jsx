@@ -80,7 +80,7 @@ export const Table = ({
           {initialData?.length > 0 ? (
             <>
               <div className="overflow-x-auto min-h-52 mx-auto w-full">
-                <table className="min-w-full bg-white  dark:bg-slate-800 table-striped">
+                <table className="min-w-full bg-white dark:bg-slate-800 table-striped">
                   <thead>
                     <tr className="w-full bg-[#F0F0F0] dark:bg-gray-900">
                       {headers?.map((header, index) => (

@@ -113,6 +113,27 @@ const widgetsSlice = createSlice({
         // if (index !== -1) {
         //   state.widgets[index] = action.payload;
         // }
+        console.log('updateWidgetCMS.fulfilled - action.payload:', action.payload);
+  console.log('Current widgets state:', state.widgets);
+  console.log('updateWidgetCMS.fulfilled - action.payload:', action.payload);
+  console.log('Widget data from API:', action.payload.data);
+  
+  const updatedWidget = action.payload.data; // API response ka actual data
+  
+  const index = state.widgets.findIndex(
+    (widget) => widget.widget_id === updatedWidget.widget_id
+  );
+  
+  console.log('Looking for widget_id:', updatedWidget.widget_id);
+  console.log('Found index:', index);
+  
+  if (index !== -1) {
+    console.log('Before update:', state.widgets[index]);
+    state.widgets[index] = { ...state.widgets[index], ...updatedWidget };
+    console.log('After update:', state.widgets[index]);
+  } else {
+    console.log('Widget not found in current state');
+  }
       })
       .addCase(updateWidgetCMS.rejected, (state, action) => {
         state.loading = false;
