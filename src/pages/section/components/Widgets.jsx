@@ -269,28 +269,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 6, 2, 2],
-     data: "Notice",
+    data :{
+      title :"Notice"
+    }
   },
   ENGAGEMENT_POST: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 6, 2, 2],
-     data: "Post",
+      data :{
+      title :"Post"
+    }
   },
   ENGAGEMENT_POLL: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 6, 2, 2],
-     data: "Poll",
+      data :{
+      title :"Poll"
+    }
   },
   ENGAGEMENT_SURVEY: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 6, 2, 2],
-     data: "Survey",
+      data :{
+      title :"Survey"
+    }
   },
   ENGAGEMENT_NOTICE_BOARD_STATUS: {
     component: NoticeBoardStatus,
@@ -311,28 +319,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 8, 2, 2],
-    // data: "Total Bookings",
+      data :{
+      title :"Total Bookings"
+    }
   },
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 8, 2, 2],
-     data: "Utilisation Rate",
+      data :{
+      title :"Utilisation Rate"
+    }
   },
   FACILITIES_REVENUE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 8, 2, 2],
-     data: "Facilities Revenue",
+      data :{
+      title :"Facilities Revenue"
+    }
   },
   FACILITIES_PENDING_DUES: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 8, 2, 2],
-     data: "Pending Dues",
+      data :{
+      title :"Pending Dues"
+    }
   },
   FACILITIES_ASSET_VALUE_BREAKDOWN: {
     component: AssetValueBreakdown,
@@ -353,28 +369,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 10, 2, 2],
-     data: "Total Visitors",
+      data :{
+      title :"Total Visitors"
+    }
   },
   GATE_AND_SECURITY_ACTIVE_INCIDENTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 10, 2, 2],
-     data: "Active Incidents",
+      data :{
+      title :"Active Incidents"
+    }
   },
   GATE_AND_SECURITY_MISSING_PATROLS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 10, 2, 2],
-     data: "Missing Patrols",
+      data :{
+      title :"Missing Patrols"
+    }
   },
   GATE_AND_SECURITY_PARKING_USAGE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 10, 2, 2],
-     data: "Parking Usage",
+      data :{
+      title :"Parking Usage"
+    }
   },
   GATE_AND_SECURITY_GUARDPATROLS: {
     component: GuardPatrols,
@@ -407,28 +431,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 12, 2, 2],
-     data: "Complaints",
+      data :{
+      title :"Complaints"
+    }
   },
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 12, 2, 2],
-     data: "Pending Requests",
+      data :{
+      title :"Pending Requests"
+    }
   },
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 12, 2, 2],
-     data: "Avg Response Time",
+      data :{
+      title :"Avg Response Time"
+    }
   },
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 12, 2, 2],
-     data: "Resolution Rate",
+      data :{
+      title :"Resolution Rate"
+    }
   },
   HELPDESK_COMPLAINTS: {
     component: Complaints,
