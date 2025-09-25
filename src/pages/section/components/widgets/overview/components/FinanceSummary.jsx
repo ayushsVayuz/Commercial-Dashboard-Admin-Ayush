@@ -26,7 +26,7 @@ function FinanceSummary({ isStatic, data }) {
       title="Income"
       period="This Month"
       icon={<LuReceiptText className="text-2xl text-green-600" />}
-      className="mb-4 break-inside-avoid "
+      className="mb-4 break-inside-avoid h-[236px] overflow-hidden"
     >
       <div className="grid grid-cols-4 text-xs text-gray-500 mb-2">
         <span>Opening</span>

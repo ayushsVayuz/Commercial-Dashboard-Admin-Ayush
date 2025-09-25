@@ -56,7 +56,7 @@ function Engagement({ isStatic, data }) {
       title="Engagement"
       period="This Month"
       icon={<LuMessageSquare className="text-2xl text-[#DBB467]" />}
-      className={`${isStatic && "max-h-[303px]"}`}
+      className={`${isStatic && "max-h-[303px]"} h-[303px]`}
     >
       <div className="w-full h-[220px]">
         <ResponsiveContainer width="100%" height="100%">

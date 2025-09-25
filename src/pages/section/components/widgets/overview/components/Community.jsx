@@ -75,10 +75,10 @@ function Community({ isStatic, data }) {
       title="Community"
       period="This Month"
       icon={<LuBuilding className="text-2xl text-[#329DFF]" />}
-      className={`${isStatic && "max-h-[184px]"} mb-4 break-inside-avoid`}
+      className={`${isStatic && "max-h-[184px]"} h-[184px] mb-4 break-inside-avoid`}
     >
       <div className="flex">
-        <div className="w-[50%] flex flex-col gap-7">
+        <div className="w-[50%] flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <div className="!m-0 !text-xs !leading-[16px] !text-[#64748B]">
               Move-in/Out Count

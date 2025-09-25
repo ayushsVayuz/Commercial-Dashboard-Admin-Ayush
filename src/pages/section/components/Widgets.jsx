@@ -74,7 +74,7 @@ export const AllWidgetMapping = {
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 18,
+    minHeight: 15.7,
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,
@@ -117,7 +117,7 @@ export const AllWidgetMapping = {
   OVERVIEW_COMMUNITY: {
     component: Community,
     minWidth: 2,
-    minHeight: 12.5,
+    minHeight: 9.6,
     position: [2, 0, 2, 2],
     data: {
       thisMonthMoveIns: 25,
@@ -131,7 +131,7 @@ export const AllWidgetMapping = {
   OVERVIEW_ENGAGEMENT: {
     component: Engagement,
     minWidth: 2,
-    minHeight: 19,
+    minHeight: 15.6,
     position: [4, 4, 2, 2],
     data: {
       total_notices: 15,
@@ -143,7 +143,7 @@ export const AllWidgetMapping = {
   OVERVIEW_GATE_UPDATE: {
     component: GateUpdates,
     minWidth: 2,
-    minHeight: 12,
+    minHeight: 13,
     position: [0, 6, 2, 2],
     data: {
       summary: {
@@ -170,7 +170,7 @@ export const AllWidgetMapping = {
   OVERVIEW_INCOME_EXPENDITURE: {
     component: FinanceSummary,
     minWidth: 2,
-    minHeight: 12,
+    minHeight: 12.3,
     position: [0, 0, 2, 2],
     data: {
       incomeSummary: {
@@ -190,7 +190,7 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: 12.5,
+    minHeight: 9.7,
     position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
