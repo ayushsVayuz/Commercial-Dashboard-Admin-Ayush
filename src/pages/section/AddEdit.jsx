@@ -28,6 +28,7 @@ import {
 } from "../../redux/actions/widgets-action";
 import WidgetGrid from "./components/WidgetGrid";
 import WidgetGridDND from "./components/WidgetDND";
+import { LuRefreshCw } from "react-icons/lu";
 
 const SectionAddEdit = () => {
   const [sectionOptions, setSectionsOptions] = useState([]);
@@ -393,6 +394,7 @@ const SectionAddEdit = () => {
                 />
               )}
             />
+
             <Controller
               name="widget"
               control={control}
@@ -411,6 +413,7 @@ const SectionAddEdit = () => {
                 />
               )}
             />
+
             {/* 
             <Controller
               name="sectionOrder"
@@ -426,9 +429,28 @@ const SectionAddEdit = () => {
               )}
             /> */}
           </div>
-          <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
-            Widgets
-          </h5>
+          <div className="flex items-center gap-4">
+            <h5 className="my-4 font-semibold text-xl text-[#4D4D4F] dark:text-gray-200">
+              Widgets
+            </h5>
+            <button
+              data-tooltip-content={"Reorder layout"}
+              data-tooltip-id={"my-tooltip"}
+              type="button"
+              className="flex items-center justify-center rounded-md border border-[#884EA7] bg-white p-2.5 hover:bg-gray-50"
+              onClick={() => {
+                dispatch(
+                  readSectionWidgetsPosition({ id: selectedSection.value })
+                );
+              }}
+            >
+              <LuRefreshCw
+                className={`h-4 w-4 text-[#884EA7] transition-transform duration-300 ${
+                  false ? "animate-spin" : ""
+                }`}
+              />
+            </button>
+          </div>
           <Controller
             name="widgets"
             control={control}

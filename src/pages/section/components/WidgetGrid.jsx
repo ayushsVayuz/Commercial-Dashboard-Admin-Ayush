@@ -9,7 +9,7 @@ export default function WidgetGrid({
   value,
   onChange,
   data,
-  isResizable = true,
+  isResizable = false,
   isDraggable = true,
   widgetPositions,
   setWidgetPositions,
@@ -61,11 +61,11 @@ export default function WidgetGrid({
 
     return (
       // <div className="h-full w-full relative bg-white !border-[0.5px] !border-[#EBEBEB] !rounded-xl !shadow-[0_0_12px_0_#EAF2FF]">
-        <WidgetComponent
-          data={item.data || {}}
-          config={item.config || {}}
-          {...(item.props || {})}
-        />
+      <WidgetComponent
+        data={item.data || {}}
+        config={item.config || {}}
+        {...(item.props || {})}
+      />
       //  </div>
     );
   };
@@ -116,12 +116,13 @@ export default function WidgetGrid({
 
           const x = item?.position?.[0] ?? defX;
           const y = item?.position?.[1] ?? defY;
-          const w = Math.max(item?.position?.[2] ?? defW, mapping.minWidth) || 1.5;
-          const h = Math.max(item?.position?.[3] ?? defH, mapping.minHeight) || 1.5;
+          const w =
+            Math.max(item?.position?.[2] ?? defW, mapping.minWidth) || 1.5;
+          const h =
+            Math.max(item?.position?.[3] ?? defH, mapping.minHeight) || 1.5;
 
           const mergedData = { ...mapping.data, ...item?.data };
 
-          console.log(w, "")
 
           return (
             <div key={item?.widget_id} data-grid={{ x, y, w, h }}>

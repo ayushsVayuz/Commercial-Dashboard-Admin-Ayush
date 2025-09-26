@@ -12,7 +12,10 @@ import {
   readSection,
 } from "../../redux/actions/section-action";
 import { MoreOption } from "../../components/moreOption";
-import { resetSectionPayload } from "../../redux/slices/sectionSlice";
+import {
+  resetSectionPayload,
+  resetSectionWidgetPosition,
+} from "../../redux/slices/sectionSlice";
 import { Toggle } from "../../components/inputs/toogle";
 import { LuLoaderCircle } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -373,7 +376,12 @@ const SectionListing = () => {
         <Link
           className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           to="/section/add"
-          onClick={() => dispatch(resetSectionPayload())}
+          onClick={() =>
+            dispatch(
+              resetSectionPayload(),
+              dispatch(resetSectionWidgetPosition())
+            )
+          }
         >
           Add Section
         </Link>

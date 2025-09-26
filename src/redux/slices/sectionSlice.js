@@ -35,6 +35,9 @@ const domainSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    resetSectionWidgetPosition: (state) => {
+      state.sectionWidgetPosition = {};
+    },
   },
   extraReducers: (builder) => {
     // Create Section
@@ -128,37 +131,34 @@ const domainSlice = createSlice({
         //     : section
         // );
         // state.statusLoading = {};
-       ;
-    const { statusCode } = action.payload;
-        
-  
-  if (statusCode === 200 || statusCode === 201) {
-  //   state.sections = state.sections.map((section) =>
-  //     section.section_id === state.statusLoading 
-  //       ? { ...section, status: section.status === 1 ? 0 : 1 } 
-  //       : section
-  //   );
-  // }
-  
-  // // Clear loading after toggle
-  // state.statusLoading = {};
-  // state.error = null;
+        const { statusCode } = action.payload;
 
-  const sectionIndex = state.sections.findIndex(
-      section => section.section_id === state.statusLoading
-    );
-    
-    if (sectionIndex !== -1) {
-      state.sections[sectionIndex] = {
-        ...state.sections[sectionIndex],
-        status: state.sections[sectionIndex].status === 1 ? 0 : 1
-      };
-    }
-  }
-  
-  state.statusLoading = {};
-  state.error = null;
-        
+        if (statusCode === 200 || statusCode === 201) {
+          //   state.sections = state.sections.map((section) =>
+          //     section.section_id === state.statusLoading
+          //       ? { ...section, status: section.status === 1 ? 0 : 1 }
+          //       : section
+          //   );
+          // }
+
+          // // Clear loading after toggle
+          // state.statusLoading = {};
+          // state.error = null;
+
+          const sectionIndex = state.sections.findIndex(
+            (section) => section.section_id === state.statusLoading
+          );
+
+          if (sectionIndex !== -1) {
+            state.sections[sectionIndex] = {
+              ...state.sections[sectionIndex],
+              status: state.sections[sectionIndex].status === 1 ? 0 : 1,
+            };
+          }
+        }
+
+        state.statusLoading = {};
+        state.error = null;
       })
       .addCase(changeStatusSection.rejected, (state, action) => {
         state.statusLoading = {};
@@ -186,6 +186,10 @@ const domainSlice = createSlice({
   },
 });
 
-export const { sectionPayload, resetSection, resetSectionPayload } =
-  domainSlice.actions;
+export const {
+  sectionPayload,
+  resetSection,
+  resetSectionPayload,
+  resetSectionWidgetPosition,
+} = domainSlice.actions;
 export default domainSlice.reducer;
