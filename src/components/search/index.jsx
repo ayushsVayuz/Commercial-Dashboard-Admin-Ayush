@@ -17,6 +17,10 @@ export const Search = (props) => {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
+
+    if (/\s/.test(value)) {
+    return;
+  }
     if (props?.numberOnly) {
       if (/^\d*$/.test(value)) {
         setQuery(value);
