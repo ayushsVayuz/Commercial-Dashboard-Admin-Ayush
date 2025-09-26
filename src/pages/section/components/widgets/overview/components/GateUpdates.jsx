@@ -98,93 +98,95 @@ function GateUpdates({ isStatic, gate }) {
         isStatic ? "max-h-[303px]" : ""
       } h-[251px] mb-4 break-inside-avoid`}
     >
-      <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2">
-        <div className="flex flex-col gap-2">
-          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
-            Active Walk-ins
+      <div>
+        <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2">
+          <div className="flex flex-col gap-2">
+            <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
+              Active Walk-ins
+            </div>
+            <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
+              {staffAttendance.total_in_now ?? 0}
+              <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
+                /{staffAttendance.total_in_today ?? 0}
+              </div>
+            </div>
           </div>
-          <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
-            {staffAttendance.total_in_now ?? 0}
-            <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
-              /{staffAttendance.total_in_today ?? 0}
+
+          <div className="flex flex-col gap-2">
+            <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
+              Pre-approved Check-ins
+            </div>
+            <div className="!m-0 text-[28px] leading-[32px] font-medium text-[#E7A015] flex">
+              {preApproved.expected_pass_scanned ?? 0}
+              <div className="text-[20px] leading-[32px] text-[#64748B]">
+                /{preApproved.total_expected_pass ?? 0}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
+              Staff Attendance
+            </div>
+            <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
+              {activeWalkins.visitor_in ?? 0}
+              <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
+                /{activeWalkins.total_pass ?? 0}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
-            Pre-approved Check-ins
-          </div>
-          <div className="!m-0 text-[28px] leading-[32px] font-medium text-[#E7A015] flex">
-            {preApproved.expected_pass_scanned ?? 0}
-            <div className="text-[20px] leading-[32px] text-[#64748B]">
-              /{preApproved.total_expected_pass ?? 0}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
-            Staff Attendance
-          </div>
-          <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
-            {activeWalkins.visitor_in ?? 0}
-            <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
-              /{activeWalkins.total_pass ?? 0}
-            </div>
-          </div>
-        </div>
+        <ResponsiveContainer width="100%" height="60%">
+          <LineChart
+            data={chartData}
+            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          >
+            <XAxis
+              dataKey="time"
+              tick={{
+                fontSize: 10,
+                lineHeight: 14,
+                fill: "#121212",
+                fontWeight: 400,
+              }}
+            />
+            <YAxis
+              yAxisId="left"
+              domain={[0, 30]}
+              ticks={[0, 10, 20, 30]}
+              tick={{
+                fontSize: 10,
+                lineHeight: 14,
+                fill: "#64748B",
+                fontWeight: 400,
+              }}
+              axisLine={false}
+              tickLine={false}
+              width={25}
+            />
+            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+            <RTooltip content={<CustomTooltip />} />
+            <Line
+              type="monotone"
+              dataKey="walkins"
+              stroke={COLORS.green}
+              strokeWidth={2}
+              dot={false}
+              name="Walk-ins"
+            />
+            <Line
+              type="monotone"
+              dataKey="checkins"
+              stroke={COLORS.amber}
+              strokeWidth={2}
+              strokeDasharray="5 5"
+              dot={false}
+              name="Pre-approved"
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
-
-      <ResponsiveContainer width="100%" height="60%">
-        <LineChart
-          data={chartData}
-          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-        >
-          <XAxis
-            dataKey="time"
-            tick={{
-              fontSize: 10,
-              lineHeight: 14,
-              fill: "#121212",
-              fontWeight: 400,
-            }}
-          />
-          <YAxis
-            yAxisId="left"
-            domain={[0, 30]}
-            ticks={[0, 10, 20, 30]}
-            tick={{
-              fontSize: 10,
-              lineHeight: 14,
-              fill: "#64748B",
-              fontWeight: 400,
-            }}
-            axisLine={false}
-            tickLine={false}
-            width={25}
-          />
-          <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-          <RTooltip content={<CustomTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="walkins"
-            stroke={COLORS.green}
-            strokeWidth={2}
-            dot={false}
-            name="Walk-ins"
-          />
-          <Line
-            type="monotone"
-            dataKey="checkins"
-            stroke={COLORS.amber}
-            strokeWidth={2}
-            strokeDasharray="5 5"
-            dot={false}
-            name="Pre-approved"
-          />
-        </LineChart>
-      </ResponsiveContainer>
     </Card>
   );
 }
