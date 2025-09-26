@@ -20,6 +20,8 @@ export const Table = ({
   setSort,
   headersSort,
   totalPages,
+  
+ movingRows = {},
 }) => {
   const [data, setData] = useState(initialData);
 
@@ -151,7 +153,10 @@ export const Table = ({
                           {data?.map((row, rowIndex) => (
                             <tr
                               key={rowIndex}
-                              className="border-b border-dashed border-gray-300 dark:border-gray-500 last:border-none"
+                              // className="border-b border-dashed border-gray-300 dark:border-gray-500 last:border-none"
+                              className={`table-row border-b border-dashed border-gray-300 dark:border-gray-500 
+                last:border-none hover:bg-gray-50/50 dark:hover:bg-gray-700/50
+                ${movingRows[rowIndex] || ''}`}
                             >
                               {Object.entries(row).map(
                                 ([key, cell], cellIndex) => (
@@ -169,6 +174,8 @@ export const Table = ({
                       </>
                     )}
                   </tbody>
+
+              
                 </table>
               </div>
 

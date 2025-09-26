@@ -116,14 +116,29 @@ const domainSlice = createSlice({
         
   
   if (statusCode === 200 || statusCode === 201) {
-    state.sections = state.sections.map((section) =>
-      section.section_id === state.statusLoading 
-        ? { ...section, status: section.status === 1 ? 0 : 1 } 
-        : section
+  //   state.sections = state.sections.map((section) =>
+  //     section.section_id === state.statusLoading 
+  //       ? { ...section, status: section.status === 1 ? 0 : 1 } 
+  //       : section
+  //   );
+  // }
+  
+  // // Clear loading after toggle
+  // state.statusLoading = {};
+  // state.error = null;
+
+  const sectionIndex = state.sections.findIndex(
+      section => section.section_id === state.statusLoading
     );
+    
+    if (sectionIndex !== -1) {
+      state.sections[sectionIndex] = {
+        ...state.sections[sectionIndex],
+        status: state.sections[sectionIndex].status === 1 ? 0 : 1
+      };
+    }
   }
   
-  // Clear loading after toggle
   state.statusLoading = {};
   state.error = null;
         
