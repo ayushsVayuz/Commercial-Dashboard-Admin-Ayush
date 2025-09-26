@@ -38,6 +38,8 @@ const SectionAddEdit = () => {
   const [selectedWidgets, setSelectedWidgets] = useState([]);
   const [widgetPositions, setWidgetPositions] = useState([]);
 
+  const [hasUnevenSpacing, setHasUnevenSpacing] = useState(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
@@ -360,6 +362,26 @@ const SectionAddEdit = () => {
     [9, 2, 2, 2],
   ];
 
+  function checkUnevenSpacing(layout, cols = 6) {
+    const rows = {};
+    layout.forEach((item) => {
+      if (!rows[item.y]) rows[item.y] = [];
+      rows[item.y].push(item);
+    });
+
+    for (const y in rows) {
+      const rowItems = rows[y].sort((a, b) => a.x - b.x);
+      let cursor = 0;
+      for (const item of rowItems) {
+        if (item.x > cursor) return true;
+        cursor = item.x + item.w;
+      }
+      if (cursor < cols) return true;
+    }
+
+    return false;
+  }
+
   return (
     <section>
       <MetaTitle title={`Section ${isEditMode ? "Edit" : "Add"} | Anarock`} />
@@ -464,6 +486,10 @@ const SectionAddEdit = () => {
                   onChange={(newLayout) => {
                     setWidgetPositions(newLayout);
                     field.onChange(newLayout);
+
+                    const uneven = checkUnevenSpacing(newLayout, 12);
+                    setHasUnevenSpacing(uneven);
+                    console.log(uneven, "uneven");
                   }}
                   errorContent={errors?.widgets?.message}
                 />
@@ -877,10 +903,11 @@ const SectionAddEdit = () => {
               Cancel
             </Button>
             <Button
+              // disabled={!isValid || hasUnevenSpacing}
+              disabled={!isValid}
               type="submit"
               mainPrimary={true}
               isLoading={loading}
-              disabled={!isValid}
             >
               Preview
             </Button>
