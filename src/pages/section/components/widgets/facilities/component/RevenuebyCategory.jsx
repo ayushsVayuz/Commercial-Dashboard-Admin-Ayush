@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 

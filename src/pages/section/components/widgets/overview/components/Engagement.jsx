@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { LuMessageSquare } from "react-icons/lu";
 import {
   Cell,
@@ -96,7 +96,10 @@ function Engagement({ isStatic, engagement }) {
             }}
           />
 
-          <RTooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
+          <RTooltip
+            content={<CustomTooltip />}
+            cursor={{ fill: "transparent" }}
+          />
 
           <Bar dataKey="value" barSize={40} isAnimationActive={false}>
             {engagementBars.map((entry) => (

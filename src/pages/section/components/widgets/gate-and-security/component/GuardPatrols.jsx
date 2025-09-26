@@ -1,12 +1,12 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const data = [
-  { name: "Completed", value: 46, color: "#10B981" },
-  { name: "Delayed", value: 2, color: "#F59E0B" },
-  { name: "Missed", value: 2, color: "#EF4444" },
+  { name: "Completed", value: 46, color: "#12B981" },
+  { name: "Delayed", value: 2, color: "#EF4444" },
+  { name: "Missed", value: 2, color: "#F69E0A" },
 ];
 
 function GuardPatrols() {

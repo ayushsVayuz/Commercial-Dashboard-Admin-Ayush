@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { LuWaves } from "react-icons/lu";
 import {
   LineChart,
@@ -63,9 +63,7 @@ function GateUpdates({ isStatic, gate }) {
   const preApproved = gate?.summary?.preApprovedCheckins || {};
   const staffAttendance = gate?.summary?.staffAttendance || {};
   const chartData =
-    gate?.chart?.length > 0
-      ? groupGateDataIntoFourHours(gate.chart)
-      : [];
+    gate?.chart?.length > 0 ? groupGateDataIntoFourHours(gate.chart) : [];
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
@@ -96,7 +94,9 @@ function GateUpdates({ isStatic, gate }) {
       title="Gate Updates"
       period="Today"
       icon={<LuWaves className="text-2xl text-[#37CC6D]" />}
-      className={`${isStatic ? "max-h-[303px]" : ""} h-[251px] mb-4 break-inside-avoid`}
+      className={`${
+        isStatic ? "max-h-[303px]" : ""
+      } h-[251px] mb-4 break-inside-avoid`}
     >
       <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2">
         <div className="flex flex-col gap-2">

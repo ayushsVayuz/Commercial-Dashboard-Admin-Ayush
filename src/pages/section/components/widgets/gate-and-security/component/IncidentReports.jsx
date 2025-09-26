@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 import { FaClock } from "react-icons/fa";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const requests = [
@@ -26,9 +26,7 @@ function Complaints() {
               <div className="text-sm font-medium text-[#121212]">
                 {item.title}
               </div>
-              <div className="text-xs text-[#64748B]">
-                Total: {item.total}
-              </div>
+              <div className="text-xs text-[#64748B]">Total: {item.total}</div>
             </div>
 
             <div className="flex flex-col items-end">

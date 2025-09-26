@@ -1,8 +1,8 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { FaRegBuilding } from "react-icons/fa";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
+import { LuBuilding } from "react-icons/lu";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -44,7 +44,7 @@ const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
     datasets: [
       {
         data: [sold, unsold],
-        backgroundColor: ["#1FA05B", "#EF4444"],
+        backgroundColor: ["#12B981", "#EF4444"],
         borderWidth: 2,
         hoverOffset: 4,
       },
@@ -74,9 +74,9 @@ const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
     <Card
       title="Unit Status"
       period="This Month"
-      icon={<FaRegBuilding className="h-6 w-6 text-green-600" />}
+      icon={<LuBuilding className="h-6 w-6 text-green-600" />}
       className="h-[238px]"
-      childrenClassName="flex-1 flex gap-4 items-center overflow-hidden"
+      childrenClassName="flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
     >
       <div className="col-span-5 space-y-3">
         <div>
@@ -87,9 +87,11 @@ const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
           <div className="text-xs text-slate-500">Unsold</div>
           <div className="text-xl font-semibold text-[#EF4444]">{unsold}</div>
         </div>
-        <div className="text-xs text-emerald-600">
+        <div className="text-xs text-[#1FA05B] font-medium flex gap-2">
           {growthPct}{" "}
-          <span className="text-slate-500">Compared to last month</span>
+          <span className="text-[#64748B] font-normal">
+            Compared to last month
+          </span>
         </div>
       </div>
 

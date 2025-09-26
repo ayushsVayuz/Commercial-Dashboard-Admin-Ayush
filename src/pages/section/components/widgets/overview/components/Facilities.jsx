@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { LuDoorOpen } from "react-icons/lu";
 import {
   LineChart,
@@ -89,16 +89,16 @@ function Facilities({ isStatic, facility }) {
   };
 
   const maxY =
-    chartData.length > 0
-      ? Math.max(...chartData.map((d) => d.total), 5)
-      : 5;
+    chartData.length > 0 ? Math.max(...chartData.map((d) => d.total), 5) : 5;
 
   return (
     <Card
       title="Facilities"
       period="Today"
       icon={<LuDoorOpen className="text-2xl text-[#8B5CF6]" />}
-      className={`${isStatic && "max-h-[305px]"} h-[305px] mb-4 break-inside-avoid`}
+      className={`${
+        isStatic && "max-h-[305px]"
+      } h-[305px] mb-4 break-inside-avoid`}
     >
       <div className="grid grid-cols-3 gap-6 mb-4">
         <div className="flex flex-col gap-1">
@@ -132,18 +132,31 @@ function Facilities({ isStatic, facility }) {
 
       <div className="w-full h-[150px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <LineChart
+            data={chartData}
+            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="#EBEBEB" />
             <XAxis
               dataKey="time"
-              tick={{ fontSize: 10, lineHeight: 14, fill: "#121212", fontWeight: 400 }}
+              tick={{
+                fontSize: 10,
+                lineHeight: 14,
+                fill: "#121212",
+                fontWeight: 400,
+              }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
               yAxisId="left"
               domain={[0, maxY]}
-              tick={{ fontSize: 10, lineHeight: 14, fill: "#64748B", fontWeight: 400 }}
+              tick={{
+                fontSize: 10,
+                lineHeight: 14,
+                fill: "#64748B",
+                fontWeight: 400,
+              }}
               axisLine={false}
               tickLine={false}
             />

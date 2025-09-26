@@ -1,4 +1,4 @@
-import Header from "../../../components/ui/Header";
+import Header from "../components/Header";
 import StatCardGrid from "./component/StatsGrid";
 import ComplaintsbyLevel from "./component/ComplaintsbyLevel";
 import RequestBox from "./component/RequestBox";

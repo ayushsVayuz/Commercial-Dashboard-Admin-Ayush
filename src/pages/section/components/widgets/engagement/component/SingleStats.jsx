@@ -44,8 +44,8 @@ function StatCardGrid({
 function SingleStats({ data }) {
   const cards = [
     {
-      title: data?.title,
-      value: 160,
+      title: data || "Total Bookings",
+      value: 145,
       delta: "+11.0%",
       deltaLabel: "Compared to last month",
       positive: true,

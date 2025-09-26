@@ -4,9 +4,18 @@ import { RiBillLine } from "react-icons/ri";
 import { LuImagePlus } from "react-icons/lu";
 import { CiBoxList } from "react-icons/ci";
 import { HiOutlineClipboardList } from "react-icons/hi";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 
-function StatCardGrid({ title, value, delta, deltaLabel, positive = true, Icon = DescriptionOutlinedIcon, iconColor = "text-emerald-600", iconBg = "bg-emerald-50" }) {
+function StatCardGrid({
+  title,
+  value,
+  delta,
+  deltaLabel,
+  positive = true,
+  Icon = DescriptionOutlinedIcon,
+  iconColor = "text-emerald-600",
+  iconBg = "bg-emerald-50",
+}) {
   return (
     <Card
       title={title}
@@ -17,9 +26,17 @@ function StatCardGrid({ title, value, delta, deltaLabel, positive = true, Icon =
       }
       className="h-[132px]"
     >
-      <div className="text-3xl font-semibold tracking-tight text-[#121212]">{value}</div>
+      <div className="text-3xl font-semibold tracking-tight text-[#121212]">
+        {value}
+      </div>
       <div className="flex items-center gap-2 text-sm">
-        <div className={positive ? "text-emerald-600 font-medium" : "text-rose-600 font-medium"}>
+        <div
+          className={
+            positive
+              ? "text-emerald-600 font-medium"
+              : "text-rose-600 font-medium"
+          }
+        >
           {delta}
         </div>
         <div className="text-slate-500">{deltaLabel}</div>

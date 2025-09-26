@@ -1,5 +1,5 @@
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 function EventItem({ title, date, rsvp, utilisation, status }) {
   return (
     <div className="mb-4 last:mb-0">

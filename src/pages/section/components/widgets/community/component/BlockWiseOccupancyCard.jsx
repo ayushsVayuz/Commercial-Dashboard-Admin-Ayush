@@ -8,7 +8,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
@@ -32,20 +32,32 @@ const BlockWiseOccupancyCard = ({
       {
         label: "Owner",
         data: owners,
-        backgroundColor: "#4F46E5",
-        barThickness: 36,
+        backgroundColor: "#3C81F6",
+        barThickness: 40,
+      },
+      {
+        label: "",
+        data: owners.map(() => 2),
+        backgroundColor: "transparent",
+        barThickness: 40,
       },
       {
         label: "Rented",
         data: rented,
-        backgroundColor: "#7C3AED",
-        barThickness: 36,
+        backgroundColor: "#8B5CF6",
+        barThickness: 40,
+      },
+      {
+        label: "",
+        data: rented.map(() => 2),
+        backgroundColor: "transparent",
+        barThickness: 40,
       },
       {
         label: "Vacant",
         data: vacant,
-        backgroundColor: "#06B6D4",
-        barThickness: 36,
+        backgroundColor: "#08B6D4",
+        barThickness: 40,
       },
     ],
   };

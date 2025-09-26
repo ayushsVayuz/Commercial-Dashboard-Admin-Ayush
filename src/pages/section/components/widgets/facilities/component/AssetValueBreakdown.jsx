@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const data = [
@@ -46,9 +46,7 @@ function AssetValueBreakdown() {
             <div className="font-semibold text-base sm:text-sm">
               AED {(total / 1000000).toFixed(2)}M
             </div>
-            <div className="text-xs sm:text-sm text-gray-500">
-              Total Assets
-            </div>
+            <div className="text-xs sm:text-sm text-gray-500">Total Assets</div>
           </div>
         </div>
 

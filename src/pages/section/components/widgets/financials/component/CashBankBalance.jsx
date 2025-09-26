@@ -1,6 +1,6 @@
 import React from "react";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 
 const CashBankBalance = () => {
   const accounts = [
@@ -29,10 +29,10 @@ const CashBankBalance = () => {
       {accounts.map((acc, i) => (
         <div key={i} className="flex justify-between items-center ">
           <div>
-            <div className="font-medium">{acc.title}</div>
+            <div className="text-base font-medium">{acc.title}</div>
             <div className="text-xs text-slate-400">{acc.subtitle}</div>
           </div>
-          <div className="text-emerald-600 font-semibold">
+          <div className="text-[#1FA05B] font-semibold">
             {formatCurrency(acc.amount)}
           </div>
         </div>

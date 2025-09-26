@@ -1,6 +1,6 @@
 import React from "react";
 import { DescriptionOutlined as DescriptionOutlinedIcon } from "@mui/icons-material";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 import { FaArrowTrendUp } from "react-icons/fa6";

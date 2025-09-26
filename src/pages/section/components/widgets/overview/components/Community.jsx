@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import { LuBuilding } from "react-icons/lu";
 import {
   PieChart,
@@ -77,7 +77,9 @@ function Community({ isStatic, community }) {
       title="Community"
       period="This Month"
       icon={<LuBuilding className="text-2xl text-[#329DFF]" />}
-      className={`${isStatic && "max-h-[184px]"} h-[184px] mb-4 break-inside-avoid`}
+      className={`${
+        isStatic && "max-h-[184px]"
+      } h-[184px] mb-4 break-inside-avoid`}
     >
       <div className="flex">
         <div className="w-[50%] flex flex-col gap-7">

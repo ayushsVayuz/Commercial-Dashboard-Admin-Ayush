@@ -1,6 +1,6 @@
 import React from "react";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../componets/Card";
+import Card from "../../components/Card";
 import IncomeExpenditure from "./IncomeExpenditure";
 
 function StatusCard({
@@ -13,7 +13,7 @@ function StatusCard({
   textColor,
 }) {
   return (
-    <div className={`rounded-lg p-4 ${bgColor}`}>
+    <div className={`rounded-lg p-4 ${bgColor} border border-[#EBEBEB]`}>
       <div className={`text-sm font-medium ${textColor}`}>{label}</div>
       <div className="mt-1 text-2xl font-semibold text-[#121212]">{value}</div>
       <div className="mt-2 flex items-center gap-2 text-sm">
