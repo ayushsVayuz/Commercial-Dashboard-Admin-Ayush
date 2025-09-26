@@ -75,7 +75,8 @@ const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
       title="Unit Status"
       period="This Month"
       icon={<FaRegBuilding className="h-6 w-6 text-green-600" />}
-      childrenClassName="h-[238px] flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
+      className="h-[238px]"
+      childrenClassName="flex-1 flex gap-4 items-center overflow-hidden"
     >
       <div className="col-span-5 space-y-3">
         <div>

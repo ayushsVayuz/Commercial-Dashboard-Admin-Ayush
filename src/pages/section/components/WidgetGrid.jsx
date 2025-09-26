@@ -9,7 +9,7 @@ export default function WidgetGrid({
   value,
   onChange,
   data,
-  isResizable = false,
+  isResizable = true,
   isDraggable = true,
   widgetPositions,
   setWidgetPositions,
@@ -112,14 +112,16 @@ export default function WidgetGrid({
       >
         {effectiveData?.map((item) => {
           const mapping = AllWidgetMapping[item?.container_id] || {};
-          const [defX, defY, defW, defH] = mapping.position || [0, 0, 2, 2];
+          const [defX, defY, defW, defH] = mapping.position || [0, 0, 1.5, 1.5];
 
           const x = item?.position?.[0] ?? defX;
           const y = item?.position?.[1] ?? defY;
-          const w = Math.max(item?.position?.[2] ?? defW, mapping.minWidth || 2);
-          const h = Math.max(item?.position?.[3] ?? defH, mapping.minHeight || 2);
+          const w = Math.max(item?.position?.[2] ?? defW, mapping.minWidth) || 1.5;
+          const h = Math.max(item?.position?.[3] ?? defH, mapping.minHeight) || 1.5;
 
           const mergedData = { ...mapping.data, ...item?.data };
+
+          console.log(w, "")
 
           return (
             <div key={item?.widget_id} data-grid={{ x, y, w, h }}>

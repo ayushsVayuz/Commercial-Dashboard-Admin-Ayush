@@ -69,12 +69,15 @@ import Complaints from "./widgets/helpdesk/component/Complaints";
 import RequestBox from "./widgets/helpdesk/component/RequestBox";
 import ComplaintsByLevel from "./widgets/helpdesk/component/ComplaintsbyLevel";
 
+import { pxToGridUnits } from "../../../utils";
+
 export const AllWidgetMapping = {
   // ============ OVERVIEW ============ //
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 15.7,
+    // minHeight: 15.7,
+    minHeight: pxToGridUnits(305),
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,
@@ -117,7 +120,7 @@ export const AllWidgetMapping = {
   OVERVIEW_COMMUNITY: {
     component: Community,
     minWidth: 2,
-    minHeight: 9.6,
+    minHeight: pxToGridUnits(184),
     position: [2, 0, 2, 2],
     data: {
       thisMonthMoveIns: 25,
@@ -131,7 +134,7 @@ export const AllWidgetMapping = {
   OVERVIEW_ENGAGEMENT: {
     component: Engagement,
     minWidth: 2,
-    minHeight: 15.6,
+    minHeight: pxToGridUnits(303),
     position: [4, 4, 2, 2],
     data: {
       total_notices: 15,
@@ -143,7 +146,7 @@ export const AllWidgetMapping = {
   OVERVIEW_GATE_UPDATE: {
     component: GateUpdates,
     minWidth: 2,
-    minHeight: 13,
+    minHeight: pxToGridUnits(251),
     position: [0, 6, 2, 2],
     data: {
       summary: {
@@ -170,7 +173,7 @@ export const AllWidgetMapping = {
   OVERVIEW_INCOME_EXPENDITURE: {
     component: FinanceSummary,
     minWidth: 2,
-    minHeight: 12.3,
+    minHeight: pxToGridUnits(232),
     position: [0, 0, 2, 2],
     data: {
       incomeSummary: {
@@ -190,7 +193,7 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: 9.7,
+    minHeight: pxToGridUnits(186),
     position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
@@ -203,281 +206,281 @@ export const AllWidgetMapping = {
   COMMUNITY_UNIT_STATUS: {
     component: UnitStatus,
     minWidth: 2,
-    minHeight: 10,
+    minHeight: pxToGridUnits(238),
     position: [0, 2, 2, 2],
   },
   COMMUNITY_OCCUPANCY_OVERVIEW: {
     component: OccupancyOverview,
     minWidth: 2,
-    minHeight: 10,
+    minHeight: pxToGridUnits(238),
     position: [2, 2, 2, 2],
   },
   COMMUNITY_RESIDENT_OVERVIEW: {
     component: ResidentOverview,
     minWidth: 2,
-    minHeight: 10,
+    minHeight: pxToGridUnits(238),
     position: [4, 2, 2, 2],
   },
   COMMUNITY_MOVEIN_OUT_TRENDS: {
     component: MoveInOutTrends,
-    minWidth: 2,
-    minHeight: 10,
+    minWidth: 3,
+    minHeight: pxToGridUnits(360),
     position: [6, 2, 2, 2],
   },
   COMMUNITY_BLOCK_WISE_OCCUPANCY: {
     component: BlockWiseOccupancy,
-    minWidth: 2,
-    minHeight: 10,
+    minWidth: 3,
+    minHeight: pxToGridUnits(360),
     position: [8, 2, 2, 2],
   },
 
   // ============ FINANCIAL ============ //
   FINANCIALS_ACCOUNTING: {
     component: Accounting,
-    minWidth: 2,
-    minHeight: 25,
+    minWidth: 4,
+    minHeight: pxToGridUnits(523),
     position: [0, 4, 2, 2],
   },
   FINANCIALS_EXPENSECATEGORIES: {
     component: ExpenseCategories,
     minWidth: 2,
-    minHeight: 25,
+    minHeight: pxToGridUnits(523),
     position: [2, 4, 2, 2],
   },
   FINANCIALS_CASH_AND_BANK_BALANCE: {
     component: CashBankBalance,
     minWidth: 2,
-    minHeight: 20,
+    minHeight: pxToGridUnits(362),
     position: [4, 4, 2, 2],
   },
   FINANCIALS_DUES_AGEING: {
     component: DuesAgeing,
-    minWidth: 2,
-    minHeight: 20,
+    minWidth: 4,
+    minHeight: pxToGridUnits(362),
     position: [6, 4, 2, 2],
   },
   FINANCIALS_BUDGET_VS_ACTUALS: {
     component: Budgets,
     minWidth: 6,
-    minHeight: 18.5,
-    position: [8, 4, 2, 2],
+    minHeight: pxToGridUnits(362),
+    position: [8, 2, 2, 2],
   },
 
   // ============ ENGAGEMENT ============ //
   ENGAGEMENT_NOTICE: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: 8,
+    minHeight: pxToGridUnits(132),
     position: [0, 6, 2, 2],
-    data :{
-      title :"Notice"
-    }
+    data: {
+      title: "Notice",
+    },
   },
   ENGAGEMENT_POST: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: 8,
+    minHeight: pxToGridUnits(132),
     position: [2, 6, 2, 2],
-      data :{
-      title :"Post"
-    }
+    data: {
+      title: "Post",
+    },
   },
   ENGAGEMENT_POLL: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: 8,
+    minHeight: pxToGridUnits(132),
     position: [4, 6, 2, 2],
-      data :{
-      title :"Poll"
-    }
+    data: {
+      title: "Poll",
+    },
   },
   ENGAGEMENT_SURVEY: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: 8,
+    minHeight: pxToGridUnits(132),
     position: [6, 6, 2, 2],
-      data :{
-      title :"Survey"
-    }
+    data: {
+      title: "Survey",
+    },
   },
   ENGAGEMENT_NOTICE_BOARD_STATUS: {
     component: NoticeBoardStatus,
     minWidth: 2,
-    minHeight: 13,
+    minHeight: pxToGridUnits(360),
     position: [8, 6, 2, 2],
   },
   ENGAGEMENT_EVENTS_UTILISATION: {
     component: EventsUtilisation,
     minWidth: 2,
-    minHeight: 13,
+    minHeight: pxToGridUnits(360),
     position: [10, 6, 2, 2],
   },
 
   // ============ FACILITIES ============ //
   FACILITIES_TOTAL_BOOKINGS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [0, 8, 2, 2],
-      data :{
-      title :"Total Bookings"
-    }
+    data: {
+      title: "Total Bookings",
+    },
   },
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [2, 8, 2, 2],
-      data :{
-      title :"Utilisation Rate"
-    }
+    data: {
+      title: "Utilisation Rate",
+    },
   },
   FACILITIES_REVENUE: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [4, 8, 2, 2],
-      data :{
-      title :"Facilities Revenue"
-    }
+    data: {
+      title: "Facilities Revenue",
+    },
   },
   FACILITIES_PENDING_DUES: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [6, 8, 2, 2],
-      data :{
-      title :"Pending Dues"
-    }
+    data: {
+      title: "Pending Dues",
+    },
   },
   FACILITIES_ASSET_VALUE_BREAKDOWN: {
     component: AssetValueBreakdown,
     minWidth: 2,
-    minHeight: 15,
+    minHeight: pxToGridUnits(362),
     position: [8, 8, 2, 2],
   },
   FACILITIES_REVENUE_BY_CATEGORY: {
     component: RevenuebyCategory,
     minWidth: 2,
-    minHeight: 15,
+    minHeight: pxToGridUnits(362),
     position: [10, 8, 2, 2],
   },
 
   // ============ GATE & SECURITY ============ //
   GATE_AND_SECURITY_TOTAL_VISITORS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [0, 10, 2, 2],
-      data :{
-      title :"Total Visitors"
-    }
+    data: {
+      title: "Total Visitors",
+    },
   },
   GATE_AND_SECURITY_ACTIVE_INCIDENTS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [2, 10, 2, 2],
-      data :{
-      title :"Active Incidents"
-    }
+    data: {
+      title: "Active Incidents",
+    },
   },
   GATE_AND_SECURITY_MISSING_PATROLS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [4, 10, 2, 2],
-      data :{
-      title :"Missing Patrols"
-    }
+    data: {
+      title: "Missing Patrols",
+    },
   },
   GATE_AND_SECURITY_PARKING_USAGE: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [6, 10, 2, 2],
-      data :{
-      title :"Parking Usage"
-    }
+    data: {
+      title: "Parking Usage",
+    },
   },
   GATE_AND_SECURITY_GUARDPATROLS: {
     component: GuardPatrols,
     minWidth: 2,
-    minHeight: 15,
+    minHeight: pxToGridUnits(362),
     position: [8, 10, 2, 2],
   },
   GATE_AND_SECURITY_HOURLY_TRAFFIC_FLOW: {
     component: HourlyTrafficFlow,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 4,
+    minHeight: pxToGridUnits(362),
     position: [10, 10, 2, 2],
   },
   GATE_AND_SECURITY_INCIDENTREPORTS: {
     component: IncidentReports,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 3,
+    minHeight: pxToGridUnits(362),
     position: [12, 10, 2, 2],
   },
   GATE_AND_SECURITY_STAFFATTENDANCE: {
     component: StaffAttendance,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 3,
+    minHeight: pxToGridUnits(362),
     position: [14, 10, 2, 2],
   },
 
   // ============ HELPDESK ============ //
   HELPDESK_OPEN_COMPLAINTS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [0, 12, 2, 2],
-      data :{
-      title :"Complaints"
-    }
+    data: {
+      title: "Complaints",
+    },
   },
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [2, 12, 2, 2],
-      data :{
-      title :"Pending Requests"
-    }
+    data: {
+      title: "Pending Requests",
+    },
   },
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [4, 12, 2, 2],
-      data :{
-      title :"Avg Response Time"
-    }
+    data: {
+      title: "Avg Response Time",
+    },
   },
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
-    minWidth: 2,
-    minHeight: 8,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(132),
     position: [6, 12, 2, 2],
-      data :{
-      title :"Resolution Rate"
-    }
+    data: {
+      title: "Resolution Rate",
+    },
   },
   HELPDESK_COMPLAINTS: {
     component: Complaints,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 3,
+    minHeight: pxToGridUnits(362),
     position: [8, 12, 2, 2],
   },
   HELPDESK_REQUESTBOX: {
     component: RequestBox,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(362),
     position: [10, 12, 2, 2],
   },
   HELPDESK_COMPLAINTS_BY_LEVEL: {
     component: ComplaintsByLevel,
-    minWidth: 2,
-    minHeight: 15,
+    minWidth: 1.5,
+    minHeight: pxToGridUnits(362),
     position: [12, 12, 2, 2],
   },
 };

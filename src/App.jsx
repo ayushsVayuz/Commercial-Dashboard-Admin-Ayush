@@ -26,6 +26,7 @@ import * as EmotionStyled from "@emotion/styled";
 
 // React Grid Layout
 import * as ReactGridLayout from "react-grid-layout";
+import { pxToGridUnits } from "./utils";
 
 function App() {
   // Expose globals for MF bundle
@@ -41,6 +42,8 @@ function App() {
   window.WidthProvider = ReactGridLayout.WidthProvider;
   window.Responsive = ReactGridLayout.Responsive;
   window.process = { env: {} };
+
+  console.log(pxToGridUnits(362), "aaaaaaaaaaa")
   
   return (
     <>
