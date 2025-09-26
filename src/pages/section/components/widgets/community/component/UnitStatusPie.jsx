@@ -76,32 +76,34 @@ const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
       period="This Month"
       icon={<LuBuilding className="h-6 w-6 text-green-600" />}
       className="h-[238px]"
-      childrenClassName="flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
+      childrenClassName="flex-1 min-h-0 "
     >
-      <div className="col-span-5 space-y-3">
-        <div>
-          <div className="text-xs text-slate-500">Sold</div>
-          <div className="text-xl font-semibold text-[#1FA05B]">{sold}</div>
+      <div className="grid grid-cols-12 gap-4 items-center">
+        <div className="col-span-5 space-y-3">
+          <div>
+            <div className="text-xs text-slate-500">Sold</div>
+            <div className="text-xl font-semibold text-[#1FA05B]">{sold}</div>
+          </div>
+          <div>
+            <div className="text-xs text-slate-500">Unsold</div>
+            <div className="text-xl font-semibold text-[#EF4444]">{unsold}</div>
+          </div>
+          <div className="text-xs text-[#1FA05B] font-medium flex gap-2">
+            {growthPct}{" "}
+            <span className="text-[#64748B] font-normal">
+              Compared to last month
+            </span>
+          </div>
         </div>
-        <div>
-          <div className="text-xs text-slate-500">Unsold</div>
-          <div className="text-xl font-semibold text-[#EF4444]">{unsold}</div>
-        </div>
-        <div className="text-xs text-[#1FA05B] font-medium flex gap-2">
-          {growthPct}{" "}
-          <span className="text-[#64748B] font-normal">
-            Compared to last month
-          </span>
-        </div>
-      </div>
 
-      <div className="col-span-7">
-        <div className="h-[158px] w-[158px] ml-auto mr-2">
-          <Doughnut
-            data={data}
-            options={options}
-            plugins={[centerTextPlugin]}
-          />
+        <div className="col-span-7">
+          <div className="h-[158px] w-[158px] ml-auto mr-2">
+            <Doughnut
+              data={data}
+              options={options}
+              plugins={[centerTextPlugin]}
+            />
+          </div>
         </div>
       </div>
     </Card>
