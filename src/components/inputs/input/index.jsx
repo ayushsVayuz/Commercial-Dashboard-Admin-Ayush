@@ -16,6 +16,7 @@ export const Input = ({
   errorContent,
   autoComplete,
   disabled,
+  
   ...props
 }) => {
   const [passwordType, setPasswordType] = useState("password");

@@ -17,8 +17,6 @@ import { Toggle } from "../../components/inputs/toogle";
 import { LuLoaderCircle } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-
-
 const modernAnimationStyles = `
   .table-row {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,18 +57,15 @@ const modernAnimationStyles = `
   }
 `;
 
-
-
-
 const SectionListing = () => {
   const dispatch = useDispatch();
 
   const [isAnimating, setIsAnimating] = useState(false);
-const [movingRows, setMovingRows] = useState({});
+  const [movingRows, setMovingRows] = useState({});
   const { sections, statusLoading, loading, totalCount } = useSelector(
     (state) => state.section
   );
-const [localSections, setLocalSections] = useState([]);
+  const [localSections, setLocalSections] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [rowsPerPage, setRowsPerPage] = useState(
     parseInt(searchParams.get("limit")) || 10
@@ -92,8 +87,6 @@ const [localSections, setLocalSections] = useState([]);
       search: searchQuery,
     };
 
-
-
     const existingParams = Object.fromEntries([...searchParams]);
 
     const hasChanged = Object.entries(newParams).some(
@@ -105,25 +98,28 @@ const [localSections, setLocalSections] = useState([]);
     }
   }, [currentPage, rowsPerPage, searchQuery]);
 
-//   useEffect(() => {
-//   setLocalSections(sections || []);
-// }, [sections]);
+  //   useEffect(() => {
+  //   setLocalSections(sections || []);
+  // }, [sections]);
 
-useEffect(() => {
-  if (sections && sections.length > 0) {
-    // Preserve the order if localSections was reordered
-    if (localSections.length === sections.length) {
-      const updatedLocal = localSections.map(localSection => {
-        const updatedSection = sections.find(s => s.section_id === localSection.section_id);
-        return updatedSection ? { ...localSection, status: updatedSection.status } : localSection;
-      });
-      setLocalSections(updatedLocal);
-    } else {
-      setLocalSections(sections);
+  useEffect(() => {
+    if (sections && sections.length > 0) {
+      // Preserve the order if localSections was reordered
+      if (localSections.length === sections.length) {
+        const updatedLocal = localSections.map((localSection) => {
+          const updatedSection = sections.find(
+            (s) => s.section_id === localSection.section_id
+          );
+          return updatedSection
+            ? { ...localSection, status: updatedSection.status }
+            : localSection;
+        });
+        setLocalSections(updatedLocal);
+      } else {
+        setLocalSections(sections);
+      }
     }
-  }
-}, [sections]);
-
+  }, [sections]);
 
   // fetch data on change
   useEffect(() => {
@@ -146,15 +142,15 @@ useEffect(() => {
   }, [currentPage, searchQuery, rowsPerPage]);
 
   const tableHeaders = [
+    "Move",
     "Sr No.",
     "Section Name",
     "Order",
     // "Collapsible",
     // "Collapsed",
-    
+
     "Status",
     "Action",
-    "Move",
   ];
 
   const actionMenu = [
@@ -170,70 +166,114 @@ useEffect(() => {
     },
   ];
 
+  const moveSection = (index, direction) => {
+    if (isAnimating) return;
 
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= localSections.length) return;
 
+    setIsAnimating(true);
 
-const moveSection = async (index, direction) => {
-  
-  if (isAnimating) return;
+    // Apply animation classes
+    setMovingRows({
+      [index]: direction === "up" ? "row-moving-up" : "row-moving-down",
+      [newIndex]: direction === "up" ? "row-moving-down" : "row-moving-up",
+    });
 
+    // Listen for transition end
+    const handleTransitionEnd = () => {
+      const reordered = [...localSections];
+      [reordered[index], reordered[newIndex]] = [
+        reordered[newIndex],
+        reordered[index],
+      ];
 
-  const newIndex = direction === 'up' ? index - 1 : index + 1;
-  if (newIndex < 0 || newIndex >= localSections.length) return;
+      const updated = reordered.map((s, idx) => ({
+        ...s,
+        order_index: idx + 1,
+      }));
 
+      setLocalSections(updated);
+      setMovingRows({});
+      setIsAnimating(false);
 
-  setIsAnimating(true);
+      // Save backend
+      const payload = updated.map((s) => ({
+        id: s?.section_id,
+        order_index: s?.order_index,
+      }));
 
-
-
-  setMovingRows({
-    [index]: direction === 'up' ? 'row-moving-up' : 'row-moving-down',
-    [newIndex]: direction === 'up' ? 'row-moving-down' : 'row-moving-up'
-  });
-
-
- 
-  setTimeout(async () => {
-    const reordered = [...localSections];
-    [reordered[index], reordered[newIndex]] = [reordered[newIndex], reordered[index]];
-    const updated = reordered.map((s, idx) => ({
-      ...s,
-      order_index: idx + 1,
-    }));
-
-
-    setLocalSections(updated);
-    setMovingRows({});
-    setIsAnimating(false);
-
-
-    // (Optionally: Save backend)
-    const payload = updated.map((s) => ({
-      id: s?.section_id,
-      order_index: s?.order_index,
-    }));
-    try {
-      const res = await fetch(
+      fetch(
         "https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save",
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sections: payload }),
         }
-      );
-      if (!res.ok) {
-        throw new Error(`Failed to save section order: ${res.status}`);
-      }
-      await res.json();
-    } catch (err) {
-      // handle error
-    }
-  }, 400);
-};
+      ).catch(() => {});
+
+      // Cleanup
+      document.removeEventListener("transitionend", handleTransitionEnd);
+    };
+
+    // Attach listener (fires only once)
+    document.addEventListener("transitionend", handleTransitionEnd, {
+      once: true,
+    });
+  };
 
   const tableData = localSections?.map((section, index) => ({
-    
+    move: {
+      component: (
+        <div className="flex gap-1 justify-center items-center">
+          <button
+            onClick={() => moveSection(index, "up")}
+            disabled={index === 0 || isAnimating}
+            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+                   disabled:cursor-not-allowed transition-all duration-200 
+                   hover:scale-110 active:scale-95"
+          >
+            <svg
+              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 14l5-5 5 5"
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={() => moveSection(index, "down")}
+            disabled={index === localSections.length - 1 || isAnimating}
+            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+                   disabled:cursor-not-allowed transition-all duration-200 
+                   hover:scale-110 active:scale-95"
+          >
+            <svg
+              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 10l5 5 5-5"
+              />
+            </svg>
+          </button>
+        </div>
+      ),
+    },
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
+
     name: { content: section.section_name, link: `view/${section.section_id}` },
     order: { content: section.order_index?.toString() },
     // isCollapsible: {
@@ -244,67 +284,79 @@ const moveSection = async (index, direction) => {
     //   content: section.is_collapsed ? "Yes" : "No",
     //   type: "status",
     // },
-    
-    status: {
-   
 
+    status: {
       component: (
-      <>
-        {statusLoading == section.section_id ? (
-          <div className="flex justify-center items-center">
-            <LuLoaderCircle size={24} />
-          </div>
-        ) : (
-          <Toggle
-            value={section.status == 1 ? true : false}
-            onChange={() =>
-              dispatch(changeStatusSection({ sectionId: section.section_id }))
-            }
-          />
-        )}
-      </>
-    ),
+        <>
+          {statusLoading == section.section_id ? (
+            <div className="flex justify-center items-center">
+              <LuLoaderCircle size={24} />
+            </div>
+          ) : (
+            <Toggle
+              value={section.status == 1 ? true : false}
+              onChange={() =>
+                dispatch(changeStatusSection({ sectionId: section.section_id }))
+              }
+            />
+          )}
+        </>
+      ),
     },
     actions: {
       component: <MoreOption id={section.section_id} actionMenu={actionMenu} />,
     },
-  
 
-
-  move: {
-  component: (
-    <div className="flex gap-1 justify-center items-center">
-      <button 
-        onClick={() => moveSection(index, 'up')}
-        disabled={index === 0 || isAnimating}
-        className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+    move: {
+      component: (
+        <div className="flex gap-1 justify-center items-center">
+          <button
+            onClick={() => moveSection(index, "up")}
+            disabled={index === 0 || isAnimating}
+            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
                    disabled:cursor-not-allowed transition-all duration-200 
                    hover:scale-110 active:scale-95"
-      >
-        <svg className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" 
-             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d="M7 14l5-5 5 5" />
-        </svg>
-      </button>
-      
-      <button 
-        onClick={() => moveSection(index, 'down')}
-        disabled={index === localSections.length - 1 || isAnimating}
-        className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+          >
+            <svg
+              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 14l5-5 5 5"
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={() => moveSection(index, "down")}
+            disabled={index === localSections.length - 1 || isAnimating}
+            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
                    disabled:cursor-not-allowed transition-all duration-200 
                    hover:scale-110 active:scale-95"
-      >
-        <svg className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors" 
-             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d="M7 10l5 5 5-5" />
-        </svg>
-      </button>
-    </div>
-  ),
-},
-  // className: "transition-all duration-300 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-700"
+          >
+            <svg
+              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 10l5 5 5-5"
+              />
+            </svg>
+          </button>
+        </div>
+      ),
+    },
+    // className: "transition-all duration-300 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-700"
   }));
 
   return (
@@ -353,27 +405,24 @@ const moveSection = async (index, direction) => {
         </div>
       )} */}
 
-      
-  {loading ? (
-    <TableShimmer />
-  ) : (
-    <div className="card-body dark:dark:bg-slate-800 p-0">
-      <Table
-        module="Section"
-        headers={tableHeaders}
-        initialData={tableData}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        rowPerPage={true}
-        selectedValue={rowsPerPage}
-        setSelectedValue={setRowsPerPage}
-        movingRows={movingRows}
-        
-      />
-    </div>
-  )}
-
+      {loading ? (
+        <TableShimmer />
+      ) : (
+        <div className="card-body dark:dark:bg-slate-800 p-0">
+          <Table
+            module="Section"
+            headers={tableHeaders}
+            initialData={tableData}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            rowPerPage={true}
+            selectedValue={rowsPerPage}
+            setSelectedValue={setRowsPerPage}
+            movingRows={movingRows}
+          />
+        </div>
+      )}
     </section>
   );
 };
