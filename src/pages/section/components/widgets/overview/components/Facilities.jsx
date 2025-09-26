@@ -1,4 +1,5 @@
-import Card from "../../../../../../components/ui/Card";
+import React, { useMemo } from "react";
+import Card from "../../componets/Card";
 import { LuDoorOpen } from "react-icons/lu";
 import {
   LineChart,
@@ -10,19 +11,58 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Facilities({ isStatic, data }) {
-  const totalBookings = Number(data.totalBookings || 0);
-  const totalSlots = Number(data.totalSlots || 0);
-  const utilizationRate = Number(data.utilizationRate || 0);
+function timeToMinutes(timeStr) {
+  if (!timeStr) return 0;
+  const [raw, meridian] = timeStr.split(" ");
+  let [hours, minutes] = raw.split(":").map(Number);
+  if (meridian === "PM" && hours !== 12) hours += 12;
+  if (meridian === "AM" && hours === 12) hours = 0;
+  return hours * 60 + minutes;
+}
 
-  const chartData =
-    data?.slots?.map((slot, index) => ({
-      time: slot?.slot_start_time
-        ? `${slot.slot_start_time} - ${slot.slot_end_time}`
-        : `Slot ${index + 1}`,
-      bookings: Number(slot?.slot_bookings || 0),
-      total: Number(slot?.total_slots || 0),
-    })) || [];
+function toTimeString(minutes) {
+  let h = Math.floor(minutes / 60);
+  const meridian = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h} ${meridian}`;
+}
+
+function groupSlotsIntoTwoHours(slots) {
+  const bucketSize = 240;
+  const grouped = {};
+
+  for (let i = 0; i < slots.length; i++) {
+    const slot = slots[i];
+    const startMinutes = timeToMinutes(slot.slot_start_time);
+
+    const bucketStart = Math.floor(startMinutes / bucketSize) * bucketSize;
+    const bucketEnd = bucketStart + bucketSize;
+    const key = `${bucketStart}-${bucketEnd}`;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        time: toTimeString(bucketEnd),
+        bookings: 0,
+        total: 0,
+      };
+    }
+
+    grouped[key].bookings += Number(slot?.slot_bookings || 0);
+    grouped[key].total += Number(slot?.total_slots || 0);
+  }
+
+  return Object.values(grouped);
+}
+
+function Facilities({ isStatic, facility }) {
+  const totalBookings = Number(facility?.totalBookings || 0);
+  const totalSlots = Number(facility?.totalSlots || 0);
+  const utilizationRate = Number(facility?.utilizationRate || 0);
+
+  const chartData = useMemo(() => {
+    if (!facility?.slots?.length) return [];
+    return groupSlotsIntoTwoHours(facility.slots);
+  }, [facility]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
@@ -40,7 +80,7 @@ function Facilities({ isStatic, data }) {
                 backgroundColor: item.color,
                 marginRight: 6,
               }}
-            ></span>
+            />
             {item.name}: <span className="font-semibold">{item.value}</span>
           </p>
         ))}
@@ -48,12 +88,17 @@ function Facilities({ isStatic, data }) {
     );
   };
 
+  const maxY =
+    chartData.length > 0
+      ? Math.max(...chartData.map((d) => d.total), 5)
+      : 5;
+
   return (
     <Card
       title="Facilities"
       period="Today"
       icon={<LuDoorOpen className="text-2xl text-[#8B5CF6]" />}
-      className={`${isStatic && "max-h-[305px]"} mb-4 break-inside-avoid`}
+      className={`${isStatic && "max-h-[305px]"} h-[305px] mb-4 break-inside-avoid`}
     >
       <div className="grid grid-cols-3 gap-6 mb-4">
         <div className="flex flex-col gap-1">
@@ -77,39 +122,28 @@ function Facilities({ isStatic, data }) {
             Utilisation Rate
           </div>
           <div className="!m-0 !text-[24px] !leading-[28px] !font-medium !text-[#329DFF]">
-            {utilizationRate.toFixed(2)}%
+            {Number.isFinite(utilizationRate)
+              ? utilizationRate.toFixed(2)
+              : "0.00"}
+            %
           </div>
         </div>
       </div>
 
-      <div className="w-full h-[200px]">
+      <div className="w-full h-[150px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={chartData}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-          >
+          <LineChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#EBEBEB" />
             <XAxis
               dataKey="time"
-              tick={{
-                fontSize: 10,
-                lineHeight: 14,
-                fill: "#121212",
-                fontWeight: 400,
-              }}
+              tick={{ fontSize: 10, lineHeight: 14, fill: "#121212", fontWeight: 400 }}
               axisLine={false}
               tickLine={false}
-              interval={20}
             />
             <YAxis
               yAxisId="left"
-              domain={[0, Math.max(...chartData.map((d) => d.total), 5)]}
-              tick={{
-                fontSize: 10,
-                lineHeight: 14,
-                fill: "#64748B",
-                fontWeight: 400,
-              }}
+              domain={[0, maxY]}
+              tick={{ fontSize: 10, lineHeight: 14, fill: "#64748B", fontWeight: 400 }}
               axisLine={false}
               tickLine={false}
             />

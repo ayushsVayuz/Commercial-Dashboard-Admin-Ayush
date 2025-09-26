@@ -1,6 +1,6 @@
-import { DescriptionOutlined as DescriptionOutlinedIcon } from "@mui/icons-material";
+import React from "react";
 import { RiBillLine } from "react-icons/ri";
-import Card from "../../../../../../components/ui/Card";
+import { DescriptionOutlined as DescriptionOutlinedIcon } from "@mui/icons-material";
 
 function StatCardGrid({
   title,
@@ -13,19 +13,20 @@ function StatCardGrid({
   iconBg = "bg-emerald-50",
 }) {
   return (
-    <Card
-      title={title}
-      icon={
+    <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] p-4 h-[132px] flex flex-col justify-between ">
+      <div className="flex items-center gap-2">
         <div className={`h-6 w-6 grid place-items-center rounded-md ${iconBg}`}>
           <Icon className={`h-4 w-4 ${iconColor}`} />
         </div>
-      }
-    >
+        <span className="text-sm font-semibold text-slate-800">{title}</span>
+      </div>
+
       <div className="text-4xl font-semibold tracking-tight text-[#121212]">
         {value}
       </div>
+
       <div className="flex items-center gap-2 text-sm">
-        <span
+        <div
           className={
             positive
               ? "text-emerald-600 font-medium"
@@ -33,17 +34,17 @@ function StatCardGrid({
           }
         >
           {delta}
-        </span>
-        <span className="text-slate-500">{deltaLabel}</span>
+        </div>
+        <div className="text-slate-500">{deltaLabel}</div>
       </div>
-    </Card>
+    </div>
   );
 }
 
 function SingleStats({ data }) {
   const cards = [
     {
-      title: data,
+      title: data?.title,
       value: 160,
       delta: "+11.0%",
       deltaLabel: "Compared to last month",

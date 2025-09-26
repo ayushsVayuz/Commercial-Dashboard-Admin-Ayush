@@ -1,8 +1,8 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GoHome } from "react-icons/go";
-import Card from "../../../../../../components/ui/Card";
+import { FaRegBuilding } from "react-icons/fa";
+import Card from "../../componets/Card";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -36,21 +36,15 @@ const centerTextPlugin = {
   },
 };
 
-const ResidentOverviewCard = ({
-  ownerCount = 1000,
-  tenantCount = 200,
-  nonResidingOwners = 26,
-  growthPct = "+9.1%",
-}) => {
-  const ownerResiding = Math.max(ownerCount - nonResidingOwners, 0);
-  const totalMembers = ownerCount + tenantCount;
+const UnitStatusPie = ({ sold = 847, unsold = 73, growthPct = "+9.1%" }) => {
+  const totalUnits = sold + unsold;
 
   const data = {
-    labels: ["Owners", "Tenants", "Non-residing Owner"],
+    labels: ["Sold", "Unsold"],
     datasets: [
       {
-        data: [ownerResiding, tenantCount, nonResidingOwners],
-        backgroundColor: ["#3B82F6", "#10B981", "#8B5CF6"],
+        data: [sold, unsold],
+        backgroundColor: ["#1FA05B", "#EF4444"],
         borderWidth: 2,
         hoverOffset: 4,
       },
@@ -68,8 +62,8 @@ const ResidentOverviewCard = ({
         displayColors: false,
       },
       centerText: {
-        top: `${totalMembers}`,
-        bottom: "Total Members",
+        top: `${totalUnits}`,
+        bottom: "Total Units",
         topSize: 20,
         bottomSize: 10,
       },
@@ -78,22 +72,19 @@ const ResidentOverviewCard = ({
 
   return (
     <Card
-      title="Resident Overview"
-      icon={<GoHome className="h-6 w-6 text-purple-600" />}
-      childrenClassName="flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
+      title="Unit Status"
+      period="This Month"
+      icon={<FaRegBuilding className="h-6 w-6 text-green-600" />}
+      childrenClassName="h-[238px] flex-1 min-h-0 grid grid-cols-12 gap-4 items-center"
     >
       <div className="col-span-5 space-y-3">
         <div>
-          <div className="text-xs text-slate-500">Total Owners</div>
-          <div className="text-3xl font-semibold text-[#3B82F6]">
-            {ownerCount}
-          </div>
+          <div className="text-xs text-slate-500">Sold</div>
+          <div className="text-xl font-semibold text-[#1FA05B]">{sold}</div>
         </div>
         <div>
-          <div className="text-xs text-slate-500">Total Tenants</div>
-          <div className="text-3xl font-semibold text-[#08B6D4]">
-            {tenantCount}
-          </div>
+          <div className="text-xs text-slate-500">Unsold</div>
+          <div className="text-xl font-semibold text-[#EF4444]">{unsold}</div>
         </div>
         <div className="text-xs text-emerald-600">
           {growthPct}{" "}
@@ -102,7 +93,7 @@ const ResidentOverviewCard = ({
       </div>
 
       <div className="col-span-7">
-        <div className="h-[162px] w-[163px] ml-auto mr-2">
+        <div className="h-[158px] w-[158px] ml-auto mr-2">
           <Doughnut
             data={data}
             options={options}
@@ -114,4 +105,4 @@ const ResidentOverviewCard = ({
   );
 };
 
-export default ResidentOverviewCard;
+export default UnitStatusPie;

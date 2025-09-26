@@ -78,13 +78,37 @@ export const readSectionListing = createAsyncThunk(
         .join("&");
 
       const response = await client.get(
-        `/sections/all-sections/${id ? id : ""}${queryString ? "?" + queryString : ""}`,
+        `/sections/all-sections/${id ? id : ""}${
+          queryString ? "?" + queryString : ""
+        }`,
         {
           // headers: {
           //   Authorization: `Bearer ${token}`,
           // },
         }
       );
+      console.log(response, "responsee section");
+
+      return response.data;
+    } catch (error) {
+      console.log("rannn2", error);
+      return rejectWithValue(error?.response?.data?.message || error?.message);
+    }
+  }
+);
+
+// Get section widgets position
+export const readSectionWidgetsPosition = createAsyncThunk(
+  "section/readSectionWidgetsPosition",
+  async ({ id }, { rejectWithValue, getState }) => {
+    const token = getTokenFromLocalStorage() || getState().auth.token;
+
+    try {
+      const response = await client.get(`/sections/get-positions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response, "responsee section");
 
       return response.data;
@@ -158,7 +182,7 @@ export const changeStatusSection = createAsyncThunk(
       console.log(response, "response of edit");
 
       return {
-        statusCode: response.data.statusCode
+        statusCode: response.data.statusCode,
       };
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);

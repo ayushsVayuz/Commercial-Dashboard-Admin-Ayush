@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const data = [
@@ -19,6 +19,7 @@ function GuardPatrols() {
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
+      className="h-[362px]"
     >
       <div className="flex flex-col items-center justify-center">
         <div className="w-[215px] h-[182px] relative">
@@ -41,10 +42,10 @@ function GuardPatrols() {
           </ResponsiveContainer>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="font-semibold text-base">
+            <div className="font-semibold text-base">
               {completed}/{total}
-            </span>
-            <span className="text-xs text-gray-500">Completed</span>
+            </div>
+            <div className="text-xs text-gray-500">Completed</div>
           </div>
         </div>
 
@@ -55,13 +56,13 @@ function GuardPatrols() {
               className="flex items-center justify-between text-xs text-gray-600"
             >
               <div className="flex items-center gap-2">
-                <span
+                <div
                   className="inline-block w-2 h-2 rotate-45"
                   style={{ backgroundColor: item.color }}
                 />
-                <span>{item.name}</span>
+                <div>{item.name}</div>
               </div>
-              <span>{item.value}</span>
+              <div>{item.value}</div>
             </div>
           ))}
         </div>

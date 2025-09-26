@@ -1,11 +1,11 @@
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 function StatusCard({ label, value, subLabel, bgColor, textColor }) {
   return (
     <div className={`rounded-lg p-4 ${bgColor}`}>
-      <h3 className={`text-sm font-medium ${textColor}`}>{label}</h3>
+      <div className={`text-sm font-medium ${textColor}`}>{label}</div>
       <div className="mt-1 text-2xl font-semibold text-[#121212]">{value}</div>
-      <p className="text-xs text-slate-500 mt-1">{subLabel}</p>
+      <div className="text-xs text-slate-500 mt-1">{subLabel}</div>
     </div>
   );
 }
@@ -17,7 +17,7 @@ export default function NoticeBoardStatus() {
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
-      className="w-full"
+      className="w-full h-[360px]"
     >
       <div className="grid grid-cols-2 gap-4">
         <StatusCard

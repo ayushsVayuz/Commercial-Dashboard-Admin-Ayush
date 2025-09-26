@@ -1,4 +1,5 @@
-import Card from "../../../../../../components/ui/Card";
+import React from "react";
+import Card from "../../componets/Card";
 import { LuWrench } from "react-icons/lu";
 import {
   PieChart,
@@ -8,8 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Helpdesk({ isStatic, data }) {
-
+function Helpdesk({ isStatic, complaints }) {
   const Chip = ({ value }) => {
     if (value === null || value === undefined || isNaN(value)) {
       return null;
@@ -29,10 +29,10 @@ function Helpdesk({ isStatic, data }) {
   };
 
   const helpdeskBreakup = [
-    { name: "L1", value: Number(data?.today_L1 || 0) },
-    { name: "L2", value: Number(data?.today_L2 || 0) },
-    { name: "L3", value: Number(data?.today_L3 || 0) },
-    { name: "No Level", value: Number(data?.today_NoLevel || 0) },
+    { name: "L1", value: Number(complaints?.today_L1 || 0) },
+    { name: "L2", value: Number(complaints?.today_L2 || 0) },
+    { name: "L3", value: Number(complaints?.today_L3 || 0) },
+    { name: "No Level", value: Number(complaints?.today_NoLevel || 0) },
   ];
 
   const total = helpdeskBreakup.reduce((sum, d) => sum + d.value, 0);
@@ -72,23 +72,23 @@ function Helpdesk({ isStatic, data }) {
       title="Helpdesk"
       period="Today"
       icon={<LuWrench className="text-2xl text-[#FA7E28]" />}
-      className={`${isStatic && "max-h-[186px]"} mb-4 break-inside-avoid`}
+      className={`${isStatic && "max-h-[186px]"} h-[186px] mb-4 break-inside-avoid`}
     >
       <div className="flex gap-3 h-fit">
         <div className="w-[50%] flex flex-col gap-7">
           <div className="flex flex-col gap-2">
-            <div className="!m-0 !text-xs !leading-[16px] !text-[#64748B]">
+            <h4 className="!m-0 !text-xs !leading-[16px] !text-[#64748B]">
               Open Complaints
-            </div>
-            <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#FA7E28]">
-              {data?.today_open_complaints ?? 0}
-            </div>
+            </h4>
+            <p className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#FA7E28]">
+              {complaints?.today_open_complaints ?? 0}
+            </p>
           </div>
 
-          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B] space-x-1">
-            <Chip value={data?.percent_change} />
+          <p className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B] space-x-1">
+            <Chip value={complaints?.percent_change} />
             <span className="whitespace-nowrap">Compared to yesterday</span>
-          </div>
+          </p>
         </div>
         <div className="w-[50%] h-[110px] flex justify-end">
           <ResponsiveContainer width="75%" height="100%">

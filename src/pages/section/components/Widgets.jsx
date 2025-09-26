@@ -41,11 +41,11 @@ import FinanceSummary from "./widgets/overview/components/FinanceSummary";
 import GateUpdates from "./widgets/overview/components/GateUpdates";
 import Helpdesk from "./widgets/overview/components/Helpdesk";
 
-import UnitStatus from "./widgets/community/components/UnitStatusPie";
-import OccupancyOverview from "./widgets/community/components/OccupancyOverviewCard";
-import ResidentOverview from "./widgets/community/components/ResidentOverviewCard";
-import MoveInOutTrends from "./widgets/community/components/MoveInOutTrendsCard";
-import BlockWiseOccupancy from "./widgets/community/components/BlockWiseOccupancyCard";
+import UnitStatus from "./widgets/community/component/UnitStatusPie";
+import OccupancyOverview from "./widgets/community/component/OccupancyOverviewCard";
+import ResidentOverview from "./widgets/community/component/ResidentOverviewCard";
+import MoveInOutTrends from "./widgets/community/component/MoveInOutTrendsCard";
+import BlockWiseOccupancy from "./widgets/community/component/BlockWiseOccupancyCard";
 
 import Accounting from "./widgets/financials/component/AccountingCard";
 import ExpenseCategories from "./widgets/financials/component/ExpenseCategories";
@@ -74,7 +74,7 @@ export const AllWidgetMapping = {
   OVERVIEW_FACILITIES: {
     component: Facilities,
     minWidth: 2,
-    minHeight: 18,
+    minHeight: 15.7,
     position: [2, 0, 2, 2],
     data: {
       totalBookings: 45,
@@ -117,7 +117,7 @@ export const AllWidgetMapping = {
   OVERVIEW_COMMUNITY: {
     component: Community,
     minWidth: 2,
-    minHeight: 12.5,
+    minHeight: 9.6,
     position: [2, 0, 2, 2],
     data: {
       thisMonthMoveIns: 25,
@@ -131,7 +131,7 @@ export const AllWidgetMapping = {
   OVERVIEW_ENGAGEMENT: {
     component: Engagement,
     minWidth: 2,
-    minHeight: 19,
+    minHeight: 15.6,
     position: [4, 4, 2, 2],
     data: {
       total_notices: 15,
@@ -143,7 +143,7 @@ export const AllWidgetMapping = {
   OVERVIEW_GATE_UPDATE: {
     component: GateUpdates,
     minWidth: 2,
-    minHeight: 12,
+    minHeight: 13,
     position: [0, 6, 2, 2],
     data: {
       summary: {
@@ -170,7 +170,7 @@ export const AllWidgetMapping = {
   OVERVIEW_INCOME_EXPENDITURE: {
     component: FinanceSummary,
     minWidth: 2,
-    minHeight: 12,
+    minHeight: 12.3,
     position: [0, 0, 2, 2],
     data: {
       incomeSummary: {
@@ -190,7 +190,7 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: 12.5,
+    minHeight: 9.7,
     position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
@@ -258,8 +258,8 @@ export const AllWidgetMapping = {
   },
   FINANCIALS_BUDGET_VS_ACTUALS: {
     component: Budgets,
-    minWidth: 2,
-    minHeight: 20,
+    minWidth: 6,
+    minHeight: 18.5,
     position: [8, 4, 2, 2],
   },
 
@@ -269,28 +269,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 6, 2, 2],
-     data: "Notice",
+    data :{
+      title :"Notice"
+    }
   },
   ENGAGEMENT_POST: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 6, 2, 2],
-     data: "Post",
+      data :{
+      title :"Post"
+    }
   },
   ENGAGEMENT_POLL: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 6, 2, 2],
-     data: "Poll",
+      data :{
+      title :"Poll"
+    }
   },
   ENGAGEMENT_SURVEY: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 6, 2, 2],
-     data: "Survey",
+      data :{
+      title :"Survey"
+    }
   },
   ENGAGEMENT_NOTICE_BOARD_STATUS: {
     component: NoticeBoardStatus,
@@ -311,28 +319,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 8, 2, 2],
-     data: "Total Bookings",
+      data :{
+      title :"Total Bookings"
+    }
   },
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 8, 2, 2],
-     data: "Utilisation Rate",
+      data :{
+      title :"Utilisation Rate"
+    }
   },
   FACILITIES_REVENUE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 8, 2, 2],
-     data: "Facilities Revenue",
+      data :{
+      title :"Facilities Revenue"
+    }
   },
   FACILITIES_PENDING_DUES: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 8, 2, 2],
-     data: "Pending Dues",
+      data :{
+      title :"Pending Dues"
+    }
   },
   FACILITIES_ASSET_VALUE_BREAKDOWN: {
     component: AssetValueBreakdown,
@@ -353,28 +369,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 10, 2, 2],
-     data: "Total Visitors",
+      data :{
+      title :"Total Visitors"
+    }
   },
   GATE_AND_SECURITY_ACTIVE_INCIDENTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 10, 2, 2],
-     data: "Active Incidents",
+      data :{
+      title :"Active Incidents"
+    }
   },
   GATE_AND_SECURITY_MISSING_PATROLS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 10, 2, 2],
-     data: "Missing Patrols",
+      data :{
+      title :"Missing Patrols"
+    }
   },
   GATE_AND_SECURITY_PARKING_USAGE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 10, 2, 2],
-     data: "Parking Usage",
+      data :{
+      title :"Parking Usage"
+    }
   },
   GATE_AND_SECURITY_GUARDPATROLS: {
     component: GuardPatrols,
@@ -407,28 +431,36 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: 8,
     position: [0, 12, 2, 2],
-     data: "Complaints",
+      data :{
+      title :"Complaints"
+    }
   },
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [2, 12, 2, 2],
-     data: "Pending Requests",
+      data :{
+      title :"Pending Requests"
+    }
   },
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [4, 12, 2, 2],
-     data: "Avg Response Time",
+      data :{
+      title :"Avg Response Time"
+    }
   },
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
     minWidth: 2,
     minHeight: 8,
     position: [6, 12, 2, 2],
-     data: "Resolution Rate",
+      data :{
+      title :"Resolution Rate"
+    }
   },
   HELPDESK_COMPLAINTS: {
     component: Complaints,

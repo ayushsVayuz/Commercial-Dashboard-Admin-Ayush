@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -90,7 +90,7 @@ const BudgetVsActuals = () => {
   return (
     <Card
       title="Budget vs Actuals"
-      className="w-full"
+      className="w-full h-[362px]"
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }

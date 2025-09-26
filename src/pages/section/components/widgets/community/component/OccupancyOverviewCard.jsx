@@ -1,6 +1,6 @@
 import React from "react";
 import { GoPeople } from "react-icons/go";
-import Card from "../../../../../../components/ui/Card";
+
 const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
   const pct = Math.max(0, Math.min(100, (value / (total || 1)) * 100));
 
@@ -11,8 +11,8 @@ const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
     : "text-slate-600";
 
   return (
-    <div className="flex flex-col items-start">
-      <div className="w-[120px]">
+    <div className="flex flex-col items-start ">
+      <div className="w-[120px] h-3 rounded-full overflow-hidden">
         <div
           className={`h-3 rounded-full ${colorClass}`}
           style={{ width: `${pct}%` }}
@@ -25,7 +25,7 @@ const MiniPill = ({ value = 0, total = 1, colorClass = "", label = "" }) => {
 };
 
 const StatTile = ({ title, value, suffix, valueClass = "" }) => (
-  <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] p-4">
+  <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] h-[84px] p-4 flex flex-col justify-center">
     <div className="text-xs text-black font-semibold mb-1">{title}</div>
     <div className={`text-3xl font-semibold ${valueClass}`}>
       {value}{" "}
@@ -45,39 +45,43 @@ const OccupancyOverviewCard = ({
   const barTotal = ownerCount + tenantCount;
 
   return (
-    <div className="space-y-4">
-      <Card
-        title="Occupancy Overview"
-        icon={<GoPeople className="h-6 w-6 text-indigo-600" />}
-      >
-        <div className="flex items-center flex-wrap justify-between gap-6">
-          <div>
-            <div className="text-xs text-slate-500">Occupied Units</div>
-            <div className="text-4xl font-semibold text-slate-900">
-              {occupiedUnits}
-              <span className="text-slate-400 text-2xl ml-1">
-                /{totalUnits}
-              </span>
-            </div>
-          </div>
+    <div >
+      
+      <div className="bg-white border border-[#EBEBEB] rounded-xl shadow-[0_0_12px_0_#EAF2FF] p-4 h-[128px]">      
+      <div className="flex items-center gap-2 mb-4">
+        <GoPeople className="h-6 w-6 text-indigo-600" />
+        <span className="text-sm font-semibold text-slate-800">
+          Occupancy Overview
+        </span>
+      </div>
 
-          <div className="flex items-end">
-            <MiniPill
-              value={ownerCount}
-              total={barTotal}
-              colorClass="bg-indigo-500"
-              label="Owner"
-            />
-            <MiniPill
-              value={tenantCount}
-              total={barTotal}
-              colorClass="bg-emerald-500"
-              label="Tenant"
-            />
+      <div className="flex items-center justify-between gap-6">
+        <div>
+          <div className="text-xs text-slate-500">Occupied Units</div>
+          <div className="text-4xl font-semibold text-slate-900">
+            {occupiedUnits}
+            <span className="text-slate-400 text-2xl ml-1">/{totalUnits}</span>
           </div>
         </div>
-      </Card>
-      <div className="grid grid-cols-2 gap-6">
+
+        <div className="flex items-end">
+          <MiniPill
+            value={ownerCount}
+            total={barTotal}
+            colorClass="bg-indigo-500"
+            label="Owner"
+          />
+          <MiniPill
+            value={tenantCount}
+            total={barTotal}
+            colorClass="bg-emerald-500"
+            label="Tenant"
+          />
+        </div>
+      </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-2 gap-6">
         <StatTile
           title="Avg Residents Per Unit"
           value={avgResidents}

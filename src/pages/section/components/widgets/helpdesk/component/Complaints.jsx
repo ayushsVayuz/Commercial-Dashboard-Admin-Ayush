@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
 
 const requests = [
@@ -14,6 +14,7 @@ function Complaints() {
     <Card
       title={"Complaints"}
       period={<OpenInNewOutlinedIcon className="text-xl text-[#884EA7]" />}
+      className="h-[362px]"
     >
       <div className="flex flex-col gap-3">
         {requests.map((item, idx) => (
@@ -22,19 +23,19 @@ function Complaints() {
             className="flex items-center justify-between bg-[#F9FAFB] rounded-lg p-3"
           >
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-[#121212]">
+              <div className="text-sm font-medium text-[#121212]">
                 {item.title}
-              </span>
-              <span className="text-xs text-[#64748B]">
+              </div>
+              <div className="text-xs text-[#64748B]">
                 Total: {item.total}
-              </span>
+              </div>
             </div>
 
             <div className="flex flex-col items-end">
-              <span className="text-sm font-semibold text-red-700">
+              <div className="text-sm font-semibold text-red-700">
                 {String(item.pending).padStart(2, "0")}
-              </span>
-              <span className="text-xs text-[#64748B]">Pending</span>
+              </div>
+              <div className="text-xs text-[#64748B]">Pending</div>
             </div>
           </div>
         ))}

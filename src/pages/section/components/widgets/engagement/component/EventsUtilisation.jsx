@@ -1,11 +1,11 @@
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 function EventItem({ title, date, rsvp, utilisation, status }) {
   return (
     <div className="mb-4 last:mb-0">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-[#121212]">{title}</h3>
-        <span
+        <div className="text-sm font-medium text-[#121212]">{title}</div>
+        <div
           className={`text-xs font-medium px-2 py-0.5  ${
             status === "Completed"
               ? "text-[#36AB6C] bg-[#E6F7EE]"
@@ -15,16 +15,16 @@ function EventItem({ title, date, rsvp, utilisation, status }) {
           }`}
         >
           {status}
-        </span>
+        </div>
       </div>
 
-      <p className="text-xs text-slate-500">{date}</p>
+      <div className="text-xs text-slate-500">{date}</div>
 
       <div className="flex justify-between items-center text-xs mt-1">
-        <span className="text-slate-600">{rsvp} RSVP</span>
-        <span className="text-[#3C82F6] font-semibold">
+        <div className="text-slate-600">{rsvp} RSVP</div>
+        <div className="text-[#3C82F6] font-semibold">
           {utilisation}% utilisation
-        </span>
+        </div>
       </div>
 
       <div className="w-full bg-slate-100 h-2 rounded mt-2">
@@ -44,7 +44,7 @@ export default function EventsUtilisation() {
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
-      className="w-full"
+      className="w-full h-[360px]"
     >
       <EventItem
         title="Holi Celebration"

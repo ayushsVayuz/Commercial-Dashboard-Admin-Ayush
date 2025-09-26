@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { OpenInNewOutlined as OpenInNewOutlinedIcon } from "@mui/icons-material";
-import Card from "../../../../../../components/ui/Card";
+import Card from "../../componets/Card";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -68,29 +68,29 @@ const DuesAgeing = () => {
   return (
     <Card
       title="Dues Ageing"
-      className="w-full"
+      className="w-full h-[362px]"
       period={
         <OpenInNewOutlinedIcon className="h-5 w-5 text-[#884EA7] cursor-pointer" />
       }
-      childrenClassName="space-y-5"
+      childrenClassName="space-y-2"
     >
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 md:grid-cols-4 gap-3">
         {labels.map((label, i) => (
-          <div key={label} className="p-3 rounded-lg bg-slate-50">
+          <div key={label} className="p-2 rounded-lg bg-slate-50">
             <div className="flex justify-between items-start">
-              <p className="font-semibold">{label}</p>
+              <div className="font-semibold">{label}</div>
               <div className="text-right">
-                <p className="text-red-600 font-semibold">
+                <div className="text-red-600 font-semibold">
                   AED {(values[i] / 1000).toFixed(1)}K
-                </p>
-                <p className="text-xs text-gray-500">{units[i]} Units</p>
+                </div>
+                <div className="text-xs text-gray-500">{units[i]} Units</div>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="h-[70%]">
+      <div className="h-[192px]">
         <Bar data={data} options={options} />
       </div>
     </Card>

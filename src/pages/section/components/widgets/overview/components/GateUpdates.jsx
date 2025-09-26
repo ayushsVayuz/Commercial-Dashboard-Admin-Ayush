@@ -1,4 +1,5 @@
-import Card from "../../../../../../components/ui/Card";
+import React from "react";
+import Card from "../../componets/Card";
 import { LuWaves } from "react-icons/lu";
 import {
   LineChart,
@@ -10,7 +11,40 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function GateUpdates({ isStatic, data }) {
+function formatHourToAMPM(hour) {
+  const meridian = hour >= 12 ? "PM" : "AM";
+  let h = hour % 12;
+  if (h === 0) h = 12;
+  return `${h} ${meridian}`;
+}
+
+function groupGateDataIntoFourHours(data) {
+  const bucketSize = 4;
+  const grouped = {};
+
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    const hour = Number(item.hour ?? 0);
+    const bucketStart = Math.floor(hour / bucketSize) * bucketSize;
+    const bucketEnd = bucketStart + bucketSize;
+    const key = bucketEnd;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        time: formatHourToAMPM(bucketEnd),
+        walkins: 0,
+        checkins: 0,
+      };
+    }
+
+    grouped[key].walkins += Number(item.walkins ?? 0);
+    grouped[key].checkins += Number(item.preApproved ?? 0);
+  }
+
+  return Object.values(grouped);
+}
+
+function GateUpdates({ isStatic, gate }) {
   const COLORS = {
     green: "#12B981",
     red: "#EF4645",
@@ -25,14 +59,13 @@ function GateUpdates({ isStatic, data }) {
     slate: "#64748B",
   };
 
-  const activeWalkins = data?.summary?.activeWalkins || {};
-  const preApproved = data?.summary?.preApprovedCheckins || {};
+  const activeWalkins = gate?.summary?.activeWalkins || {};
+  const preApproved = gate?.summary?.preApprovedCheckins || {};
+  const staffAttendance = gate?.summary?.staffAttendance || {};
   const chartData =
-    data?.chart?.map((d) => ({
-      time: `${d?.hour ?? 0}:00`,
-      walkins: Number(d?.walkins ?? 0),
-      checkins: Number(d?.preApproved ?? 0),
-    })) ?? [];
+    gate?.chart?.length > 0
+      ? groupGateDataIntoFourHours(gate.chart)
+      : [];
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
@@ -63,18 +96,18 @@ function GateUpdates({ isStatic, data }) {
       title="Gate Updates"
       period="Today"
       icon={<LuWaves className="text-2xl text-[#37CC6D]" />}
-      className={`${isStatic ? "max-h-[303px]" : ""} mb-4 break-inside-avoid`}
+      className={`${isStatic ? "max-h-[303px]" : ""} h-[251px] mb-4 break-inside-avoid`}
     >
-      <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2 ">
+      <div className="flex flex-wrap gap-x-2 gap-y-2 text-sm mb-2">
         <div className="flex flex-col gap-2">
           <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
             Active Walk-ins
           </div>
-          <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B]">
-            {activeWalkins.visitor_in ?? 0}
-            <span className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
-              /{activeWalkins.total_pass ?? 0}
-            </span>
+          <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
+            {staffAttendance.total_in_now ?? 0}
+            <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
+              /{staffAttendance.total_in_today ?? 0}
+            </div>
           </div>
         </div>
 
@@ -82,67 +115,76 @@ function GateUpdates({ isStatic, data }) {
           <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
             Pre-approved Check-ins
           </div>
-          <div className="!m-0 text-[28px] leading-[32px] font-medium text-[#E7A015]">
+          <div className="!m-0 text-[28px] leading-[32px] font-medium text-[#E7A015] flex">
             {preApproved.expected_pass_scanned ?? 0}
-            <span className="text-[20px] leading-[32px] text-[#64748B]">
+            <div className="text-[20px] leading-[32px] text-[#64748B]">
               /{preApproved.total_expected_pass ?? 0}
-            </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="!m-0 !text-[10px] !leading-[14px] !text-[#64748B]">
+            Staff Attendance
+          </div>
+          <div className="!m-0 !text-[28px] !leading-[32px] !font-medium text-[#1FA05B] flex">
+            {activeWalkins.visitor_in ?? 0}
+            <div className="!m-0 !text-[20px] !leading-[32px] !text-[#64748B]">
+              /{activeWalkins.total_pass ?? 0}
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-full h-[95px]">
-        <ResponsiveContainer width="100%" height="60%">
-          <LineChart
-            data={chartData}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-          >
-            <XAxis
-              dataKey="time"
-              tick={{
-                fontSize: 10,
-                lineHeight: 14,
-                fill: "#121212",
-                fontWeight: 400,
-              }}
-            />
-            <YAxis
-              yAxisId="left"
-              domain={[0, 30]}
-              ticks={[0, 10, 20, 30]}
-              tick={{
-                fontSize: 10,
-                lineHeight: 14,
-                fill: "#64748B",
-                fontWeight: 400,
-              }}
-              axisLine={false}
-              tickLine={false}
-              width={25}
-            />
-            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
 
-            <RTooltip content={<CustomTooltip />} />
-
-            <Line
-              type="monotone"
-              dataKey="walkins"
-              stroke={COLORS.green}
-              strokeWidth={2}
-              dot={false}
-              name="Walk-ins"
-            />
-            <Line
-              type="monotone"
-              dataKey="checkins"
-              stroke={COLORS.amber}
-              strokeWidth={2}
-              strokeDasharray="5 5"
-              dot={false}
-              name="Pre-approved"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height="60%">
+        <LineChart
+          data={chartData}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+        >
+          <XAxis
+            dataKey="time"
+            tick={{
+              fontSize: 10,
+              lineHeight: 14,
+              fill: "#121212",
+              fontWeight: 400,
+            }}
+          />
+          <YAxis
+            yAxisId="left"
+            domain={[0, 30]}
+            ticks={[0, 10, 20, 30]}
+            tick={{
+              fontSize: 10,
+              lineHeight: 14,
+              fill: "#64748B",
+              fontWeight: 400,
+            }}
+            axisLine={false}
+            tickLine={false}
+            width={25}
+          />
+          <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+          <RTooltip content={<CustomTooltip />} />
+          <Line
+            type="monotone"
+            dataKey="walkins"
+            stroke={COLORS.green}
+            strokeWidth={2}
+            dot={false}
+            name="Walk-ins"
+          />
+          <Line
+            type="monotone"
+            dataKey="checkins"
+            stroke={COLORS.amber}
+            strokeWidth={2}
+            strokeDasharray="5 5"
+            dot={false}
+            name="Pre-approved"
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </Card>
   );
 }
