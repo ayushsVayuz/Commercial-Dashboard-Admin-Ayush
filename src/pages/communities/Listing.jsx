@@ -6,10 +6,9 @@ import { useEffect, useState } from "react";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
 import { Search } from "../../components/search";
-import { changeStatusWidget } from "../../redux/actions/widgets-action";
 import { LuLoaderCircle } from "react-icons/lu";
 import { Toggle } from "../../components/inputs/toogle";
-import { readCommunities } from "../../redux/actions/communities-action";
+import { changeStatusCommunity, readCommunities } from "../../redux/actions/communities-action";
 
 const CommunitiesListing = () => {
   const dispatch = useDispatch();
@@ -82,25 +81,25 @@ const CommunitiesListing = () => {
 
   const headers = ["Sr No.", "Name", "Status"];
 
-  const dataToPass = communityData?.map((widget, index) => ({
+  const dataToPass = communityData?.map((community, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
     name: {
-      content: widget?.title,
+      content: community?.name,
       // link: `view/${widget?.widget_id}`
     },
 
     status: {
       component: (
         <>
-          {statusLoading == widget.widget_id ? (
+          {statusLoading == community.id ? (
             <div className="flex justify-center items-center">
               <LuLoaderCircle size={24} />
             </div>
           ) : (
             <Toggle
-              value={widget.is_active == 1 ? true : false}
+              value={community.status == 1 ? true : false}
               onChange={() =>
-                dispatch(changeStatusWidget({ widgetId: widget.widget_id }))
+                dispatch(changeStatusCommunity({ communityId: community.id }))
               }
             />
           )}

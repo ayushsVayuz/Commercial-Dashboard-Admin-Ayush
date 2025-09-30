@@ -39,11 +39,12 @@ const communitiesSlice = createSlice({
         state.statusLoading = action.meta.arg.communityId;
       })
       .addCase(changeStatusCommunity.fulfilled, (state, action) => {
+        console.log(action.payload, "aaaaaaa");
         const { statusCode } = action.payload;
 
         if (statusCode === 200 || statusCode === 201) {
           const communityIndex = state.communities.findIndex(
-            (community) => community.community_id === state.statusLoading
+            (community) => community.id === state.statusLoading
           );
 
           if (communityIndex !== -1) {

@@ -10,7 +10,7 @@ export const readCommunities = createAsyncThunk(
 
     try {
       const queryString = buildQueryString(queryArray);
-      const url = `/communities/${queryString ? `?${queryString}` : ""}`;
+      const url = `/community/all-communities${queryString ? `?${queryString}` : ""}`;
 
       const response = await client.get(url, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -31,7 +31,7 @@ export const changeStatusCommunity = createAsyncThunk(
 
     try {
       const response = await client.put(
-        `/sections/update-status/${communityId}`,
+        `/community/update-status/${communityId}`,
         {},
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
