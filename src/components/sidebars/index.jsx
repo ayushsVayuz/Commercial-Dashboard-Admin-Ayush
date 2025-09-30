@@ -10,6 +10,7 @@ import {
   LuLayoutDashboard,
   LuPanelLeftClose,
   LuArrowRight,
+  LuBuilding2,
 } from "react-icons/lu";
 import { iconSize } from "../../utils";
 
@@ -25,7 +26,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
     {
       id: 2,
       title: "Communities",
-      icon: <LuHouse size={iconSize} />,
+      icon: <LuBuilding2 size={iconSize} />,
       to: "/communities",
       isPinned: false,
     },
