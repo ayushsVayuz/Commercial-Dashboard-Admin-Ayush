@@ -26,3 +26,25 @@ export function pxToGridCols(widthPx, containerWidth, cols = 6, marginX = 10) {
   const colWidth = (containerWidth - (cols + 1) * marginX) / cols;
   return (widthPx + marginX) / (colWidth + marginX);
 }
+
+// Centralized helper for token retrieval
+export const getAuthToken = (getState) =>
+  localStorage.getItem("token") || getState().auth?.token || null;
+
+// Utility to build query strings safely
+export const buildQueryString = (queries = []) =>
+  queries
+    .filter(
+      ({ field, value }) => field && value !== undefined && value !== null
+    )
+    .map(
+      ({ field, value }) =>
+        `${encodeURIComponent(field)}=${encodeURIComponent(value)}`
+    )
+    .join("&");
+
+// Common error handler
+export const handleError = (error, rejectWithValue) =>
+  rejectWithValue(
+    error?.response?.data?.message || error?.message || "Unknown error"
+  );

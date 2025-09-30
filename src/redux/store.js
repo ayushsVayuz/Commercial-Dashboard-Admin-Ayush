@@ -9,6 +9,7 @@ import dashboardSlice from "./slices/dashboardSlice";
 import sectionSlice from "./slices/sectionSlice";
 import widgetsSlice from "./slices/widgetsSlice";
 import containersSlice from "./slices/containerSlice";
+import communitiesSlice from "./slices/communitiesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     container: containersSlice,
     section: sectionSlice,
     widget: widgetsSlice,
+    communities: communitiesSlice,
   },
 });

@@ -20,6 +20,7 @@ import ContainersListing from "../pages/containers/Listing";
 import ContainerAddEdit from "../pages/containers/AddEdit";
 import ContainerPreview from "../pages/containers/Preview";
 import ContainerDetails from "../pages/containers/Details";
+import CommunitiesListing from "../pages/communities/Listing";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,17 @@ const router = createBrowserRouter([
                   {
                     path: "view/:id",
                     element: <SectionDetails />,
+                  },
+                ],
+              },
+              // Communities Routes
+              {
+                path: "communities",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <CommunitiesListing />,
                   },
                 ],
               },
