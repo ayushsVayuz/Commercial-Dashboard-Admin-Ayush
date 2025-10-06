@@ -310,55 +310,55 @@ const SectionListing = () => {
       component: <MoreOption id={section.section_id} actionMenu={actionMenu} />,
     },
 
-    move: {
-      component: (
-        <div className="flex gap-1 justify-center items-center">
-          <button
-            onClick={() => moveSection(index, "up")}
-            disabled={index === 0 || isAnimating}
-            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
-                   disabled:cursor-not-allowed transition-all duration-200 
-                   hover:scale-110 active:scale-95"
-          >
-            <svg
-              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 14l5-5 5 5"
-              />
-            </svg>
-          </button>
+    // move: {
+    //   component: (
+    //     <div className="flex gap-1 justify-center items-center">
+    //       <button
+    //         onClick={() => moveSection(index, "up")}
+    //         disabled={index === 0 || isAnimating}
+    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+    //                disabled:cursor-not-allowed transition-all duration-200 
+    //                hover:scale-110 active:scale-95"
+    //       >
+    //         <svg
+    //           className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+    //           fill="none"
+    //           stroke="currentColor"
+    //           viewBox="0 0 24 24"
+    //         >
+    //           <path
+    //             strokeLinecap="round"
+    //             strokeLinejoin="round"
+    //             strokeWidth={2}
+    //             d="M7 14l5-5 5 5"
+    //           />
+    //         </svg>
+    //       </button>
 
-          <button
-            onClick={() => moveSection(index, "down")}
-            disabled={index === localSections.length - 1 || isAnimating}
-            className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
-                   disabled:cursor-not-allowed transition-all duration-200 
-                   hover:scale-110 active:scale-95"
-          >
-            <svg
-              className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 10l5 5 5-5"
-              />
-            </svg>
-          </button>
-        </div>
-      ),
-    },
+    //       <button
+    //         onClick={() => moveSection(index, "down")}
+    //         disabled={index === localSections.length - 1 || isAnimating}
+    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
+    //                disabled:cursor-not-allowed transition-all duration-200 
+    //                hover:scale-110 active:scale-95"
+    //       >
+    //         <svg
+    //           className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors"
+    //           fill="none"
+    //           stroke="currentColor"
+    //           viewBox="0 0 24 24"
+    //         >
+    //           <path
+    //             strokeLinecap="round"
+    //             strokeLinejoin="round"
+    //             strokeWidth={2}
+    //             d="M7 10l5 5 5-5"
+    //           />
+    //         </svg>
+    //       </button>
+    //     </div>
+    //   ),
+    // },
     // className: "transition-all duration-300 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-700"
   }));
 
