@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import "anarock-widgets/dist/anarock-widgets.css"; */
+
 /* HTML: <div class="loader"></div> */
 .loader {
   width: fit-content;
