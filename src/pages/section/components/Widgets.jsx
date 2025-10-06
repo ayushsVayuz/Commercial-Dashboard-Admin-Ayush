@@ -1,74 +1,74 @@
-import {
-  Community,
-  Engagement,
-  Facilities,
-  FinanceSummary,
-  GateUpdates,
-  Helpdesk,
-  UnitStatus,
-  OccupancyOverview,
-  ResidentOverview,
-  MoveInOutTrends,
-  BlockWiseOccupancy,
-  Accounting,
-  Budgets,
-  CashBankBalance,
-  DuesAgeing,
-  ExpenseCategories,
-  IncomeExpenditure,
-  AssetValueBreakdown,
-  RevenuebyCategory,
-  StatsGrid as FacilitiesStatsGrid,
-  GuardPatrols,
-  HourlyTrafficFlow,
-  IncidentReports,
-  StaffAttendance,
-  GateAndSecurityStatsGrid,
-  Complaints,
-  ComplaintsByLevel,
-  RequestBox,
-  HelpdeskStatsGrid,
-  EventsUtilisation,
-  NoticeBoardStatus,
-  SingleStats,
-  EngagementStatsGrid,
-} from "anarock-widgets";
+// import {
+//   Community,
+//   Engagement,
+//   Facilities,
+//   FinanceSummary,
+//   GateUpdates,
+//   Helpdesk,
+//   UnitStatus,
+//   OccupancyOverview,
+//   ResidentOverview,
+//   MoveInOutTrends,
+//   BlockWiseOccupancy,
+//   Accounting,
+//   Budgets,
+//   CashBankBalance,
+//   DuesAgeing,
+//   ExpenseCategories,
+//   IncomeExpenditure,
+//   AssetValueBreakdown,
+//   RevenuebyCategory,
+//   StatsGrid as FacilitiesStatsGrid,
+//   GuardPatrols,
+//   HourlyTrafficFlow,
+//   IncidentReports,
+//   StaffAttendance,
+//   GateAndSecurityStatsGrid,
+//   Complaints,
+//   ComplaintsByLevel,
+//   RequestBox,
+//   HelpdeskStatsGrid,
+//   EventsUtilisation,
+//   NoticeBoardStatus,
+//   SingleStats,
+//   EngagementStatsGrid,
+// } from "anarock-widgets";
 // import "anarock-widgets/dist/anarock-widgets.css";
 
-// import Community from "./widgets/overview/components/Community";
-// import Engagement from "./widgets/overview/components/Engagement";
-// import Facilities from "./widgets/overview/components/Facilities";
-// import FinanceSummary from "./widgets/overview/components/FinanceSummary";
-// import GateUpdates from "./widgets/overview/components/GateUpdates";
-// import Helpdesk from "./widgets/overview/components/Helpdesk";
+import Community from "./widgets/overview/components/Community";
+import Engagement from "./widgets/overview/components/Engagement";
+import Facilities from "./widgets/overview/components/Facilities";
+import FinanceSummary from "./widgets/overview/components/FinanceSummary";
+import GateUpdates from "./widgets/overview/components/GateUpdates";
+import Helpdesk from "./widgets/overview/components/Helpdesk";
 
-// import UnitStatus from "./widgets/community/component/UnitStatusPie";
-// import OccupancyOverview from "./widgets/community/component/OccupancyOverviewCard";
-// import ResidentOverview from "./widgets/community/component/ResidentOverviewCard";
-// import MoveInOutTrends from "./widgets/community/component/MoveInOutTrendsCard";
-// import BlockWiseOccupancy from "./widgets/community/component/BlockWiseOccupancyCard";
+import UnitStatus from "./widgets/community/component/UnitStatusPie";
+import OccupancyOverview from "./widgets/community/component/OccupancyOverviewCard";
+import ResidentOverview from "./widgets/community/component/ResidentOverviewCard";
+import MoveInOutTrends from "./widgets/community/component/MoveInOutTrendsCard";
+import BlockWiseOccupancy from "./widgets/community/component/BlockWiseOccupancyCard";
 
-// import Accounting from "./widgets/financials/component/AccountingCard";
-// import ExpenseCategories from "./widgets/financials/component/ExpenseCategories";
-// import CashBankBalance from "./widgets/financials/component/CashBankBalance";
-// import DuesAgeing from "./widgets/financials/component/DuesAgeing";
-// import Budgets from "./widgets/financials/component/Budgets";
+import Accounting from "./widgets/financials/component/AccountingCard";
+import ExpenseCategories from "./widgets/financials/component/ExpenseCategories";
+import CashBankBalance from "./widgets/financials/component/CashBankBalance";
+import DuesAgeing from "./widgets/financials/component/DuesAgeing";
+import Budgets from "./widgets/financials/component/Budgets";
 
-// import NoticeBoardStatus from "./widgets/engagement/component/NoticeBoardStatus";
-// import EventsUtilisation from "./widgets/engagement/component/EventsUtilisation";
-// import SingleStats from "./widgets/engagement/component/SingleStats";
+import NoticeBoardStatus from "./widgets/engagement/component/NoticeBoardStatus";
+import EventsUtilisation from "./widgets/engagement/component/EventsUtilisation";
+import SingleStats from "./widgets/engagement/component/SingleStats";
 
-// import AssetValueBreakdown from "./widgets/facilities/component/AssetValueBreakdown";
-// import RevenuebyCategory from "./widgets/facilities/component/RevenuebyCategory";
+import AssetValueBreakdown from "./widgets/facilities/component/AssetValueBreakdown";
+import RevenuebyCategory from "./widgets/facilities/component/RevenuebyCategory";
 
-// import GuardPatrols from "./widgets/gate-and-security/component/GuardPatrols";
-// import HourlyTrafficFlow from "./widgets/gate-and-security/component/HourlyTrafficFlow";
-// import IncidentReports from "./widgets/gate-and-security/component/IncidentReports";
-// import StaffAttendance from "./widgets/gate-and-security/component/StaffAttendance";
+import GuardPatrols from "./widgets/gate-and-security/component/GuardPatrols";
+import HourlyTrafficFlow from "./widgets/gate-and-security/component/HourlyTrafficFlow";
+import IncidentReports from "./widgets/gate-and-security/component/IncidentReports";
+import StaffAttendance from "./widgets/gate-and-security/component/StaffAttendance";
 
-// import Complaints from "./widgets/helpdesk/component/Complaints";
-// import RequestBox from "./widgets/helpdesk/component/RequestBox";
-// import ComplaintsByLevel from "./widgets/helpdesk/component/ComplaintsbyLevel";
+import Complaints from "./widgets/helpdesk/component/Complaints";
+import RequestBox from "./widgets/helpdesk/component/RequestBox";
+import ComplaintsByLevel from "./widgets/helpdesk/component/ComplaintsbyLevel";
 
 import { pxToGridUnits } from "../../../utils";
 
