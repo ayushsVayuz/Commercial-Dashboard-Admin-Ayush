@@ -50,7 +50,7 @@ const SectionDetails = () => {
               </p> */}
             </CardWrapper>
             <CardWrapper title="Widgets">
-              <WidgetGrid
+              <DNDGridLayout
                 data={singleSection?.widgets}
                 widgetPositions={widgetPositions}
                 setWidgetPositions={setWidgetPositions}
