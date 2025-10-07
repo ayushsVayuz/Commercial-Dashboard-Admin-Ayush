@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 
 // Function to get token from local storage
-const getTokenFromLocalStorage = () => {
+export const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
 };
 
 // Helper to get token
-const getAuthHeaders = (getState) => {
+export const getAuthHeaders = (getState) => {
   const token = getTokenFromLocalStorage() || getState().auth.token;
   return {
     Authorization: `Bearer ${token}`,

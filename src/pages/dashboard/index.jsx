@@ -2,46 +2,32 @@ import { useEffect, useState } from "react";
 import WidgetGrid from "../section/components/WidgetGrid";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { NoData } from "../../components/noDara";
+import { fetchDashboardDetails } from "../../redux/actions/dashboard-action";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await fetch(
-          "https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details"
-        );
-        const result = await res.json();
+        const response = await dispatch(
+          fetchDashboardDetails({ userId: 4, communityId: 2 })
+        ).unwrap();
 
-        if (result?.statusCode === 200) {
-          const apiSections =
-            result.data.sections?.map((s, idx) => ({
-              section_id: s.id,
-              name: s.name,
-              order_index: s.order_index ?? idx,
-              widgets:
-                s.widgets?.map((w) => ({
-                  widget_id: w.widget_id,
-                  widget_name: w.widget_id,
-                  container_id: w.container_id,
-                  is_active: w.is_active,
-                  position: w.position || [0, 0, 4, 2],
-                })) || [],
-            })) || [];
-
-          setSections(apiSections);
-        }
-      } catch (err) {
-        console.error("Error fetching dashboard:", err);
-      } finally {
+        console.log("Fetched dashboard data:", response);
+        setSections(response);
         setLoading(false);
+      } catch (error) {
+        console.error("Error fetching dashboard:", error);
       }
     };
 
     fetchDashboard();
-  }, []);
+  }, [dispatch]);
 
   // Handle drag end for sections
   const handleDragEnd = async (result) => {
