@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import WidgetGrid from "../section/components/DNDGridLayout";
+import DNDGridLayout from "../section/components/DNDGridLayout";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { NoData } from "../../components/noDara";
 import { fetchDashboardDetails } from "../../redux/actions/dashboard-action";
@@ -122,7 +122,7 @@ const Dashboard = () => {
             <div key={section.section_id} className="mb-6">
               <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
               {section?.widgets && section?.widgets?.length > 0 ? (
-                <WidgetGrid
+                <DNDGridLayout
                   data={section.widgets}
                   isDraggable={false}
                   isResizable={false}
