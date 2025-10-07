@@ -5,7 +5,7 @@ import { AllWidgetMapping } from "./Widgets";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-export default function WidgetGrid({
+export default function DNDGridLayout({
   value,
   onChange,
   data,

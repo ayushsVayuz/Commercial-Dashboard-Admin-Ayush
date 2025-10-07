@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import WidgetGrid from "../section/components/WidgetGrid";
+import WidgetGrid from "../section/components/DNDGridLayout";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { NoData } from "../../components/noDara";
 import { fetchDashboardDetails } from "../../redux/actions/dashboard-action";
@@ -20,9 +20,10 @@ const Dashboard = () => {
 
         console.log("Fetched dashboard data:", response);
         setSections(response);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching dashboard:", error);
+      } finally {
+        setLoading(false);
       }
     };
 

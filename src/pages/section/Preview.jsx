@@ -11,7 +11,7 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { TableShimmer } from "../../components/shimmers/tableShimmer";
-import WidgetGrid from "./components/WidgetGrid";
+import DNDGridLayout from "./components/DNDGridLayout";
 import { useState } from "react";
 
 const SectionPreview = () => {

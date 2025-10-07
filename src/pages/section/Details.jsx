@@ -8,7 +8,7 @@ import { RenderLableValue } from "../../components/labels";
 import { decrypt } from "../../functions";
 import { readSingleSection } from "../../redux/actions/section-action";
 import { CardWrapper } from "../../components/wrappers/card";
-import WidgetGrid from "./components/WidgetGrid";
+import DNDGridLayout from "./components/DNDGridLayout";
 
 const SectionDetails = () => {
   const [widgetPositions, setWidgetPositions] = useState([]);

@@ -26,9 +26,9 @@ import {
   readMappedWidget,
   readWidget,
 } from "../../redux/actions/widgets-action";
-import WidgetGrid from "./components/WidgetGrid";
-import WidgetGridDND from "./components/WidgetDND";
+// import WidgetGridDND from "./components/WidgetDND";
 import { LuRefreshCw } from "react-icons/lu";
+import DNDGridLayout from "./components/DNDGridLayout";
 
 const SectionAddEdit = () => {
   const [sectionOptions, setSectionsOptions] = useState([]);
@@ -478,7 +478,7 @@ const SectionAddEdit = () => {
             control={control}
             render={({ field }) => (
               <>
-                <WidgetGrid
+                <DNDGridLayout
                   data={selectedWidgets}
                   widgetPositions={widgetPositions}
                   setWidgetPositions={setWidgetPositions}
