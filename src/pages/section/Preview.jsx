@@ -150,7 +150,7 @@ const SectionPreview = () => {
           </CardWrapper> */}
 
           <CardWrapper title="Widgets">
-            <WidgetGrid
+            <DNDGridLayout
               data={payload?.widgets}
               widgetPositions={widgetPositions}
               setWidgetPositions={setWidgetPositions}

@@ -10,6 +10,7 @@ import sectionSlice from "./slices/sectionSlice";
 import widgetsSlice from "./slices/widgetsSlice";
 import containersSlice from "./slices/containerSlice";
 import communitiesSlice from "./slices/communitiesSlice";
+import commonSlice from "./slices/common-slice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     section: sectionSlice,
     widget: widgetsSlice,
     communities: communitiesSlice,
+    common: commonSlice,
   },
 });

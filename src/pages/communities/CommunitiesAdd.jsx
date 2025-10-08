@@ -1,53 +1,46 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Heading } from "../../components/heading";
-import { Table } from "../../components/table";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { TableShimmer } from "../../components/shimmers/tableShimmer";
 import { MetaTitle } from "../../components/metaTitle";
+import { Heading } from "../../components/heading";
 import { Search } from "../../components/search";
-import { LuLoaderCircle } from "react-icons/lu";
-import { Toggle } from "../../components/inputs/toogle";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
-  changeStatusCommunity,
   mapCommunities,
   readCommunities,
 } from "../../redux/actions/communities-action";
+import { TableShimmer } from "../../components/shimmers/tableShimmer";
+import { Table } from "../../components/table";
+import toast from "react-hot-toast";
 
-const CommunitiesListing = () => {
+const CommunitiesAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     communities: communityData,
     loading,
     totalCount,
-    statusLoading,
   } = useSelector((state) => state.communities);
 
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [rowsPerPage, setRowsPerPage] = useState(
     parseInt(searchParams.get("limit")) || 10
   );
   const currentPageFromUrl = parseInt(searchParams.get("skip")) || 0;
   const searchQuery = searchParams.get("search") || "";
-
   const [currentPage, setCurrentPage] = useState(currentPageFromUrl);
 
-  const totalPages = totalCount ? Math.ceil(totalCount / rowsPerPage) : 0;
+  const [selectedIds, setSelectedIds] = useState([]);
 
+  const totalPages = totalCount ? Math.ceil(totalCount / rowsPerPage) : 0;
   const sectionId = searchParams.get("section_id");
 
-  // keep URL params in sync
   useEffect(() => {
     const newParams = {
       skip: currentPage.toString(),
       limit: rowsPerPage.toString(),
       search: searchQuery,
     };
-
     const existingParams = Object.fromEntries([...searchParams]);
-
     const hasChanged = Object.entries(newParams).some(
       ([key, value]) => existingParams[key] !== value
     );
@@ -57,11 +50,8 @@ const CommunitiesListing = () => {
     }
   }, [currentPage, rowsPerPage, searchQuery]);
 
-  // fetch data on change
   useEffect(() => {
-    const requestPayload = {
-      queryArray: [],
-    };
+    const requestPayload = { queryArray: [] };
 
     if (searchQuery?.length > 0) {
       setCurrentPage(0);
@@ -74,97 +64,77 @@ const CommunitiesListing = () => {
     }
 
     if (sectionId) {
-      requestPayload.queryArray.push({
-        field: "section_id",
-        value: sectionId,
-      });
+      requestPayload.queryArray.push({ field: "section_id", value: sectionId });
     }
-    requestPayload.queryArray.push({
-      field: "enabled",
-      value: true,
-    });
 
+    requestPayload.queryArray.push({ field: "enabled", value: false });
     dispatch(readCommunities(requestPayload));
   }, [currentPage, searchQuery, rowsPerPage, sectionId]);
 
-  const headers = ["Sr No.", "Name", "Status"];
+  const handleCheckboxChange = (id, checked) => {
+    if (checked) {
+      setSelectedIds((prev) => [...prev, id]);
+    } else {
+      setSelectedIds((prev) => prev.filter((item) => item !== id));
+    }
+  };
 
+  const headers = ["Sr No.", "Name", "Select"];
   const dataToPass = communityData?.map((community, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
-    name: {
-      content: community?.name,
-      // link: `view/${widget?.widget_id}`
-    },
-
-    status: {
-      component: (
-        <>
-          {statusLoading == community.id ? (
-            <div className="flex justify-center items-center">
-              <LuLoaderCircle size={24} />
-            </div>
-          ) : (
-            <Toggle
-              value={community.status == 1 ? true : false}
-              onChange={() =>
-                dispatch(mapCommunities({ communityIds: [community.id] }))
-              }
-            />
-          )}
-        </>
+    name: { content: community?.name },
+    select: {
+      content: (
+        <input
+          type="checkbox"
+          value={community?.id}
+          checked={selectedIds.includes(community?.id)}
+          onChange={(e) =>
+            handleCheckboxChange(community?.id, e.target.checked)
+          }
+          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+        />
       ),
     },
   }));
 
+  const handleMapCommunities = async () => {
+    const result = await dispatch(
+      mapCommunities({ communityIds: selectedIds })
+    ).unwrap();
+    if (result?.statusCode === 200) {
+      toast.success("Communities updated successfully");
+      navigate("/communities");
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <section className="flex flex-col gap-4">
-      <MetaTitle title={"Widget | Anarock"} />
-
+      <MetaTitle title={"Communities | Anarock"} />
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
         <Heading
           sectionLink="/communities"
           parent="Communities"
-          mainTitle="Communities"
+          mainTitle="Add Communities"
         />
-        {/* <Button
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-          onClick={() => {
-            navigate("/widget/add");
-            dispatch(resetWidgetPayload());
-          }}
-        >
-          Add Widget
-        </Button> */}
-        <Link
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
-          to="/communities/add"
-        >
-          Add Community
-        </Link>
       </div>
-
       <div className="flex sm:justify-end items-center gap-2">
+        {selectedIds.length > 0 && (
+          <Link
+            className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+            onClick={() => handleMapCommunities()}
+          >
+            Map Communities
+          </Link>
+        )}
         <Search
           containerClassName="w-full sm:w-auto mb-2 rounded px"
           placeholder="Search"
           label="search"
-          // filter={
-          //   <Filter
-          //     filterMenu={filterMenu}
-          //     setFilterMenu={setFilterMenu}
-          //     filters={[
-          //       {
-          //         type: "select",
-          //         key: "section_id",
-          //         placeholder: "Select Communities",
-          //         options: sectionOptions,
-          //       },
-          //     ]}
-          //   />
-          // }
         />
       </div>
-
       {loading ? (
         <TableShimmer />
       ) : (
@@ -186,4 +156,4 @@ const CommunitiesListing = () => {
   );
 };
 
-export default CommunitiesListing;
+export default CommunitiesAdd;

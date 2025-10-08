@@ -21,6 +21,7 @@ import ContainerAddEdit from "../pages/containers/AddEdit";
 import ContainerPreview from "../pages/containers/Preview";
 import ContainerDetails from "../pages/containers/Details";
 import CommunitiesListing from "../pages/communities/Listing";
+import CommunitiesAdd from "../pages/communities/CommunitiesAdd";
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <CommunitiesListing />,
+                  },
+                  {
+                    path: "add",
+                    element: <CommunitiesAdd />,
                   },
                 ],
               },

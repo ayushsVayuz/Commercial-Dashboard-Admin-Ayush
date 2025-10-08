@@ -30,7 +30,7 @@ export const updateWidgetCMS = createAsyncThunk(
   "widget/updateWidgetCMS",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
     console.log(widgetId, updatedData, "widgetid and updated data");
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getTokenFromLocalStorage() || getState().auth.token;
 
     try {
       const response = await client.put(
@@ -38,7 +38,7 @@ export const updateWidgetCMS = createAsyncThunk(
         updatedData,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -47,7 +47,7 @@ export const updateWidgetCMS = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-         toast.error(error?.response?.data?.message)
+      toast.error(error?.response?.data?.message);
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
   }

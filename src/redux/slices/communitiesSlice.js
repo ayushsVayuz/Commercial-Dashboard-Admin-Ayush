@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   readCommunities,
   changeStatusCommunity,
+  mapCommunities,
 } from "../actions/communities-action";
 
 const initialState = {
@@ -60,6 +61,28 @@ const communitiesSlice = createSlice({
       })
       .addCase(changeStatusCommunity.rejected, (state, action) => {
         state.statusLoading = {};
+        state.error = action.payload?.message || "Failed to update community";
+      });
+    builder
+      .addCase(mapCommunities.pending, (state, action) => {
+        // Track all communities being updated
+        state.statusLoading = action.meta.arg.communityIds;
+      })
+      .addCase(mapCommunities.fulfilled, (state, action) => {
+        const { statusCode, data } = action.payload;
+
+        if (statusCode === 200 || statusCode === 201) {
+          const updatedIds = data.map((community) => community.community_id);
+          state.communities = state.communities.filter(
+            (community) => !updatedIds.includes(community.id)
+          );
+        }
+
+        state.statusLoading = [];
+        state.error = null;
+      })
+      .addCase(mapCommunities.rejected, (state, action) => {
+        state.statusLoading = [];
         state.error = action.payload?.message || "Failed to update community";
       });
   },

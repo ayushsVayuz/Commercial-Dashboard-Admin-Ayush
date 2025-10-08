@@ -2,7 +2,8 @@ import axios from "axios";
 
 const client = axios.create(
   {
-    baseURL: "https://apnacomplex.vayuz.com/dashboard-api/v1",
+    baseURL: "https://staging-reactdashboard.anacity.com/dashboard-api/v1",
+    // baseURL: "http://localhost:3000/dashboard-api/v1",
   },
   {
     withCredentials: true,

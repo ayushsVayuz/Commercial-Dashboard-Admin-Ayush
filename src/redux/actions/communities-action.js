@@ -10,7 +10,9 @@ export const readCommunities = createAsyncThunk(
 
     try {
       const queryString = buildQueryString(queryArray);
-      const url = `/community/all-communities${queryString ? `?${queryString}` : ""}`;
+      const url = `/community/all-communities${
+        queryString ? `?${queryString}` : ""
+      }`;
 
       const response = await client.get(url, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -39,6 +41,27 @@ export const changeStatusCommunity = createAsyncThunk(
       );
 
       return { statusCode: response.data.statusCode };
+    } catch (error) {
+      return handleError(error, rejectWithValue);
+    }
+  }
+);
+
+export const mapCommunities = createAsyncThunk(
+  "section/mapCommunities",
+  async ({ communityIds }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
+    console.log(communityIds);
+
+    try {
+      const response = await client.put(`/community/update-status`, {
+        communityIds,
+      });
+
+      return {
+        statusCode: response.data.statusCode,
+        data: response.data.data,
+      };
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
