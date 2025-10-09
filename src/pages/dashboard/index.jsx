@@ -11,11 +11,13 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
+  const userId = 4
+
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
         const response = await dispatch(
-          fetchDashboardDetails({ userId: 4, communityId: 2 })
+          fetchDashboardDetails({ userId: userId, communityId: 2 })
         ).unwrap();
 
         console.log("Fetched dashboard data:", response);
