@@ -9,7 +9,7 @@ import { ThemeProvider } from "./components/theme";
 import { OnlineStatus } from "./components/onlineStatus";
 import { ScrollToTopButton } from "./components/scrollToTop";
 
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 
 // Chart.js v4+
@@ -26,11 +26,8 @@ import * as EmotionStyled from "@emotion/styled";
 
 // React Grid Layout
 import * as ReactGridLayout from "react-grid-layout";
-import { pxToGridUnits } from "./utils";
 
 function App() {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   // Expose globals for MF bundle
   window.React = React;
   window.ReactDOM = ReactDOM;
@@ -46,14 +43,6 @@ function App() {
   window.process = { env: {} };
 
   // console.log(pxToGridUnits(362), "aaaaaaaaaaa");
-
-  const token = searchParams.get("token");
-
-  useEffect(() => {
-    if (token !== null) {
-      localStorage.setItem("token", token);
-    }
-  }, [token]);
 
   return (
     <>

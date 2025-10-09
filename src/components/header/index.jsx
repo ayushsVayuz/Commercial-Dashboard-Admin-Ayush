@@ -47,7 +47,7 @@ export const Header = ({ className, collapse, setCollapse }) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    // navigate("/login");
   };
   return (
     <header
