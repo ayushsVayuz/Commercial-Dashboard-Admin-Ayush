@@ -8,12 +8,15 @@ export const Unauthorized = (containerClassName, imageClassName) => {
         src={"/no-data-img.svg"}
         alt="No data available"
       />
-      <h1 className="font-extrabold text-3xl  text-gray-800 dark:text-gray-300">
-        🚫 Unauthorized Access
-      </h1>
-      <p className="text-lg text-gray-600">
-        You do not have permission to view this page.
-      </p>
+      <div>
+        {" "}
+        <h1 className="font-extrabold text-3xl  text-gray-600">
+          🚫 Unauthorized Access
+        </h1>
+        <p className="text-lg text-gray-500">
+          You do not have permission to view this page.
+        </p>
+      </div>
       {/* <Link to={"/"} className="mt-4 text-primaryText hover:underline">
         Back to Homepage
       </Link> */}
