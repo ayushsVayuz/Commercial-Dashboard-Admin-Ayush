@@ -14,11 +14,11 @@ export const AuthWrapper = () => {
   const tokenFromLocalStorage = localStorage.getItem("token");
 
   if (!tokenFromLocalStorage) {
-    // if (window.location.hostname !== "localhost") {
-    return <Unauthorized />;
-    // window.location.href =
-    //   "https://staging-reactdashboard.anacity.com/support_helpdesk";
-    // }
+    if (window.location.hostname !== "localhost") {
+      return <Unauthorized />;
+      // window.location.href =
+      //   "https://staging-reactdashboard.anacity.com/support_helpdesk";
+    }
   }
 
   return <Outlet />;
