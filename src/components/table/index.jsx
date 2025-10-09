@@ -20,10 +20,12 @@ export const Table = ({
   setSort,
   headersSort,
   totalPages,
-  
- movingRows = {},
+
+  movingRows = {},
 }) => {
-  const [data, setData] = useState(initialData);
+  // const [data, setData] = useState(initialData);
+
+  const data = initialData
 
   const [sorting, setSorting] = useState({
     column: null,
@@ -35,9 +37,9 @@ export const Table = ({
     setSelectedValue(parseInt(event.target.value));
   };
 
-  useEffect(() => {
-    setData(initialData);
-  }, [initialData]);
+  // useEffect(() => {
+  //   setData(initialData);
+  // }, [initialData]);
 
   // Function to handle sorting
   const handleSort = (column) => {
@@ -156,7 +158,7 @@ export const Table = ({
                               // className="border-b border-dashed border-gray-300 dark:border-gray-500 last:border-none"
                               className={`table-row border-b border-dashed border-gray-300 dark:border-gray-500 
                 last:border-none hover:bg-gray-50/50 dark:hover:bg-gray-700/50
-                ${movingRows[rowIndex] || ''}`}
+                ${movingRows[rowIndex] || ""}`}
                             >
                               {Object.entries(row).map(
                                 ([key, cell], cellIndex) => (
@@ -174,15 +176,15 @@ export const Table = ({
                       </>
                     )}
                   </tbody>
-
-              
                 </table>
               </div>
 
               {totalPages > 1 && (
                 <div className="px-2 py-4 flex flex-col sm:flex-row justify-start items-center gap-4 bg-white dark:bg-slate-800">
                   <div className="flex items-center">
-                    <p className="text-xs text-black dark:text-white">Rows per page:</p>
+                    <p className="text-xs text-black dark:text-white">
+                      Rows per page:
+                    </p>
                     <select
                       className="focus:outline-none text-xs px-2"
                       value={selectedValue}

@@ -47,7 +47,7 @@ export const readSection = createAsyncThunk(
           },
         }
       );
-      console.log(response, "responsee section");
+      
 
       return response.data;
     } catch (error) {
