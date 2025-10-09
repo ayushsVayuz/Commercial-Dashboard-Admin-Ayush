@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { Unauthorized } from "../../components/unauthorized";
+import { Outlet} from "react-router-dom";
 
 export const AuthWrapper = () => {
   const [searchParams] = useSearchParams();
