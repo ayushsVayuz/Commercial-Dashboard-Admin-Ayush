@@ -1,15 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-import { getAuthHeaders } from "./containers-action";
+import { getAuthToken } from "../../utils";
 
 export const fetchDashboardDetails = createAsyncThunk(
   "dashboard/fetchDashboardDetails",
   async ({ userId, communityId }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
+
     try {
       const response = await client.get(
         `/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details?user_id=${userId}&community_id=${communityId}`,
         {
-          headers: getAuthHeaders(getState),
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

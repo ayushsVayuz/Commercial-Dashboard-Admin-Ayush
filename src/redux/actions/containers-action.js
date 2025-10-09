@@ -1,26 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-
-// Function to get token from local storage
-export const getTokenFromLocalStorage = () => {
-  return localStorage.getItem("token");
-};
-
-// Helper to get token
-export const getAuthHeaders = (getState) => {
-  const token = getTokenFromLocalStorage() || getState().auth.token;
-  return {
-    Authorization: `Bearer ${token}`,
-  };
-};
+import { getAuthToken } from "../../utils";
 
 // Create Container
 export const createContainer = createAsyncThunk(
   "container/createContainer",
   async (containerData, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
     try {
       const response = await client.post("/widget-containers", containerData, {
-        headers: getAuthHeaders(getState),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return response?.data;
@@ -34,11 +25,16 @@ export const createContainer = createAsyncThunk(
 export const updateContainer = createAsyncThunk(
   "container/updateContainer",
   async ({ containerId, updatedData }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
     try {
       const response = await client.put(
         `/widget-containers/${containerId}`,
         updatedData,
-        { headers: getAuthHeaders(getState) }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       return response?.data;
@@ -52,6 +48,7 @@ export const updateContainer = createAsyncThunk(
 export const readContainer = createAsyncThunk(
   "container/readContainer",
   async ({ queryArray }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
     try {
       const queryString = queryArray
         ?.map(
@@ -65,7 +62,9 @@ export const readContainer = createAsyncThunk(
       const response = await client.get(
         `/widget-containers${queryString ? "?" + queryString : ""}`,
         {
-          headers: getAuthHeaders(getState),
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -80,9 +79,13 @@ export const readContainer = createAsyncThunk(
 export const readSingleContainer = createAsyncThunk(
   "container/readSingleContainer",
   async ({ id }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
+    s;
     try {
       const response = await client.get(`/widget-containers/${id}`, {
-        headers: getAuthHeaders(getState),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return response?.data;
@@ -96,11 +99,14 @@ export const readSingleContainer = createAsyncThunk(
 export const deleteContainer = createAsyncThunk(
   "container/deleteContainer",
   async ({ containerId }, { rejectWithValue, getState }) => {
+    const token = getAuthToken(getState);
     try {
       const response = await client.delete(
         `/widget-containers/${containerId}`,
         {
-          headers: getAuthHeaders(getState),
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

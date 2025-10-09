@@ -12,12 +12,11 @@ export const getAllRoles = createAsyncThunk(
     try {
       const response = await client.get(`/common/get-all-roles`, {
         params: { skip, limit, search },
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      // console.log(response.data, "roles response");
 
       return {
         statusCode: response.data.statusCode,

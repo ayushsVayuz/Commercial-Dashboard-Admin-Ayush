@@ -54,9 +54,15 @@ export const mapCommunities = createAsyncThunk(
     console.log(communityIds);
 
     try {
-      const response = await client.put(`/community/update-status`, {
-        communityIds,
-      });
+      const response = await client.put(
+        `/community/update-status`,
+        {
+          communityIds,
+        },
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+      );
 
       return {
         statusCode: response.data.statusCode,

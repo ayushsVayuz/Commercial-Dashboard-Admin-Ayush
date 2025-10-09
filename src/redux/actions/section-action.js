@@ -1,16 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-
-// Function to get token from local storage
-const getTokenFromLocalStorage = () => {
-  return localStorage.getItem("token");
-};
+import { getAuthToken } from "../../utils";
 
 // Create a new section
 export const createSection = createAsyncThunk(
   "section/createSection",
   async (sectionData, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
+    const token = getAuthToken(getState);
     try {
       const response = await client.post("/sections", sectionData, {
         headers: {
@@ -30,7 +26,7 @@ export const createSection = createAsyncThunk(
 export const readSection = createAsyncThunk(
   "section/readSection",
   async ({ id, queryArray }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       // Construct the query string from the array of query objects
@@ -46,9 +42,9 @@ export const readSection = createAsyncThunk(
       const response = await client.get(
         `/sections/dashboard/${id}${queryString ? "?" + queryString : ""}`,
         {
-          // headers: {
-          //   Authorization: `Bearer ${token}`,
-          // },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log(response, "responsee section");
@@ -64,7 +60,7 @@ export const readSection = createAsyncThunk(
 export const readSectionListing = createAsyncThunk(
   "section/readSectionListing",
   async ({ id, queryArray }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       // Construct the query string from the array of query objects
@@ -82,9 +78,9 @@ export const readSectionListing = createAsyncThunk(
           queryString ? "?" + queryString : ""
         }`,
         {
-          // headers: {
-          //   Authorization: `Bearer ${token}`,
-          // },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log(response, "responsee section");
@@ -101,7 +97,7 @@ export const readSectionListing = createAsyncThunk(
 export const readSectionWidgetsPosition = createAsyncThunk(
   "section/readSectionWidgetsPosition",
   async ({ id }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.get(`/sections/get-positions/${id}`, {
@@ -123,7 +119,7 @@ export const readSectionWidgetsPosition = createAsyncThunk(
 export const readSingleSection = createAsyncThunk(
   "section/readSingleSection",
   async ({ id }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.get(`/sections/${id}`, {
@@ -145,7 +141,7 @@ export const readSingleSection = createAsyncThunk(
 export const updateSection = createAsyncThunk(
   "section/updateSection",
   async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(`/sections/${sectionId}`, updatedData, {
@@ -167,11 +163,12 @@ export const updateSection = createAsyncThunk(
 export const changeStatusSection = createAsyncThunk(
   "section/changeStatusSection",
   async ({ sectionId }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(
         `/sections/update-status/${sectionId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -194,7 +191,7 @@ export const changeStatusSection = createAsyncThunk(
 export const deleteSection = createAsyncThunk(
   "section/deleteSection",
   async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(

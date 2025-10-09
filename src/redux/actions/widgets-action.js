@@ -1,20 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import toast from "react-hot-toast";
-// Function to get token from local storage
-const getTokenFromLocalStorage = () => {
-  return localStorage.getItem("token");
-};
+import { getAuthToken } from "../../utils";
 
 // Create a new widget
 export const createWidget = createAsyncThunk(
   "widget/createWidget",
   async (sectionData, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // First check local storage, then Redux state
+    const token = getAuthToken(getState);
     try {
       const response = await client.post("/widgets", sectionData, {
         headers: {
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log(response, "slow days");
@@ -29,8 +26,7 @@ export const createWidget = createAsyncThunk(
 export const updateWidgetCMS = createAsyncThunk(
   "widget/updateWidgetCMS",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
-    console.log(widgetId, updatedData, "widgetid and updated data");
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(
@@ -57,7 +53,7 @@ export const updateWidgetCMS = createAsyncThunk(
 export const readWidget = createAsyncThunk(
   "widget/readWidget",
   async ({ id, queryArray }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       // Construct the query string from the array of query objects
@@ -74,7 +70,7 @@ export const readWidget = createAsyncThunk(
         `widgets/all-widgets/${queryString ? "?" + queryString : ""}`,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -91,7 +87,7 @@ export const readWidget = createAsyncThunk(
 export const readMappedWidget = createAsyncThunk(
   "widget/readMappedWidget",
   async ({ queryArray }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       // Construct the query string from the array of query objects
@@ -108,7 +104,7 @@ export const readMappedWidget = createAsyncThunk(
         `/widgets${queryString ? "?" + queryString : ""}`,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -126,12 +122,12 @@ export const readMappedWidget = createAsyncThunk(
 export const readSingleWidget = createAsyncThunk(
   "widget/readSingleWidget",
   async ({ id }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.get(`/widgets/widget-details/${id}`, {
         headers: {
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log(response, "responsee widget");
@@ -149,12 +145,12 @@ export const updateWidget = createAsyncThunk(
   "widget/updateWidget",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
     console.log(widgetId, updatedData, "widgetid and updated data");
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(`/widgets/${widgetId}`, updatedData, {
         headers: {
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -171,14 +167,18 @@ export const updateWidget = createAsyncThunk(
 export const changeStatusWidget = createAsyncThunk(
   "widget/changeStatusWidget",
   async ({ widgetId }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token;
+    const token = getAuthToken(getState);
 
     try {
-      const response = await client.put(`/widgets/update-status/${widgetId}`, {
-        headers: {
-          // Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await client.put(
+        `/widgets/update-status/${widgetId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       console.log(response, "response of edit");
 
@@ -193,7 +193,7 @@ export const changeStatusWidget = createAsyncThunk(
 export const deleteWidget = createAsyncThunk(
   "widget/deleteWidget",
   async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
-    const token = getTokenFromLocalStorage() || getState().auth.token; // Check local storage first
+    const token = getAuthToken(getState);
 
     try {
       const response = await client.put(
@@ -201,7 +201,7 @@ export const deleteWidget = createAsyncThunk(
         updatedData,
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

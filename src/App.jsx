@@ -1,7 +1,7 @@
 import "./App.css";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { Tooltip } from "./components/tooltip";
 import { Settings } from "./components/settings";
@@ -9,7 +9,7 @@ import { ThemeProvider } from "./components/theme";
 import { OnlineStatus } from "./components/onlineStatus";
 import { ScrollToTopButton } from "./components/scrollToTop";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 
 // Chart.js v4+
@@ -29,6 +29,8 @@ import * as ReactGridLayout from "react-grid-layout";
 import { pxToGridUnits } from "./utils";
 
 function App() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // Expose globals for MF bundle
   window.React = React;
   window.ReactDOM = ReactDOM;
@@ -43,8 +45,16 @@ function App() {
   window.Responsive = ReactGridLayout.Responsive;
   window.process = { env: {} };
 
-  console.log(pxToGridUnits(362), "aaaaaaaaaaa")
-  
+  // console.log(pxToGridUnits(362), "aaaaaaaaaaa");
+
+  const token = searchParams.get("token");
+
+  useEffect(() => {
+    if (token !== null) {
+      localStorage.setItem("token", token);
+    }
+  }, [token]);
+
   return (
     <>
       <Provider store={store}>
