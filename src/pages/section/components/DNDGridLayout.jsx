@@ -94,7 +94,7 @@ export default function DNDGridLayout({
   );
 
   return (
-    <div className="min-h-[370px]">
+    <div className="min-h-[370px] -mx-[10px]">
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
@@ -122,7 +122,6 @@ export default function DNDGridLayout({
             Math.max(item?.position?.[3] ?? defH, mapping.minHeight) || 1.5;
 
           const mergedData = { ...mapping.data, ...item?.data };
-
 
           return (
             <div key={item?.widget_id} data-grid={{ x, y, w, h }}>

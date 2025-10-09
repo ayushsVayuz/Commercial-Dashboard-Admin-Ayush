@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  const userId = 4
+  const userId = 4;
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -120,9 +120,11 @@ const Dashboard = () => {
             </Droppable>
           </DragDropContext>
           {/* Render all sections with their widgets */}
-          {sections?.map((section) => (
+          {sections?.map((section, index) => (
             <div key={section.section_id} className="mb-6">
-              <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
+              {index !== 0 && (
+                <h3 className="text-lg font-semibold mb-2">{section.name}</h3>
+              )}
               {section?.widgets && section?.widgets?.length > 0 ? (
                 <DNDGridLayout
                   data={section.widgets}
