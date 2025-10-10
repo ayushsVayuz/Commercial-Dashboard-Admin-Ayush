@@ -48,6 +48,15 @@ export const readSection = createAsyncThunk(
         }
       );
 
+      const PRIVATE_KEY = process.env.REACT_APP_PRIVATE_KEY;
+
+      const decryptedData = await decryptApiResponse(
+        response.data,
+        PRIVATE_KEY
+      );
+
+      console.log(decryptedData, "decryptedData section");
+
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
