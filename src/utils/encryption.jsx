@@ -25,23 +25,23 @@ function toBase64(buf) {
 
 // 🧩 Main encryption function
 export async function encryptPayload(payloadObj) {
-  const dispatch = useDispatch();
-  // 1️⃣ Get public key from server
-//     const pubPem =`-----BEGIN PUBLIC KEY-----
-//   MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAmk5Y0alQLRh20hDXdJwk
-//   wN4YmKYgvmqwSVzfBacbCQCFsvS3EkNmwC93DNOT3DXpfBhYpyIKJdXdXvDivsNF
-//   zGA4PkAzmXS3QuVS9jZ4tfCiLfOgEOHUCpGps68F8jDM4qyYb6xvLIyarYg1U13v
-//   jTIL+yrymOgiAjSYTWxS8iT9qZ3yhHM874WDYpGUG1rQG/re8EQ14hhFBZbNZz4x
-//   8mvtDJ8bZiVWTn8utv4HXeYMks24Xi06cjQ/f2e/57r/AEwIV2eWfQxtAGXcAYXK
-//   7BvyPQLS1xOVhCBoDcr06e7qtxMOsf6vj1oWTJenUbRD4/ypEqjfNAhfTajrnygf
-//   XS+n4a1xSPSGX94V8eyUojjQJK7ByDemLF6ZHOVmmrI6Ks7bn91XHznKg4hQuA1H
-//   +sN9Vft7FEaYcJ879FNfsQDLdWkhvr67HSYFxPKAJSps2avVRwDBFGV+oR7CLBb0
-//   8oyLCUAYHliuA+zoSfgydLWYLCj+6A18Pte0RQh3vfe+vEcTijAxyMC3ngVz2L9/
-//   CnMCIRDgK59ZKOzBT4+S9VGBKnsOT8+YUXqeeR5zq3ANH/J7lE6vwYMhTtG1j3cL
-//   B7DgpxRqSTti4Npt+HJYmyvEPLbvbCtqiQmvQKAT8B+T0unJr3T5XuNIlgILsGzi
-//   F3q03UuV19JwmXrsVBiCZPkCAwEAAQ==
-//   -----END PUBLIC KEY-----`
-  const pubPem = dispatch(readPublicKey());
+//   const dispatch = useDispatch();
+//   1️⃣ Get public key from server
+    const pubPem =`-----BEGIN PUBLIC KEY-----
+  MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAmk5Y0alQLRh20hDXdJwk
+  wN4YmKYgvmqwSVzfBacbCQCFsvS3EkNmwC93DNOT3DXpfBhYpyIKJdXdXvDivsNF
+  zGA4PkAzmXS3QuVS9jZ4tfCiLfOgEOHUCpGps68F8jDM4qyYb6xvLIyarYg1U13v
+  jTIL+yrymOgiAjSYTWxS8iT9qZ3yhHM874WDYpGUG1rQG/re8EQ14hhFBZbNZz4x
+  8mvtDJ8bZiVWTn8utv4HXeYMks24Xi06cjQ/f2e/57r/AEwIV2eWfQxtAGXcAYXK
+  7BvyPQLS1xOVhCBoDcr06e7qtxMOsf6vj1oWTJenUbRD4/ypEqjfNAhfTajrnygf
+  XS+n4a1xSPSGX94V8eyUojjQJK7ByDemLF6ZHOVmmrI6Ks7bn91XHznKg4hQuA1H
+  +sN9Vft7FEaYcJ879FNfsQDLdWkhvr67HSYFxPKAJSps2avVRwDBFGV+oR7CLBb0
+  8oyLCUAYHliuA+zoSfgydLWYLCj+6A18Pte0RQh3vfe+vEcTijAxyMC3ngVz2L9/
+  CnMCIRDgK59ZKOzBT4+S9VGBKnsOT8+YUXqeeR5zq3ANH/J7lE6vwYMhTtG1j3cL
+  B7DgpxRqSTti4Npt+HJYmyvEPLbvbCtqiQmvQKAT8B+T0unJr3T5XuNIlgILsGzi
+  F3q03UuV19JwmXrsVBiCZPkCAwEAAQ==
+  -----END PUBLIC KEY-----`
+//   const pubPem = dispatch(readPublicKey());
   const spki = pemToArrayBuffer(pubPem);
 
   // 2️⃣ Import RSA public key

@@ -21,13 +21,10 @@ const commonSlice = createSlice({
         state.error = null;
       })
       .addCase(getAllRoles.fulfilled, (state, action) => {
-        const { statusCode, data, total } = action.payload;
-
-        if (statusCode === 200) {
-          state.roles = data;
+        if (action.payload.statusCode === 200) {
+          state.roles = action.payload.data;
         }
-        state.totalCount = total;
-
+        state.totalCount = action.payload.total;
         state.rolesLoading = false;
         state.error = null;
       })

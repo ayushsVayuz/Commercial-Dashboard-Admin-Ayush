@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { getAuthToken, handleError } from "../../utils";
+import { decryptResponse } from "../../utils/decryption";
 
 export const getAllRoles = createAsyncThunk(
   "common/getAllRoles",
@@ -16,12 +17,9 @@ export const getAllRoles = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      const decryptedData = await decryptResponse(response.data);
 
-      return {
-        statusCode: response.data.statusCode,
-        data: response.data.data,
-        total: response.data.total,
-      };
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }

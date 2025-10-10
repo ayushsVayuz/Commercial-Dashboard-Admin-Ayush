@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { buildQueryString, getAuthToken, handleError } from "../../utils";
+import { decryptResponse } from "../../utils/decryption";
+import { encryptPayload } from "../../utils/encryption";
 
 // Get community list with query
 export const readCommunities = createAsyncThunk(
@@ -18,7 +20,9 @@ export const readCommunities = createAsyncThunk(
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
@@ -51,13 +55,12 @@ export const mapCommunities = createAsyncThunk(
   "section/mapCommunities",
   async ({ communityIds }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload({ communityIds: communityIds });
 
     try {
       const response = await client.put(
         `/community/update-status`,
-        {
-          communityIds,
-        },
+        encryptedData,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }

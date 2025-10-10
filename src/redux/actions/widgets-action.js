@@ -3,6 +3,7 @@ import client from "../axios-baseurl";
 import toast from "react-hot-toast";
 import { getAuthToken, handleError } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
+import { decryptResponse } from "../../utils/decryption";
 
 // Create a new widget
 export const createWidget = createAsyncThunk(
@@ -16,9 +17,10 @@ export const createWidget = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response, "slow days");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
@@ -43,7 +45,9 @@ export const updateWidgetCMS = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       toast.error(error?.response?.data?.message);
       return handleError(error, rejectWithValue);
@@ -78,7 +82,9 @@ export const readWidget = createAsyncThunk(
       );
       console.log(response, "responsee widget");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
       return handleError(error, rejectWithValue);
@@ -112,7 +118,9 @@ export const readMappedWidget = createAsyncThunk(
       );
       console.log(response, "responsee widget");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
       return handleError(error, rejectWithValue);
@@ -134,7 +142,9 @@ export const readSingleWidget = createAsyncThunk(
       });
       console.log(response, "responsee widget");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
@@ -156,7 +166,9 @@ export const updateWidget = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
@@ -168,11 +180,12 @@ export const changeStatusWidget = createAsyncThunk(
   "widget/changeStatusWidget",
   async ({ widgetId }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload({});
 
     try {
       const response = await client.put(
         `/widgets/update-status/${widgetId}`,
-        {},
+        encryptedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -208,7 +221,9 @@ export const deleteWidget = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }

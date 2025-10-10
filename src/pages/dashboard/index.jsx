@@ -2,34 +2,22 @@ import { useEffect, useState } from "react";
 import DNDGridLayout from "../section/components/DNDGridLayout";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { NoData } from "../../components/noDara";
-import { fetchDashboardDetails } from "../../redux/actions/dashboard-action";
-import { useDispatch } from "react-redux";
+import {
+  fetchDashboardDetails,
+  updateSectionOrder,
+} from "../../redux/actions/dashboard-action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const [sections, setSections] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [sectionsOrder, setSectionsOrder] = useState();
+  const { data: sections, loading } = useSelector((state) => state.dashboard);
 
   const dispatch = useDispatch();
 
   const userId = 4;
 
   useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        const response = await dispatch(
-          fetchDashboardDetails({ userId: userId, communityId: 2 })
-        ).unwrap();
-
-        console.log("Fetched dashboard data:", response);
-        setSections(response);
-      } catch (error) {
-        console.error("Error fetching dashboard:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDashboard();
+    dispatch(fetchDashboardDetails({ userId: userId, communityId: 2 }));
   }, [dispatch]);
 
   // Handle drag end for sections
@@ -46,38 +34,17 @@ const Dashboard = () => {
       order_index: idx + 1,
     }));
 
-    setSections(updated);
+    setSectionsOrder(updated);
 
     // prepare payload for API
     const payload = updated.map((s) => ({
       id: s?.section_id,
       order_index: s?.order_index,
     }));
-
-    console.log("Saving to backend:", payload);
-
-    try {
-      const res = await fetch(
-        `https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ sections: payload }),
-        }
-      );
-
-      if (!res.ok) {
-        throw new Error(`Failed to save sections: ${res.status}`);
-      }
-
-      const result = await res.json();
-      console.log("Save success:", result);
-    } catch (err) {
-      console.error("Error saving section order:", err);
-    }
+    dispatch(updateSectionOrder({ sections: payload }));
   };
+
+  // console.log(sections, "sections in dash")
 
   if (loading) return <div>Loading Dashboard...</div>;
 

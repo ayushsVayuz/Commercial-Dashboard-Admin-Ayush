@@ -17,9 +17,11 @@ export const createSection = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -55,7 +57,7 @@ export const readSection = createAsyncThunk(
       return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -88,10 +90,12 @@ export const readSectionListing = createAsyncThunk(
       );
       console.log(response, "responsee section");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -110,10 +114,12 @@ export const readSectionWidgetsPosition = createAsyncThunk(
       });
       console.log(response, "responsee section");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -132,10 +138,12 @@ export const readSingleSection = createAsyncThunk(
       });
       console.log(response, "responsee section");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -159,9 +167,11 @@ export const updateSection = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -171,11 +181,12 @@ export const changeStatusSection = createAsyncThunk(
   "section/changeStatusSection",
   async ({ sectionId }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload({});
 
     try {
       const response = await client.put(
         `/sections/update-status/${sectionId}`,
-        {},
+        encryptedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -189,7 +200,7 @@ export const changeStatusSection = createAsyncThunk(
         statusCode: response.data.statusCode,
       };
     } catch (error) {
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -211,9 +222,11 @@ export const deleteSection = createAsyncThunk(
 
       console.log(response, "response of edit");
 
-      return response.data;
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
-     return handleError(error, rejectWithValue);
+      return handleError(error, rejectWithValue);
     }
   }
 );
