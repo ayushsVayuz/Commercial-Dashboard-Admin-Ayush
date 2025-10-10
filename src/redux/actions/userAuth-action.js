@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import axios from "axios";
+import { handleError } from "../../utils";
 
 // export const loginUser = createAsyncThunk(
 //   "loginUser",
@@ -20,7 +21,7 @@ import axios from "axios";
 //       return response.data;
 //     } catch (error) {
 //       console.log(error);
-//       return rejectWithValue(error?.response?.data?.message || error?.message);
+//       return handleError(error, rejectWithValue);
 //     }
 //   }
 // );
@@ -39,7 +40,7 @@ export const loginUser = createAsyncThunk(
             "Content-Type": "application/json",
           },
           body: JSON.stringify(authInfo), // Format authInfo as JSON
-        //   mode: "no-cors",
+          //   mode: "no-cors",
         }
       );
 
@@ -84,7 +85,7 @@ export const compareOtp = createAsyncThunk(
       console.log(response, "response otp compare");
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -105,7 +106,7 @@ export const resendOtp = createAsyncThunk(
       console.log(response, "response otp resend");
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-import { getAuthToken } from "../../utils";
+import { getAuthToken, handleError } from "../../utils";
 
 export const fetchDashboardDetails = createAsyncThunk(
   "dashboard/fetchDashboardDetails",
@@ -40,11 +40,7 @@ export const fetchDashboardDetails = createAsyncThunk(
 
       return apiSections;
     } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.message ||
-          error?.message ||
-          "Something went wrong"
-      );
+      return handleError(error, rejectWithValue);
     }
   }
 );

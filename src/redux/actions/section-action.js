@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-import { getAuthToken } from "../../utils";
+import { getAuthToken, handleError } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
 import { decryptResponse } from "../../utils/decryption";
 
@@ -19,7 +19,7 @@ export const createSection = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -55,7 +55,7 @@ export const readSection = createAsyncThunk(
       return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -91,7 +91,7 @@ export const readSectionListing = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -113,7 +113,7 @@ export const readSectionWidgetsPosition = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -135,7 +135,7 @@ export const readSingleSection = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -161,7 +161,7 @@ export const updateSection = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -189,7 +189,7 @@ export const changeStatusSection = createAsyncThunk(
         statusCode: response.data.statusCode,
       };
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );
@@ -213,7 +213,7 @@ export const deleteSection = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+     return handleError(error, rejectWithValue);
     }
   }
 );

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import toast from "react-hot-toast";
-import { getAuthToken } from "../../utils";
+import { getAuthToken, handleError } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
 
 // Create a new widget
@@ -20,7 +20,7 @@ export const createWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -46,7 +46,7 @@ export const updateWidgetCMS = createAsyncThunk(
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.message);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -81,7 +81,7 @@ export const readWidget = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -115,7 +115,7 @@ export const readMappedWidget = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("rannn2", error);
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -136,7 +136,7 @@ export const readSingleWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -158,7 +158,7 @@ export const updateWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -184,7 +184,7 @@ export const changeStatusWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -210,7 +210,7 @@ export const deleteWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );

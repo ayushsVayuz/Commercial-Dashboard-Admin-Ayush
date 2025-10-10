@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
-import { getAuthToken } from "../../utils";
+import { getAuthToken, handleError } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
 
 // Create Container
@@ -18,7 +18,7 @@ export const createContainer = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -42,7 +42,7 @@ export const updateContainer = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -73,7 +73,7 @@ export const readContainer = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -93,7 +93,7 @@ export const readSingleContainer = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
@@ -115,7 +115,7 @@ export const deleteContainer = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );

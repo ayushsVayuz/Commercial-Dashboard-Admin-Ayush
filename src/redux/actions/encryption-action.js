@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
+import { handleError } from "../../utils";
 
 export const readPublicKey = createAsyncThunk(
   "encryption/readPublicKey",
@@ -13,7 +14,7 @@ export const readPublicKey = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error?.response?.data?.message || error?.message);
+      return handleError(error, rejectWithValue);
     }
   }
 );
