@@ -16,11 +16,9 @@ import {
   readSingleSection,
 } from "../../redux/actions/section-action";
 import { MetaTitle } from "../../components/metaTitle";
-import { Input } from "../../components/inputs/input";
 import { Heading } from "../../components/heading";
 import { FormWrapper } from "../../components/wrappers/form";
 import { Selector } from "../../components/select";
-import { Toggle } from "../../components/inputs/toogle";
 import { sectionPayload } from "../../redux/slices/sectionSlice";
 import {
   readMappedWidget,
@@ -310,6 +308,7 @@ const SectionAddEdit = () => {
       // params: data?.params || [],
       widgets: widgetPositions,
     };
+    // console.log(payload);
     dispatch(sectionPayload(payload));
     if (isEditMode) {
       navigate(`/section/preview/${id}`);

@@ -17,7 +17,6 @@ export const getAllRoles = createAsyncThunk(
         },
       });
 
-
       return {
         statusCode: response.data.statusCode,
         data: response.data.data,

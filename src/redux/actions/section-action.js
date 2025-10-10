@@ -1,20 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { getAuthToken } from "../../utils";
+import { encryptPayload } from "../../utils/encryption";
 
 // Create a new section
 export const createSection = createAsyncThunk(
   "section/createSection",
   async (sectionData, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload(sectionData);
+
     try {
-      const response = await client.post("/sections", sectionData, {
+      const response = await client.post("/sections", encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response, "slow days");
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data?.message || error?.message);
@@ -29,7 +30,6 @@ export const readSection = createAsyncThunk(
     const token = getAuthToken(getState);
 
     try {
-      // Construct the query string from the array of query objects
       const queryString = queryArray
         ?.map(
           (query) =>
@@ -47,7 +47,6 @@ export const readSection = createAsyncThunk(
           },
         }
       );
-      
 
       return response.data;
     } catch (error) {
@@ -142,13 +141,17 @@ export const updateSection = createAsyncThunk(
   "section/updateSection",
   async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
-
+    const encryptedData = await encryptPayload(updatedData);
     try {
-      const response = await client.put(`/sections/${sectionId}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await client.put(
+        `/sections/${sectionId}`,
+        encryptedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       console.log(response, "response of edit");
 
@@ -190,13 +193,11 @@ export const changeStatusSection = createAsyncThunk(
 // Delete section
 export const deleteSection = createAsyncThunk(
   "section/deleteSection",
-  async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
+  async ({ domainId }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
-
     try {
-      const response = await client.put(
+      const response = await client.delete(
         `/master-settings/section/${domainId}`,
-        updatedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,

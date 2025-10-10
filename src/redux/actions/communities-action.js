@@ -51,7 +51,6 @@ export const mapCommunities = createAsyncThunk(
   "section/mapCommunities",
   async ({ communityIds }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
-    console.log(communityIds);
 
     try {
       const response = await client.put(

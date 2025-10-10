@@ -1,14 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { getAuthToken } from "../../utils";
+import { encryptPayload } from "../../utils/encryption";
 
 // Create Container
 export const createContainer = createAsyncThunk(
   "container/createContainer",
   async (containerData, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload(containerData);
     try {
-      const response = await client.post("/widget-containers", containerData, {
+      const response = await client.post("/widget-containers", encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -26,10 +28,11 @@ export const updateContainer = createAsyncThunk(
   "container/updateContainer",
   async ({ containerId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload(updatedData);
     try {
       const response = await client.put(
         `/widget-containers/${containerId}`,
-        updatedData,
+        encryptedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,

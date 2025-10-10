@@ -2,14 +2,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import toast from "react-hot-toast";
 import { getAuthToken } from "../../utils";
+import { encryptPayload } from "../../utils/encryption";
 
 // Create a new widget
 export const createWidget = createAsyncThunk(
   "widget/createWidget",
-  async (sectionData, { rejectWithValue, getState }) => {
+  async (widgetData, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    const encryptedData = await encryptPayload(widgetData);
     try {
-      const response = await client.post("/widgets", sectionData, {
+      const response = await client.post("/widgets", encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,11 +29,11 @@ export const updateWidgetCMS = createAsyncThunk(
   "widget/updateWidgetCMS",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
-
+    const encryptedData = await encryptPayload(updatedData);
     try {
       const response = await client.put(
         `/widgets/update-widget/${widgetId}`,
-        updatedData,
+        encryptedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +54,7 @@ export const updateWidgetCMS = createAsyncThunk(
 // Get widget list with query
 export const readWidget = createAsyncThunk(
   "widget/readWidget",
-  async ({ id, queryArray }, { rejectWithValue, getState }) => {
+  async ({ queryArray }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
 
     try {
@@ -134,7 +136,6 @@ export const readSingleWidget = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log("rannn2", error);
       return rejectWithValue(error?.response?.data?.message || error?.message);
     }
   }
@@ -144,11 +145,10 @@ export const readSingleWidget = createAsyncThunk(
 export const updateWidget = createAsyncThunk(
   "widget/updateWidget",
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
-    console.log(widgetId, updatedData, "widgetid and updated data");
     const token = getAuthToken(getState);
-
+    const encryptedData = await encryptPayload(updatedData);
     try {
-      const response = await client.put(`/widgets/${widgetId}`, updatedData, {
+      const response = await client.put(`/widgets/${widgetId}`, encryptedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -192,13 +192,13 @@ export const changeStatusWidget = createAsyncThunk(
 // Delete widget
 export const deleteWidget = createAsyncThunk(
   "widget/deleteWidget",
-  async ({ domainId, updatedData }, { rejectWithValue, getState }) => {
+  async ({ domainId }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
 
     try {
-      const response = await client.put(
+      const response = await client.delete(
         `/master-settings/widget/${domainId}`,
-        updatedData,
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
