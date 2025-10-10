@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { getAuthToken } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
-import { decryptApiResponse } from "../../utils/decryptApiResponse";
+import { decryptResponse } from "../../utils/decryption";
 
 // Create a new section
 export const createSection = createAsyncThunk(
@@ -50,9 +50,7 @@ export const readSection = createAsyncThunk(
       );
       console.log(response.data);
 
-      const decryptedData = await decryptApiResponse(response.data);
-
-      // console.log(decryptedData, "decryptedData section");
+      const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {

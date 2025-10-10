@@ -1,8 +1,4 @@
-// decryptApiResponse.js
-export async function decryptApiResponse(encryptedResponse) {
-  //   console.log("encryptedResponse", encryptedResponse);
-  //   console.log("process.env.VITE_PRIVATE_KEY", import.meta.env.VITE_PRIVATE_KEY);
-
+export async function decryptResponse(encryptedResponse) {
   const privateKeyPem = import.meta.env.VITE_PRIVATE_KEY;
 
   if (!privateKeyPem) {
