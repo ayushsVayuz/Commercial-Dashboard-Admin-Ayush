@@ -124,8 +124,8 @@ export const Header = ({ className, collapse, setCollapse }) => {
         </div>
         {signedIn ? (
           <div className="flex items-center gap-4">
-            <ThemeSwitch />
-            <FullScreenButton />
+            {/* <ThemeSwitch /> */}
+            {/* <FullScreenButton /> */}
             {/* <Notification /> */}
             <div className="hidden sm:flex relative gap-2">
               <button
@@ -137,9 +137,9 @@ export const Header = ({ className, collapse, setCollapse }) => {
                   <span className="text-white">A</span>
                 </div>
                 <div className="flex flex-col items-start gap-1">
-                  <h5 className="font-bold text-[#3D3D47] dark:text-white">
+                  {/* <h5 className="font-bold text-[#3D3D47] dark:text-white">
                     {"Anarock Admin"}
-                  </h5>
+                  </h5> */}
                   {/* <span className="text-xs text-[#767676]  dark:text-white">
                     {"UI Designer"}
                   </span> */}
@@ -152,9 +152,9 @@ export const Header = ({ className, collapse, setCollapse }) => {
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
                     ref={signedInMenuPopupRef}
-                    className="p-4 w-full absolute top-16 right-0 bg-white dark:bg-darkPrimary border border-[#C6C6C6] shadow rounded-md z-10 flex flex-col items-start justify-start gap-2"
+                    className="p-4 min-w-[200px] w-full absolute top-16 right-0 bg-white dark:bg-darkPrimary border border-[#C6C6C6] shadow rounded-md z-10 flex flex-col items-start justify-start gap-2"
                   >
-                    <Link
+                    {/* <Link
                       onClick={() => setSignedInMenuPopup(!signedInMenuPopup)}
                       to={"/user-profile"}
                       className="flex items-center gap-2 dark:text-white"
@@ -169,7 +169,7 @@ export const Header = ({ className, collapse, setCollapse }) => {
                     >
                       <IoSettingsOutline />
                       <p className="text-sm">Settings</p>
-                    </Link>
+                    </Link> */}
                     <button
                       onClick={() => {
                         setSignOutModalOpen(!signOutModalOpen);

@@ -37,11 +37,27 @@ const dashboardSlice = createSlice({
       .addCase(updateSectionOrder.fulfilled, (state, action) => {
         state.loading = false;
 
-        console.log(action, "sdfas")
-        if (action.payload?.statusCode == 200) {
-          // state.data = action.payload;
+        if (
+          action.payload?.statusCode === 200 &&
+          Array.isArray(action.meta.arg.sections)
+        ) {
+          const updatedSections = action.meta.arg.sections;
+
+          let newData = state.data?.map((section) => {
+            const updated = updatedSections.find(
+              (s) => s.id === section.section_id
+            );
+            return updated
+              ? { ...section, order_index: updated.order_index }
+              : section;
+          });
+
+          newData = newData?.sort((a, b) => a.order_index - b.order_index);
+
+          state.data = newData;
         }
       })
+
       .addCase(updateSectionOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
