@@ -194,11 +194,9 @@ export const changeStatusSection = createAsyncThunk(
         }
       );
 
-      console.log(response, "response of edit");
+      const decryptedData = await decryptResponse(response.data);
 
-      return {
-        statusCode: response.data.statusCode,
-      };
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }

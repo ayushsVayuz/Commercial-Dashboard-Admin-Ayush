@@ -193,9 +193,9 @@ export const changeStatusWidget = createAsyncThunk(
         }
       );
 
-      console.log(response, "response of edit");
+      const decryptedData = await decryptResponse(response.data);
 
-      return response.data;
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
