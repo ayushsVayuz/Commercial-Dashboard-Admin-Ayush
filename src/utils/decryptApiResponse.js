@@ -1,10 +1,21 @@
-export async function decryptApiResponse(encryptedResponse, privateKeyPem) {
+// decryptApiResponse.js
+export async function decryptApiResponse(encryptedResponse) {
+  //   console.log("encryptedResponse", encryptedResponse);
+  //   console.log("process.env.VITE_PRIVATE_KEY", import.meta.env.VITE_PRIVATE_KEY);
+
+  const privateKeyPem = import.meta.env.VITE_PRIVATE_KEY;
+
+  if (!privateKeyPem) {
+    throw new Error("Private key is not defined. Check your .env file.");
+  }
+
   // Convert PEM private key to CryptoKey
   async function importRsaPrivateKey(pemKey) {
     const base64 = pemKey
       .replace("-----BEGIN PRIVATE KEY-----", "")
       .replace("-----END PRIVATE KEY-----", "")
       .replace(/\s+/g, "");
+
     const binaryDer = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
 
     return window.crypto.subtle.importKey(
@@ -49,7 +60,7 @@ export async function decryptApiResponse(encryptedResponse, privateKeyPem) {
     ["decrypt"]
   );
 
-  // Combine ciphertext + authTag for decryption
+  // Combine ciphertext + authTag
   const combinedCiphertext = new Uint8Array(ciphertext.length + authTag.length);
   combinedCiphertext.set(ciphertext);
   combinedCiphertext.set(authTag, ciphertext.length);
@@ -62,7 +73,6 @@ export async function decryptApiResponse(encryptedResponse, privateKeyPem) {
   );
 
   // Convert decrypted buffer to JSON
-  const decoder = new TextDecoder();
-  const decryptedText = decoder.decode(decryptedBuffer);
+  const decryptedText = new TextDecoder().decode(decryptedBuffer);
   return JSON.parse(decryptedText);
 }

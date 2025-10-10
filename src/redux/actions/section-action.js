@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import client from "../axios-baseurl";
 import { getAuthToken } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
+import { decryptApiResponse } from "../../utils/decryptApiResponse";
 
 // Create a new section
 export const createSection = createAsyncThunk(
@@ -47,17 +48,13 @@ export const readSection = createAsyncThunk(
           },
         }
       );
+      console.log(response.data);
 
-      const PRIVATE_KEY = process.env.REACT_APP_PRIVATE_KEY;
+      const decryptedData = await decryptApiResponse(response.data);
 
-      const decryptedData = await decryptApiResponse(
-        response.data,
-        PRIVATE_KEY
-      );
+      // console.log(decryptedData, "decryptedData section");
 
-      console.log(decryptedData, "decryptedData section");
-
-      return response.data;
+      return decryptedData;
     } catch (error) {
       console.log("rannn2", error);
       return rejectWithValue(error?.response?.data?.message || error?.message);
