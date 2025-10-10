@@ -19,6 +19,7 @@ import {
 import { Toggle } from "../../components/inputs/toogle";
 import { LuLoaderCircle } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { updateSectionOrder } from "../../redux/actions/dashboard-action";
 
 const modernAnimationStyles = `
   .table-row {
@@ -206,14 +207,7 @@ const SectionListing = () => {
         order_index: s?.order_index,
       }));
 
-      fetch(
-        "https://apnacomplex.vayuz.com/dashboard-api/v1/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/save",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sections: payload }),
-        }
-      ).catch(() => {});
+      dispatch(updateSectionOrder({ sections: payload }));
 
       // Cleanup
       document.removeEventListener("transitionend", handleTransitionEnd);
@@ -316,8 +310,8 @@ const SectionListing = () => {
     //       <button
     //         onClick={() => moveSection(index, "up")}
     //         disabled={index === 0 || isAnimating}
-    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
-    //                disabled:cursor-not-allowed transition-all duration-200 
+    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30
+    //                disabled:cursor-not-allowed transition-all duration-200
     //                hover:scale-110 active:scale-95"
     //       >
     //         <svg
@@ -338,8 +332,8 @@ const SectionListing = () => {
     //       <button
     //         onClick={() => moveSection(index, "down")}
     //         disabled={index === localSections.length - 1 || isAnimating}
-    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30 
-    //                disabled:cursor-not-allowed transition-all duration-200 
+    //         className="group p-2 rounded-full hover:bg-blue-50 disabled:opacity-30
+    //                disabled:cursor-not-allowed transition-all duration-200
     //                hover:scale-110 active:scale-95"
     //       >
     //         <svg

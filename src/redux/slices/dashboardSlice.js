@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchDashboardDetails } from "../actions/dashboard-action";
+import {
+  fetchDashboardDetails,
+  updateSectionOrder,
+} from "../actions/dashboard-action";
 
 const dashboardSlice = createSlice({
   name: "dashboard",
@@ -24,6 +27,22 @@ const dashboardSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchDashboardDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateSectionOrder.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateSectionOrder.fulfilled, (state, action) => {
+        state.loading = false;
+
+        console.log(action, "sdfas")
+        if (action.payload?.statusCode == 200) {
+          // state.data = action.payload;
+        }
+      })
+      .addCase(updateSectionOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
