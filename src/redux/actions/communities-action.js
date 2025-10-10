@@ -44,7 +44,9 @@ export const changeStatusCommunity = createAsyncThunk(
         }
       );
 
-      return { statusCode: response.data.statusCode };
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
@@ -66,10 +68,9 @@ export const mapCommunities = createAsyncThunk(
         }
       );
 
-      return {
-        statusCode: response.data.statusCode,
-        data: response.data.data,
-      };
+      const decryptedData = await decryptResponse(response.data);
+
+      return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
