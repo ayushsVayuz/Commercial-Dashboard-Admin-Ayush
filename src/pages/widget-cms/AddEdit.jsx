@@ -473,6 +473,8 @@ const WidgetCMSAddEdit = () => {
         })
       ).unwrap();
 
+      console.log(response, "sadasda");
+
       if (response?.statusCode === 200 || response?.statusCode === 201) {
         navigate("/widget");
       }

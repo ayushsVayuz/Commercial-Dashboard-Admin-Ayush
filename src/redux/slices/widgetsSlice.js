@@ -1,4 +1,4 @@
-import { createSlice , current} from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   createWidget,
   readWidget,
@@ -12,7 +12,7 @@ import {
 const initialState = {
   widgets: [],
   singleWidget: {},
-  singleWidgetLoading : false,
+  singleWidgetLoading: false,
   payload: {},
   loading: false,
   statusLoading: {},
@@ -107,22 +107,21 @@ const widgetsSlice = createSlice({
         state.error = null;
       })
       .addCase(updateWidgetCMS.fulfilled, (state, action) => {
-  state.loading = false;
-  
-  const { widgetId, updatedData } = action.meta.arg;
-  
-  const index = state.widgets.findIndex(
-    (widget) => widget.widget_id === widgetId
-  );
-  
-  if (index !== -1) {
-    state.widgets[index] = { 
-      ...state.widgets[index], 
-      ...updatedData,
-      
-    };
-  }
-})
+        state.loading = false;
+        console.log(action.meta.arg);
+        const { widgetId, updatedData } = action.meta.arg;
+
+        const index = state.widgets.findIndex(
+          (widget) => widget.widget_id === widgetId
+        );
+
+        if (index !== -1) {
+          state.widgets[index] = {
+            ...state.widgets[index],
+            ...updatedData,
+          };
+        }
+      })
       .addCase(updateWidgetCMS.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to update widgets";
