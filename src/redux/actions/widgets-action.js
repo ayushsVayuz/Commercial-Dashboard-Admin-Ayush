@@ -42,9 +42,6 @@ export const updateWidgetCMS = createAsyncThunk(
           },
         }
       );
-
-      console.log(response, "response of edit");
-
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
@@ -80,13 +77,11 @@ export const readWidget = createAsyncThunk(
           },
         }
       );
-      console.log(response, "responsee widget");
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -116,13 +111,11 @@ export const readMappedWidget = createAsyncThunk(
           },
         }
       );
-      console.log(response, "responsee widget");
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -140,7 +133,6 @@ export const readSingleWidget = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response, "responsee widget");
 
       const decryptedData = await decryptResponse(response.data);
 
@@ -163,8 +155,6 @@ export const updateWidget = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log(response, "response of edit");
 
       const decryptedData = await decryptResponse(response.data);
 
@@ -218,8 +208,6 @@ export const deleteWidget = createAsyncThunk(
           },
         }
       );
-
-      console.log(response, "response of edit");
 
       const decryptedData = await decryptResponse(response.data);
 

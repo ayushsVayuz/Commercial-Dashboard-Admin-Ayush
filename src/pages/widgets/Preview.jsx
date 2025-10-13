@@ -21,10 +21,7 @@ const WidgetPreview = () => {
     navigate(-1);
   };
 
-  console.log(payload, "preview payload data");
-
   const handleSubmit = async (data) => {
-    console.log(data, "form data");
     try {
       let res;
       if (isEditMode) {
@@ -42,7 +39,6 @@ const WidgetPreview = () => {
           `Widget ${isEditMode ? "Updated" : "Created"} Successfully`
         );
       }
-      console.log("Submission response:", res);
     } catch (error) {
       toast.error("An error occurred. Please try again.");
       console.error("Submission error:", error);

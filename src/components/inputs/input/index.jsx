@@ -16,7 +16,7 @@ export const Input = ({
   errorContent,
   autoComplete,
   disabled,
-  
+
   ...props
 }) => {
   const [passwordType, setPasswordType] = useState("password");
@@ -26,10 +26,9 @@ export const Input = ({
   };
 
   const handleChange = (e) => {
-
     // Prevent more than one space consecutively
     let newValue;
-    let nameArr = ['password', 'email']
+    let nameArr = ["password", "email"];
     if (nameArr.includes(e.target.name)) {
       newValue = e.target.value.replace(/\s/g, "");
     } else {
@@ -37,11 +36,9 @@ export const Input = ({
     }
 
     if (e.target.name === "otp" && (newValue.length > 4 || newValue > 9999)) {
-      console.log('trying');
-
-      newValue = newValue.slice(0, 4); // Trim to 4 characters
+      newValue = newValue.slice(0, 4);
     } else if (e.target.value.length > 150) {
-      return; // Enforce max length of 30 for other fields
+      return;
     }
     e.target.value = newValue;
     onChange(e);
@@ -63,8 +60,9 @@ export const Input = ({
         <div className="w-full relative ">
           <input
             {...props}
-            className={`${className} ${errorContent && touched ? "border-error" : "border-[#D6D6D6]"
-              } w-full text-black placeholder:text-[#C4C4C4] placeholder:text-xs p-3 bg-pageBodyBg focus:border-focusInputBorderColor h-49 dark:bg-gray-900 dark:text-white rounded-md shadow-sm`}
+            className={`${className} ${
+              errorContent && touched ? "border-error" : "border-[#D6D6D6]"
+            } w-full text-black placeholder:text-[#C4C4C4] placeholder:text-xs p-3 bg-pageBodyBg focus:border-focusInputBorderColor h-49 dark:bg-gray-900 dark:text-white rounded-md shadow-sm`}
             type={type === "password" ? passwordType : type}
             placeholder={placeholder}
             value={value}
@@ -79,9 +77,9 @@ export const Input = ({
               type="button"
               onClick={viewPassword}
               className={`absolute top-1/2 -translate-y-1/2 right-4`}
-            // ${
-            //   errorContent ? "right-10" : "right-4"
-            // }
+              // ${
+              //   errorContent ? "right-10" : "right-4"
+              // }
             >
               {passwordType === "password" ? (
                 <FaEye className="text-[#858585]" />

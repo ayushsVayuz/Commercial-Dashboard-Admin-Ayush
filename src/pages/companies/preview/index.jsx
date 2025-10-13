@@ -6,8 +6,6 @@ import { MetaTitle } from "../../../components/metaTitle";
 export const PreviewCompany = () => {
   const { companyData } = useSelector((state) => state.company);
 
-  console.log(companyData, "sfsd");
-
   return (
     <section>
       <MetaTitle title={"Preview Company | Anarock"} />

@@ -25,12 +25,9 @@ const MicrofrontendLoader = forwardRef(
       }
 
       script.onload = () => {
-        console.log("loaaddd");
         const RemoteComponent = window[globalVarName];
         if (onLoad) onLoad();
         if (RemoteComponent) {
-          console.log("loaaddd 2");
-
           setComponent(() => RemoteComponent);
         } else {
           console.error(`Global var ${globalVarName} not found`);

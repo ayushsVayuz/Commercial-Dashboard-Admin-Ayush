@@ -3,9 +3,6 @@ import { RenderLableValue } from "../../../../components/labels";
 import { CardWrapper } from "../../../../components/wrappers/card";
 
 export const BasicInformation = ({ company }) => {
-
-  console.log(company, "dsafasdf");
-  
   return (
     <div className="mb-12">
       <div className="w-full flex flex-col md:flex-row gap-5">

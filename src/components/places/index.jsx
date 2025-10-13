@@ -36,7 +36,6 @@ export default function LocationInput({
     geocodeByAddress(newAddress)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
-        console.log("Success", latLng);
         onSelect({ address: newAddress, lat: latLng.lat, lng: latLng.lng });
       })
       .catch((error) => console.error("Error", error));
@@ -57,7 +56,9 @@ export default function LocationInput({
           <div className="flex flex-col gap-1">
             <div
               className={`${className} ${
-                errorContent && touched ? "border-error" : "border-[#D6D6D6] dark:border-gray-900"
+                errorContent && touched
+                  ? "border-error"
+                  : "border-[#D6D6D6] dark:border-gray-900"
               } w-full h-full bg-pageBodyBg dark:bg-gray-900 p-2 rounded-lg`}
             >
               <input

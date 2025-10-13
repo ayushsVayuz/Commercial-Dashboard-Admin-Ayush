@@ -283,8 +283,6 @@
 //     }
 //   }, [effectiveData]);
 
-//   console.log(gridWidgets, "grid widgets data");
-
 //   return (
 //     <div className="p-4">
 //       <DndProvider backend={HTML5Backend}>
@@ -292,7 +290,7 @@
 //           className="
 //             grid gap-2 w-full
 //             grid-cols-6
-//             auto-rows-[120px] 
+//             auto-rows-[120px]
 //             sm:auto-rows-[100px]
 //             md:auto-rows-[120px]
 //             lg:auto-rows-[140px]

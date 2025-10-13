@@ -111,7 +111,6 @@ const WidgetAddEdit = () => {
         tablet: JSON.stringify(singleWidget.responsive?.tablet || {}),
         desktop: JSON.stringify(singleWidget.responsive?.desktop || {}),
       });
-      console.log(singleWidget, "singleWidget data");
     } else {
       const singleWidget = payload;
       reset({
@@ -213,7 +212,6 @@ const WidgetAddEdit = () => {
     fetchSections();
   }, [dispatch]);
 
-  console.log(errors, "errors");
   return (
     <section className="dark:bg-gray-800 dark:h-screen">
       <MetaTitle title={`Widget ${isEditMode ? "Edit" : "Add"} | Anarock`} />

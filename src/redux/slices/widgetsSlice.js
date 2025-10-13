@@ -108,7 +108,6 @@ const widgetsSlice = createSlice({
       })
       .addCase(updateWidgetCMS.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.meta.arg);
         const { widgetId, updatedData } = action.meta.arg;
 
         const index = state.widgets.findIndex(

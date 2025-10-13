@@ -9,7 +9,6 @@
 //   const [query, setQuery] = useState(searchParams.get("search") || ""); // Decrypt the search query
 
 //   useEffect(() => {
-//     console.log(query, "query from search");
 //   }, [query]);
 
 //   const navigate = useNavigate();

@@ -315,7 +315,6 @@ export const listenForLogin = () => {
 // Example usage
 // const inputTimestamp = '2024-01-05T15:00:00.000Z';
 // const formattedTimestamp = convertTimestamp(inputTimestamp);
-// console.log(formattedTimestamp);
 
 export function convertToCustomFormat(inputDate) {
   const date = new Date(inputDate);
@@ -340,8 +339,6 @@ export function convertToCustomFormat(inputDate) {
 
 // const inputDateString = "Thu Dec 07 2023 16:22:47 GMT+0530 (India Standard Time)";
 // const formattedDate = convertToCustomFormat(inputDateString);
-
-// console.log(formattedDate);
 
 export function convertDateFormat(inputDate) {
   // Parse the input date string
@@ -372,7 +369,6 @@ export const isObjectValid = (obj) => {
 // Example usage:
 // const inputDate = 'Thu Dec 07 2023 21:42:50 GMT+0530 (India Standard Time)';
 // const outputDate = convertDateFormat(inputDate);
-// console.log(outputDate);
 
 // It can split a string after the first whitespace
 

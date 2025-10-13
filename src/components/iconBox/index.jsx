@@ -59,19 +59,14 @@ export const IconBox = ({
   //     const isMatch = item.matches.some((match) => pathname === match);
 
   //     if (isMatch) {
-  //       console.log(isMatch, "trueee");
   //     }
   //   });
 
   const isMatching = child?.some((item) => {
-    // console.log(item, "1");
     item?.matches?.some((match) => {
-      // console.log(match, pathname, "log 2");
       pathname === match;
     });
   });
-
-  // console.log(dropdown, isMatching, "log 3");
 
   return (
     <>
@@ -170,7 +165,9 @@ export const IconBox = ({
                     <li
                       data-tooltip-id={collapse ? "my-tooltip" : ""}
                       data-tooltip-content={data.title}
-                      className={`${data.className} ${collapse ? "px-0" : "px-4"} group`}
+                      className={`${data.className} ${
+                        collapse ? "px-0" : "px-4"
+                      } group`}
                       key={index}
                     >
                       <Link

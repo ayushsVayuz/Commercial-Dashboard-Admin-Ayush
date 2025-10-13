@@ -18,9 +18,9 @@ export const ChangePassword = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form submitted with data:", { ...data });
-  };
+  // const onSubmit = (data) => {
+
+  // };
 
   return (
     <div className="w-full p-4">

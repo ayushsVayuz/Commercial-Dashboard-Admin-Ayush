@@ -65,7 +65,6 @@ const domainSlice = createSlice({
         state.loading = false;
         state.sections = action.payload.data;
         state.totalCount = action.payload.total;
-        // console.log(action.payload.data, state.sections, "section");
       })
       .addCase(readSection.rejected, (state, action) => {
         state.loading = false;

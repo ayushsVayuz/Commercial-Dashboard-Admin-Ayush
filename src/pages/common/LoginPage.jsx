@@ -21,11 +21,6 @@ const LoginPage = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isOtpMode, setIsOtpMode] = useState(false);
 
-  console.log(isOtpMode);
-  useEffect(() => {
-    console.log(error, "error from login page");
-  }, [error]);
-
   const inputRefs = useRef([]);
 
   const {
@@ -49,7 +44,7 @@ const LoginPage = () => {
       const script = document.createElement("script");
       script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaKey}`;
       script.async = true;
-      script.onload = () => console.log("reCAPTCHA script loaded");
+      script.onload = () => {};
       document.body.appendChild(script);
     };
 
@@ -72,10 +67,8 @@ const LoginPage = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const token = await executeRecaptcha();
-      console.log("reCAPTCHA token:", token); // For debugging
 
       if (!isOtpMode) {
         // Handle login submission
@@ -87,9 +80,8 @@ const LoginPage = () => {
       } else {
         // Handle OTP submission
         const email = watch("email"); // Get email value from the form
-        console.log(email, otp, token);
+
         const otpNumber = otp.join("");
-        // console.log(otpNumber);
         // await dispatch(compareOtp({ email, otp: otpNumber, token }));
         // navigate("/dashboard");
         const action = await dispatch(

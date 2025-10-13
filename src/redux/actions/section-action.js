@@ -50,13 +50,11 @@ export const readSection = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -88,13 +86,11 @@ export const readSectionListing = createAsyncThunk(
           },
         }
       );
-      console.log(response, "responsee section");
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -112,13 +108,11 @@ export const readSectionWidgetsPosition = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response, "responsee section");
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -136,13 +130,11 @@ export const readSingleSection = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response, "responsee section");
 
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
     } catch (error) {
-      console.log("rannn2", error);
       return handleError(error, rejectWithValue);
     }
   }
@@ -164,8 +156,6 @@ export const updateSection = createAsyncThunk(
           },
         }
       );
-
-      console.log(response, "response of edit");
 
       const decryptedData = await decryptResponse(response.data);
 
@@ -217,8 +207,6 @@ export const deleteSection = createAsyncThunk(
           },
         }
       );
-
-      console.log(response, "response of edit");
 
       const decryptedData = await decryptResponse(response.data);
 

@@ -40,7 +40,6 @@ export const AddAndEditCompany = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("Form submitted with data:", { ...data });
     dispatch(setCompanyData(data));
     navigate("/preview-company");
   };
@@ -63,9 +62,7 @@ export const AddAndEditCompany = () => {
               className={"w-72"}
               childrenClassName={"p-4 flex flex-col items-center gap-6"}
             >
-              <p >
-                Are you sure you want to cancel the entry?
-              </p>
+              <p>Are you sure you want to cancel the entry?</p>
               <div className="flex items-center gap-2">
                 <Button simpleLink={true}>Cancel</Button>
                 <Button mainPrimary={true}>Confirm</Button>

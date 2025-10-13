@@ -22,7 +22,6 @@ export const DragAndDrop = ({
   const handleDrop = async (files) => {
     setLoading(true); //disable loading if upload in progress
     const uploaders = files.map((file) => {
-      console.log("files", files);
       const formData = new FormData();
       formData.append("file", file);
       formData.append("tags", "codeinfuse, medium, gist");
@@ -31,8 +30,6 @@ export const DragAndDrop = ({
       //formData.append("api_key", process.env.CLOUDINARY_API_KEY); // Replace with your actual API key
       formData.append("timestamp", (Date.now() / 1000) | 0);
       setLoading(true);
-
-      console.log("Process in middle", formData);
 
       return axios
         .post(
@@ -44,7 +41,6 @@ export const DragAndDrop = ({
         )
         .then((response) => {
           const data = response.data;
-          console.log(response);
           const url = data.secure_url;
           const publicId = data.public_id;
           handleUpload({ url, publicId });
@@ -55,8 +51,6 @@ export const DragAndDrop = ({
       setLoading(false);
       // Add any additional logic to be executed after all uploads are complete
     });
-
-    console.log("Process End");
   };
 
   return (

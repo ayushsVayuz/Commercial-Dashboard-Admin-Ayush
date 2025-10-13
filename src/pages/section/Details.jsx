@@ -22,9 +22,6 @@ const SectionDetails = () => {
     dispatch(readSingleSection({ id: id }));
   }, [id, dispatch]);
 
-  // Log to check domain data
-  console.log(singleSection, "singleSection data");
-
   return (
     <>
       <section className="flex flex-col">

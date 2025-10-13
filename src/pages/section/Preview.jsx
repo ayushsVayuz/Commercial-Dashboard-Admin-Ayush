@@ -66,8 +66,6 @@ const SectionPreview = () => {
     }
   };
 
-  console.log(payload, "Section Preview");
-
   return (
     <section>
       <MetaTitle title={"Section Preview | Anarock"} />

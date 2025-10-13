@@ -1,7 +1,5 @@
 export const RenderLableValue = (label, value, file) => {
-  console.log(file, "file1");
   const renderFilePreview = (file) => {
-    console.log(file, "file");
     if (file) {
       // If the uploaded file is an image, show the preview of the image
       const isImageUrl = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file);

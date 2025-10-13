@@ -18,9 +18,6 @@ const WidgetDetails = () => {
     dispatch(readSingleWidget({ id: id }));
   }, [id, dispatch]);
 
-  // Log to check domain data
-  console.log(singleWidget, "singleWidget data");
-
   return (
     <>
       <section className="flex flex-col">

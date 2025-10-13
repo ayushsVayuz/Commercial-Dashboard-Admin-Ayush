@@ -42,8 +42,6 @@ function App() {
   window.Responsive = ReactGridLayout.Responsive;
   window.process = { env: {} };
 
-  // console.log(pxToGridUnits(362), "aaaaaaaaaaa");
-
   return (
     <>
       <Provider store={store}>

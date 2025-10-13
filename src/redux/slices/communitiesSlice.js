@@ -40,7 +40,6 @@ const communitiesSlice = createSlice({
         state.statusLoading = action.meta.arg.communityId;
       })
       .addCase(changeStatusCommunity.fulfilled, (state, action) => {
-        console.log(action.payload, "aaaaaaa");
         const { statusCode } = action.payload;
 
         if (statusCode === 200 || statusCode === 201) {

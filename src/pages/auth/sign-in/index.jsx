@@ -37,7 +37,7 @@ export const SignIn = () => {
           <div className="w-[20rem] flex flex-col gap-4">
             <Heading>Sign in</Heading>
             <form
-              onSubmit={handleSubmit((data) => console.log(data))}
+              onSubmit={handleSubmit()}
               className="flex flex-col gap-1"
             >
               <Input

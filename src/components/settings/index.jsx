@@ -16,8 +16,6 @@ export const Settings = () => {
   const dispatch = useDispatch();
   const sidebarClassName = useSelector((state) => state.theme.sidebarClassName);
 
-  console.log(sidebarClassName);
-
   const handleSidebar = (type) => () => {
     if (type == "v") {
       dispatch(setSidebarClassName("flex flex-col 1"));

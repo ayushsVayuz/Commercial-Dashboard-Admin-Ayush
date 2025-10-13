@@ -16,11 +16,9 @@ import { handleError } from "../../utils";
 //           },
 //         }
 //       );
-//       console.log(response, "response of login");
 
 //       return response.data;
 //     } catch (error) {
-//       console.log(error);
 //       return handleError(error, rejectWithValue);
 //     }
 //   }
@@ -30,8 +28,6 @@ export const loginUser = createAsyncThunk(
   "loginUser",
   async (authInfo, { rejectWithValue }) => {
     try {
-      console.log(authInfo);
-
       const response = await fetch(
         "https://anarock-super-admin.vayuz.com/v1/auth/login",
         {
@@ -44,23 +40,17 @@ export const loginUser = createAsyncThunk(
         }
       );
 
-      console.log(response, "response from login user");
-
       // Check if the response is successful (status 200-299)
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         return rejectWithValue(errorData.message || "An error occurred");
       }
 
       // Parse the response JSON if successful
       const data = await response.json();
-      console.log(data, "response of login");
 
       return data;
     } catch (error) {
-      console.log(error, "error from user auth");
-
       // Handle error messages
       return rejectWithValue(
         error?.message || "An error occurred during the login process"
@@ -82,7 +72,6 @@ export const compareOtp = createAsyncThunk(
           },
         }
       );
-      console.log(response, "response otp compare");
       return response.data;
     } catch (error) {
       return handleError(error, rejectWithValue);
@@ -103,7 +92,6 @@ export const resendOtp = createAsyncThunk(
           },
         }
       );
-      console.log(response, "response otp resend");
       return response.data;
     } catch (error) {
       return handleError(error, rejectWithValue);

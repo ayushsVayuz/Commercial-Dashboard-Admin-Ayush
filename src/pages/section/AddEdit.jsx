@@ -182,8 +182,6 @@ const SectionAddEdit = () => {
         setSelectedWidgets(section.widgets);
       }
 
-      console.log(widgetOptions, "singleSection data in useEffect");
-
       reset({
         sectionName: selectedOption || "",
         // sectionOrder: section.order_index || "",
@@ -288,7 +286,6 @@ const SectionAddEdit = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log("Form Data: ", data);
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
@@ -308,7 +305,7 @@ const SectionAddEdit = () => {
       // params: data?.params || [],
       widgets: widgetPositions,
     };
-    // console.log(payload);
+
     dispatch(sectionPayload(payload));
     if (isEditMode) {
       navigate(`/section/preview/${id}`);
@@ -488,7 +485,6 @@ const SectionAddEdit = () => {
 
                     const uneven = checkUnevenSpacing(newLayout, 12);
                     setHasUnevenSpacing(uneven);
-                    console.log(uneven, "uneven");
                   }}
                   errorContent={errors?.widgets?.message}
                 />

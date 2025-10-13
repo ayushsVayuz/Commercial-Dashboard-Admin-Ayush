@@ -41,7 +41,6 @@
 //     (state) => state.common
 //   );
 
-//   console.log("roles data in component", roles);
 //   const {
 //     control,
 //     handleSubmit,
@@ -74,7 +73,7 @@
 
 //   useEffect(() => {
 //     if (singleWidget?.container_id) {
-//       console.log(singleWidget?.container_id, "in use effect ");
+
 //       setContainerValue(singleWidget.container_id);
 
 //       reset({
@@ -109,7 +108,6 @@
 //     const fetchRoles = async () => {
 //       try {
 //         const res = await dispatch(getAllRoles());
-//         console.log(res, "roles data");
 //       } catch (error) {
 //         console.error("Error fetching roles:", error);
 //       }
@@ -156,7 +154,6 @@
 
 //   const totalPages = totalCount ? Math.ceil(totalCount / rowsPerPage) : 0;
 //   const handleCheckboxChange = (id, checked) => {
-//     console.log(id, checked);
 //   };
 //   const headers = ["Sr No.", "Name", "Select"];
 //   const dataToPass = roles?.map((role, index) => ({
@@ -369,8 +366,6 @@ const WidgetCMSAddEdit = () => {
         singleWidget.Roles?.map((role) => role.role_id) || [];
       setSelectedIds(preSelectedRoleIds);
     }
-
-    // console.log(singleWidget, "single widget data");
   }, [singleWidget, reset]);
 
   // ---------- Pagination + Search setup ----------
@@ -436,7 +431,6 @@ const WidgetCMSAddEdit = () => {
           limit: rowsPerPage,
         };
         const res = await dispatch(getAllRoles(payload));
-        console.log(res, "roles data response");
       } catch (error) {
         console.error("Error fetching roles:", error);
       }
@@ -472,8 +466,6 @@ const WidgetCMSAddEdit = () => {
           updatedData: payload,
         })
       ).unwrap();
-
-      console.log(response, "sadasda");
 
       if (response?.statusCode === 200 || response?.statusCode === 201) {
         navigate("/widget");

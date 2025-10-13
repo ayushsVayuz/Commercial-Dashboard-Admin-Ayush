@@ -44,8 +44,6 @@ const Dashboard = () => {
     dispatch(updateSectionOrder({ sections: payload }));
   };
 
-  // console.log(sections, "sections in dash")
-
   if (loading) return <div>Loading Dashboard...</div>;
 
   return (

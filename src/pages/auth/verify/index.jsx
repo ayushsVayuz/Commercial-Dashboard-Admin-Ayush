@@ -30,7 +30,6 @@ export const Verify = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const enteredOtp = otp.join("");
-    console.log(enteredOtp);
   };
 
   // Function to handle input change

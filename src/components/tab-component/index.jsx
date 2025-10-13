@@ -4,13 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const TabComponent = ({ tabs, containerClassName }) => {
   const pathname = useLocation().pathname;
-  console.log(
-    window.location.pathname,
-    tabs[0].link,
-    tabs[0].link == window.location.pathname,
-    "sgh"
-  );
-  
+
   return (
     <div className={`${containerClassName} tab-container`}>
       <div className="tab-headers">
