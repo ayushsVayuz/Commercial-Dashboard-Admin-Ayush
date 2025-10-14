@@ -1,7 +1,7 @@
 import { IconBox } from "../iconBox";
 import { GoDotFill } from "react-icons/go";
 import { AnimatePresence, motion } from "framer-motion";
-import "./sidebar.scss";
+// import "./sidebar.scss";
 import { useState } from "react";
 import {
   LuAlignJustify,
