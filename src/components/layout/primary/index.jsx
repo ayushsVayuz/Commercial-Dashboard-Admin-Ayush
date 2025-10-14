@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 
 export const PrimaryLayout = () => {
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
   const [phoneCollapse, setPhoneCollapse] = useState(true);
   const sidebarClassName = useSelector((state) => state.theme.sidebarClassName);
 

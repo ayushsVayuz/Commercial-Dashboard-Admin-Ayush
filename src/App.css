@@ -2,23 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"); */
 
-@import "./css/utils/variables.scss";
-@import "./css/breadcrumb.scss";
-@import "./css/typography.scss";
-@import "./css/page-body.scss";
-@import "./css/scrollbar.scss";
-@import "./css/header.scss";
 @import "./css/toggle.css";
 
 :root {
-  /* font-family: Inter, system-ui, -apple-system, "Segoe UI", "Open Sans",
-    "Helvetica Neue", sans-serif; */
-    font-family: "Outfit !important";
+  font-family: "Outfit" !important;
 }
-
-/* body {
-  background-color: #f9fafc;
-} */
 
 /* Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-inner-spin-button,
@@ -31,7 +19,9 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
+button {
+  cursor: pointer;
+}
 .stroke-icon {
   width: 20px;
   height: 20px;
@@ -171,5 +161,3 @@ input[type="number"] {
 .cursor-not-allowed {
   cursor: not-allowed !important;
 }
-
-
