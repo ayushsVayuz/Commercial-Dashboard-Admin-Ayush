@@ -13,8 +13,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 // Chart.js v4+
-import * as ChartJs from "chart.js";
-import { Chart as ReactChart } from "react-chartjs-2";
+// import * as ChartJs from "chart.js";
+// import { Chart as ReactChart } from "react-chartjs-2";
 
 // MUI + Icons
 import * as MaterialUI from "@mui/material";
@@ -31,12 +31,12 @@ function App() {
   // Expose globals for MF bundle
   window.React = React;
   window.ReactDOM = ReactDOM;
-  window.ChartJs = ChartJs;
-  window.ReactChartJs2 = { Chart: ReactChart };
-  window.MaterialUI = MaterialUI;
+  // window.ChartJs = ChartJs;
+  // window.ReactChartJs2 = { Chart: ReactChart };
+  // window.MaterialUI = MaterialUI;
+  // window.EmotionReact = EmotionReact;
+  // window.EmotionStyled = EmotionStyled;
   window.MuiIcons = MuiIcons;
-  window.EmotionReact = EmotionReact;
-  window.EmotionStyled = EmotionStyled;
   window.ReactGridLayout = ReactGridLayout;
   window.WidthProvider = ReactGridLayout.WidthProvider;
   window.Responsive = ReactGridLayout.Responsive;
