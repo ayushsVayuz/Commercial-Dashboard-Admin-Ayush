@@ -11,6 +11,11 @@ export default defineConfig(({ mode }) => {
       "process.env": env,
     },
     plugins: [react(), tailwindcss(), pluginRewriteAll()],
+    build: {
+      rollupOptions: {
+        output: { manualChunks: undefined },
+      },
+    },
     // css: {
     //   preprocessorOptions: {
     //     scss: {
