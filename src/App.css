@@ -4,8 +4,8 @@
 
 @import "./css/toggle.css";
 
-:root {
-  font-family: "Outfit" !important;
+:root, body {
+  font-family: "Outfit";
 }
 
 /* Chrome, Safari, Edge, Opera */
