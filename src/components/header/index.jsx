@@ -54,7 +54,7 @@ export const Header = ({ className, collapse, setCollapse }) => {
     <header
       className={`${
         className && className
-      } bg-headerBg dark:bg-slate-900 px-2 lg:px-4 py-4 z-[1000]`}
+      } bg-headerBg bg-white dark:bg-slate-900 px-2 lg:px-4 py-4 z-[1000]`}
     >
       <div className="relative flex justify-between items-center">
         <div className="flex items-center gap-6">
@@ -133,7 +133,7 @@ export const Header = ({ className, collapse, setCollapse }) => {
                 className="flex items-center gap-2"
               >
                 {/* <img src="/icons/user.png" alt="" /> */}
-                <div className="bg-blue-900 rounded-[50%] w-[30px] h-[30px] flex items-center justify-center">
+                <div className="bg-[#884ea7] rounded-[50%] w-[30px] h-[30px] flex items-center justify-center">
                   <span className="text-white">A</span>
                 </div>
                 <div className="flex flex-col items-start gap-1">

@@ -7,6 +7,7 @@ import {
   updateSectionOrder,
 } from "../../redux/actions/dashboard-action";
 import { useDispatch, useSelector } from "react-redux";
+import { pxToGridUnits } from "../../utils";
 
 const Dashboard = () => {
   const [sectionsOrder, setSectionsOrder] = useState();
@@ -45,6 +46,8 @@ const Dashboard = () => {
   };
 
   if (loading) return <div>Loading Dashboard...</div>;
+
+  // console.log(pxToGridUnits(184), "px")
 
   return (
     <>

@@ -193,7 +193,7 @@ export const AllWidgetMapping = {
   OVERVIEW_HELPDESK: {
     component: Helpdesk,
     minWidth: 2,
-    minHeight: pxToGridUnits(186),
+    minHeight: pxToGridUnits(184),
     position: [6, 0, 2, 2],
     data: {
       openComplaints: 5,
