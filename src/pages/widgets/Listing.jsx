@@ -22,6 +22,7 @@ import {
   readSectionListing,
 } from "../../redux/actions/section-action";
 import { clearSingleWidget } from "../../redux/slices/widgetsSlice";
+import toast from "react-hot-toast";
 
 const WidgetsListing = () => {
   const [filterMenu, setFilterMenu] = useState(false);
@@ -64,19 +65,14 @@ const WidgetsListing = () => {
       ([key, value]) => existingParams[key] !== value
     );
 
-   
     if (hasChanged) {
       setSearchParams(newParams);
     }
   }, [currentPage, rowsPerPage, searchQuery]);
 
-
-   useEffect(() => {
-        
-        dispatch(clearSingleWidget());
-        
-       
-      }, []);
+  useEffect(() => {
+    dispatch(clearSingleWidget());
+  }, []);
 
   // fetch data on change
   useEffect(() => {
@@ -130,6 +126,21 @@ const WidgetsListing = () => {
     //   icon: <TbEye className="text-xl" />,
     // },
   ];
+  async (params) => {};
+
+  const handleWidgetStatus = async (widget) => {
+    try {
+      const response = await dispatch(
+        changeStatusWidget({ widgetId: widget.widget_id })
+      ).unwrap();
+
+      if (response?.statusCode === 200){
+        toast.success("Widget status updated successfully");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Failed to update widget status");
+    }
+  };
 
   const dataToPass = widgetsData?.map((widget, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
@@ -152,9 +163,7 @@ const WidgetsListing = () => {
           ) : (
             <Toggle
               value={widget.is_active == 1 ? true : false}
-              onChange={() =>
-                dispatch(changeStatusWidget({ widgetId: widget.widget_id }))
-              }
+              onChange={() => handleWidgetStatus(widget)}
             />
           )}
         </>

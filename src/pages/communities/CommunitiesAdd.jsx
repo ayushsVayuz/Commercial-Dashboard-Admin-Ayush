@@ -123,7 +123,7 @@ const CommunitiesAdd = () => {
       <div className="flex sm:justify-end items-center gap-2">
         {selectedIds.length > 0 && (
           <Link
-            className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+            className="w-fit bg-[#884EA7] text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
             onClick={() => handleMapCommunities()}
           >
             Map Communities

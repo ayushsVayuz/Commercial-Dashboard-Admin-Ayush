@@ -5,7 +5,7 @@ export const CardWrapper = ({ title, children, className, titleClassName }) => {
     <div
       class={`${
         className && className
-      } break-inside-avoid card bg-white dark:bg-slate-800 p-4`}
+      } break-inside-avoid  !mb-[24px] border-2 border-[#F4F5F8] !rounded-[5px] shadow-[0_3px_18px_rgb(244_245_248)] relative flex flex-col min-w-0 !bg-white dark:bg-gray-800 p-4`}
     >
       {title && (
         <p
@@ -14,7 +14,7 @@ export const CardWrapper = ({ title, children, className, titleClassName }) => {
           {title}
         </p>
       )}
-      <div class="text-[#6C6C6C] dark:text-gray-300">{children}</div>
+      <div class="!text-[#6C6C6C] dark:text-gray-300">{children}</div>
     </div>
   );
 };

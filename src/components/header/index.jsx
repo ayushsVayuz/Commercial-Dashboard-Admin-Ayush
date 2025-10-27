@@ -127,13 +127,13 @@ export const Header = ({ className, collapse, setCollapse }) => {
             {/* <ThemeSwitch /> */}
             {/* <FullScreenButton /> */}
             {/* <Notification /> */}
-            <div className="hidden sm:flex relative gap-2">
+            <div className="hidden sm:!flex relative gap-2">
               <button
                 onClick={() => setSignedInMenuPopup(!signedInMenuPopup)}
                 className="flex items-center gap-2"
               >
                 {/* <img src="/icons/user.png" alt="" /> */}
-                <div className="bg-[#884ea7] rounded-[50%] w-[30px] h-[30px] flex items-center justify-center">
+                <div className="!bg-[#884ea7] rounded-[50%] w-[30px] h-[30px] flex items-center justify-center">
                   <span className="text-white">A</span>
                 </div>
                 <div className="flex flex-col items-start gap-1">

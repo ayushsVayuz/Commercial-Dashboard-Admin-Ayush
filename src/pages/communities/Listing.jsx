@@ -13,6 +13,7 @@ import {
   mapCommunities,
   readCommunities,
 } from "../../redux/actions/communities-action";
+import toast from "react-hot-toast";
 
 const CommunitiesListing = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,20 @@ const CommunitiesListing = () => {
     dispatch(readCommunities(requestPayload));
   }, [currentPage, searchQuery, rowsPerPage, sectionId]);
 
+  const handleCommunityStatus = async (community) => {
+    try {
+      const response = await dispatch(
+        mapCommunities({ communityIds: [community.id] })
+      ).unwrap();
+
+      if (response?.statusCode === 200) {
+        toast.success("Community status updated successfully");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Failed to update community status");
+    }
+  };
+
   const headers = ["Sr No.", "Name", "Status"];
 
   const dataToPass = communityData?.map((community, index) => ({
@@ -106,9 +121,7 @@ const CommunitiesListing = () => {
           ) : (
             <Toggle
               value={community.status == 1 ? true : false}
-              onChange={() =>
-                dispatch(mapCommunities({ communityIds: [community.id] }))
-              }
+              onChange={() => handleCommunityStatus(community)}
             />
           )}
         </>
@@ -127,7 +140,7 @@ const CommunitiesListing = () => {
           mainTitle="Communities"
         />
         {/* <Button
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+          className="w-fit bg-[#884EA7] text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           onClick={() => {
             navigate("/widget/add");
             dispatch(resetWidgetPayload());
@@ -136,7 +149,7 @@ const CommunitiesListing = () => {
           Add Widget
         </Button> */}
         <Link
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+          className="w-fit bg-[#884EA7] text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           to="/communities/add"
         >
           Add Community

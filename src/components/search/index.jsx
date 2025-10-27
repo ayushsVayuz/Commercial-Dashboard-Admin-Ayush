@@ -156,10 +156,10 @@ export const Search = (props) => {
       className={`${
         props.containerClassName
           ? props.containerClassName
-          : "hidden lg:flex items-center gap-2 my-3"
+          : "flex items-center gap-2 my-3"
       }`}
     >
-      <div className="relative shadow-sm">
+      <div className="relative shadow-sm rounded-md">
         <LuSearch
           size={18}
           className="absolute top-1/2 -translate-y-1/2 left-2 dark:text-white text-gray-400"
@@ -169,7 +169,7 @@ export const Search = (props) => {
             props?.inputClassName
               ? props.inputClassName
               : "lg:min-w-[20rem] p-4"
-          } bg-[#F4F5F8] dark:bg-gray-900 dark:text-white rounded-md pl-8`}
+          } bg-[#F4F5F8] dark:bg-gray-900 dark:text-white rounded-md !pl-8`}
           type="text"
           value={query}
           onChange={handleInputChange}

@@ -57,12 +57,12 @@ export const Input = ({
             />
           )}
         </div>
-        <div className="w-full relative ">
+        <div className="w-full relative">
           <input
             {...props}
             className={`${className} ${
               errorContent && touched ? "border-error" : "border-[#D6D6D6]"
-            } w-full text-black placeholder:text-[#C4C4C4] placeholder:text-xs p-3 bg-pageBodyBg focus:border-focusInputBorderColor h-49 dark:bg-gray-900 dark:text-white rounded-md shadow-sm`}
+            } w-full text-black placeholder:text-[#C4C4C4] placeholder:text-xs p-3 !bg-[#F9FAFC] focus:border-focusInputBorderColor h-49 dark:bg-gray-900 dark:text-white rounded-md shadow-sm`}
             type={type === "password" ? passwordType : type}
             placeholder={placeholder}
             value={value}

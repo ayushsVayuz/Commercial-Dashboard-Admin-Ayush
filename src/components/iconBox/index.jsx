@@ -76,9 +76,9 @@ export const IconBox = ({
           className={`${className} px-2 py-2.5 ${
             pathname === to ||
             item?.matches?.some((match) => pathname.includes(match))
-              ? "bg-secondaryBg dark:bg-[#392347]"
+              ? "!bg-[#FBF5FF] dark:bg-[#392347]"
               : ""
-          } relative flex items-center gap-4 text-black dark:text-white hover:bg-secondaryBg dark:hover:bg-[#392347] rounded`}
+          } relative flex items-center gap-4 text-black dark:text-white hover:!bg-[#FBF5FF] dark:hover:bg-[#392347] rounded`}
           onClick={onClick}
           data-tooltip-id={collapse ? "my-tooltip" : ""}
           data-tooltip-content={item.title}
@@ -87,7 +87,7 @@ export const IconBox = ({
             className={`${
               pathname == to ||
               item?.matches?.some((match) => pathname.includes(match))
-                ? "text-primaryBg dark:text-[#ab66d1]"
+                ? "!text-[#884EA7] dark:text-[#ab66d1]"
                 : "text-black dark:text-white"
             } `}
           >
@@ -98,7 +98,7 @@ export const IconBox = ({
               className={`${
                 pathname == to ||
                 item?.matches?.some((match) => pathname.includes(match))
-                  ? "text-primaryText dark:text-[#ab66d1]"
+                  ? "!text-[#884EA7] dark:text-[#ab66d1]"
                   : "text-black dark:text-white"
               } text-base flex items-center`}
             >
@@ -119,14 +119,14 @@ export const IconBox = ({
           data-tooltip-content={item.title}
           onClick={handleDropdown}
           className={`${className} ${
-            isMatching || dropdown ? "bg-secondaryBg dark:bg-[#392347]" : ""
-          } w-full px-2 py-2.5 flex items-center justify-between gap-2 hover:bg-secondaryBg dark:hover:bg-[#392347] rounded`}
+            isMatching || dropdown ? "!bg-[#FBF5FF] dark:bg-[#392347]" : ""
+          } w-full px-2 py-2.5 flex items-center justify-between gap-2 hover:!bg-[#FBF5FF] dark:hover:bg-[#392347] rounded`}
         >
           <p className="flex gap-4 dark:text-white">
             <span
               className={`${
                 isMatching || dropdown
-                  ? "text-primaryBg dark:text-white"
+                  ? "!text-[#884EA7] dark:text-white"
                   : "text-black dark:text-white"
               }`}
             >
@@ -136,7 +136,7 @@ export const IconBox = ({
               <span
                 className={`${
                   isMatching || dropdown
-                    ? "text-primaryText dark:text-white"
+                    ? "!text-[#884EA7] dark:text-white"
                     : "text-black dark:text-white"
                 } text-base`}
               >
@@ -148,7 +148,7 @@ export const IconBox = ({
             <span className="flex items-center gap-2">
               <IoIosArrowForward
                 className={`${dropdown && "rotate-90"} ${
-                  isMatching ? "text-primaryText" : "dark:text-white"
+                  isMatching ? "!text-[#884EA7]" : "dark:text-white"
                 }`}
               />
             </span>
@@ -184,8 +184,8 @@ export const IconBox = ({
                                 data?.matches?.some((match) =>
                                   pathname.includes(match)
                                 )
-                                  ? "fill-primaryText text-primaryText"
-                                  : "text-black dark:text-white group-hover:text-primaryText"
+                                  ? "fill-primaryText !text-[#884EA7]"
+                                  : "text-black dark:text-white group-hover:!text-[#884EA7]"
                               } `}
                             >
                               {data.icon}
@@ -210,8 +210,8 @@ export const IconBox = ({
                                 data?.matches?.some((match) =>
                                   pathname.includes(match)
                                 )
-                                  ? "text-primaryText"
-                                  : "text-black dark:text-white group-hover:text-primaryText"
+                                  ? "!text-[#884EA7]"
+                                  : "text-black dark:text-white group-hover:!text-[#884EA7]"
                               } text-sm`}
                             >
                               {data.title}

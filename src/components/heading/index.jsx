@@ -5,7 +5,7 @@ import { SVG } from "../svg";
 
 export const Heading = ({ parent, mainTitle, className, sectionLink }) => {
   return (
-    <div className="page-title flex flex-col items-start md:gap-2">
+    <div className="page-title py-[25px] flex flex-col items-start md:gap-2">
       <nav class="flex md:justify-start items-center" aria-label="breadcrumb">
         <ol class="breadcrumb flex flex-wrap items-center">
           <li class="breadcrumb-item font-semibold text-[#884EA7]">

@@ -51,6 +51,8 @@ const SectionPreview = () => {
         res = await dispatch(createSection(updatedPayload));
       }
 
+      console.log(res, "response---");
+
       if (
         res?.payload?.statusCode === 200 ||
         res?.payload?.statusCode === 201
@@ -80,7 +82,7 @@ const SectionPreview = () => {
       ) : payload ? (
         <div className="w-full md:w-[100%] flex flex-col">
           <CardWrapper>
-            <h5 className="font-semibold !text-3xl text-primaryText dark:text-white hover:text-primaryBg">
+            <h5 className="font-semibold !text-3xl text-[#884EA7] dark:text-white hover:text-[#884EA7]">
               {payload?.section_id?.label}
             </h5>
             {/* <p className="font-medium text-base dark:text-gray-200">

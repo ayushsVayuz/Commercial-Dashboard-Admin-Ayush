@@ -124,7 +124,7 @@
   --page-body-bg: var(--body-color);
   --header-bg: var(--header-bg-color);
   --color-primary-bg: var(--bg-primary-color);
-  --secondary-bg: var(--bg-secondary-color);
+  --secondaryBg: var(--secondary-color);
   --button-bg: var(--button-bg-color1);
   --dark-primary: #292e37;
   --error: #ff5050;

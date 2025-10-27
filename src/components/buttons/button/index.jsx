@@ -28,18 +28,18 @@ export const Button = ({
         simpleLink &&
         !disabled &&
         !isLoading &&
-        "text-primaryText font-medium  hover:text-gray-700 rounded"
-      } ${outLine && !disabled && !isLoading && "rounded text-primaryText"} ${
+        "text-[#884EA7] font-medium  hover:text-gray-700 rounded"
+      } ${outLine && !disabled && !isLoading && "rounded text-[#884EA7]"} ${
         mainPrimary &&
         !disabled &&
         !isLoading &&
-        "border border-primaryText bg-primaryBg text-white hover:bg-primaryBg hover:bg-opacity-80 hover:border-secondaryBg rounded"
+        "border border-[#884EA7] bg-[#884EA7] text-white hover:bg-[#884EA7] hover:bg-opacity-80 hover:border-[#fbf5ff] rounded"
       } ${
         gradientBtn &&
         !disabled &&
         !isLoading &&
-        "bg-gradient-to-r from-primaryBg to-secondaryBg text-white hover:bg-opacity-80 px-7 hover:bg-gradient-to-l rounded"
-      } border border-primaryText dark:border-gray-700 flex justify-center items-center gap-2 transition-all duration-300 ease-in-out hover:transition-all hover:duration-300 hover:ease-in-out disabled:cursor-not-allowed disabled:dark:bg-gray-500 disabled:dark:text-white disabled:border-gray-400`}
+        "bg-gradient-to-r from-[#884EA7] to-[#fbf5ff] text-white hover:bg-opacity-80 px-7 hover:bg-gradient-to-l rounded"
+      } border border-[#884EA7] dark:border-gray-700 flex justify-center items-center gap-2 transition-all duration-300 ease-in-out hover:transition-all hover:duration-300 hover:ease-in-out disabled:cursor-not-allowed disabled:dark:bg-gray-500 disabled:dark:text-white disabled:border-gray-400`}
     >
       {leftIcon && leftIcon}
       {children}

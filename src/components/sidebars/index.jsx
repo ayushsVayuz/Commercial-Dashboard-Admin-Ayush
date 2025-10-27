@@ -109,7 +109,7 @@ export const Sidebar = ({ className, collapse, setCollapse }) => {
               <IconBox
                 containerClassName="px-4 py-2"
                 titleClassName={
-                  item.to == null && "font-semibold text-primary uppercase "
+                  item.to == null && "font-semibold !text-[#884ea7] uppercase "
                 }
                 className={item.className}
                 item={item}

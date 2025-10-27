@@ -20,6 +20,7 @@ import { Toggle } from "../../components/inputs/toogle";
 import { LuLoaderCircle } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { updateSectionOrder } from "../../redux/actions/dashboard-action";
+import toast from "react-hot-toast";
 
 const modernAnimationStyles = `
   .table-row {
@@ -219,6 +220,20 @@ const SectionListing = () => {
     });
   };
 
+  const handleSectionStatus = async (section) => {
+    try {
+      const response = await dispatch(
+        changeStatusSection({ sectionId: section.section_id })
+      ).unwrap();
+
+      if (response?.statusCode === 200) {
+        toast.success("Section status updated successfully");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Failed to update section status");
+    }
+  };
+
   const tableData = localSections?.map((section, index) => ({
     move: {
       component: (
@@ -292,9 +307,7 @@ const SectionListing = () => {
           ) : (
             <Toggle
               value={section.status == 1 ? true : false}
-              onChange={() =>
-                dispatch(changeStatusSection({ sectionId: section.section_id }))
-              }
+              onChange={() => handleSectionStatus(section)}
             />
           )}
         </>
@@ -368,7 +381,7 @@ const SectionListing = () => {
           mainTitle="Section Listing"
         />
         <Link
-          className="w-fit bg-buttonBg text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
+          className="w-fit bg-[#884EA7] text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
           to="/section/add"
           onClick={() =>
             dispatch(
