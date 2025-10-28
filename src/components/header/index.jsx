@@ -54,7 +54,7 @@ export const Header = ({ className, collapse, setCollapse }) => {
     <header
       className={`${
         className && className
-      } bg-headerBg bg-white dark:bg-slate-900 px-2 lg:px-4 py-4 z-[1000]`}
+      } bg-headerBg bg-white dark:bg-slate-900 px-2 lg:!px-4 py-4 z-[1000]`}
     >
       <div className="relative flex justify-between items-center">
         <div className="flex items-center gap-6">

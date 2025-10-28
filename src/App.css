@@ -162,3 +162,10 @@ button {
 .cursor-not-allowed {
   cursor: not-allowed !important;
 }
+
+.page-title .breadcrumb-item+.breadcrumb-item:before {
+    float: left;
+    padding-right: 5px;
+    content: "/";
+    color: var(--text-primary-color);
+}

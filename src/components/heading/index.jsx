@@ -14,13 +14,13 @@ export const Heading = ({ parent, mainTitle, className, sectionLink }) => {
               {/* <SVG iconId="Home" className="svg-divor" /> */}
             </Link>
           </li>
-          <li class="breadcrumb-item pl-[5px] sm:text-base text-xs font-semibold text-[#884EA7]">
+          <li class="breadcrumb-item !pl-[5px] sm:!text-base text-xs font-medium text-[#884EA7]">
             <Link to={sectionLink}>{parent}</Link>
           </li>
-          <li class="active breadcrumb-item pl-[5px] text-black dark:text-white text-xs sm:text-base font-medium">{mainTitle}</li>
+          <li class="active breadcrumb-item pl-[5px] text-black dark:text-white text-xs sm:!text-base font-medium">{mainTitle}</li>
         </ol>
       </nav>
-      <h3 className={`${className} text-2xl font-semibold text-black dark:text-white `}> {mainTitle}</h3>
+      <h3 className={`${className} !text-2xl font-medium text-[#3D3D47] dark:text-white `}> {mainTitle}</h3>
     </div>
   );
 };
