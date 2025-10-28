@@ -18,7 +18,7 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag saurabhvayuz/anarock_admin:2.0
+        run: docker build . --file Dockerfile --tag saurabhvayuz/anarock_admin:2.1
 
       - name: Docker Push
-        run: docker push saurabhvayuz/anarock_admin:2.0
+        run: docker push saurabhvayuz/anarock_admin:2.1

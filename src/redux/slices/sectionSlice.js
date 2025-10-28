@@ -125,26 +125,9 @@ const domainSlice = createSlice({
         state.statusLoading = action.meta.arg.sectionId;
       })
       .addCase(changeStatusSection.fulfilled, (state, action) => {
-        // state.sections = state.sections.map((section) =>
-        //   section.id === state.statusLoading
-        //     ? { ...section, status: section.status === 1 ? 0 : 1 }
-        //     : section
-        // );
-        // state.statusLoading = {};
         const { statusCode } = action.payload;
 
         if (statusCode === 200 || statusCode === 201) {
-          //   state.sections = state.sections.map((section) =>
-          //     section.section_id === state.statusLoading
-          //       ? { ...section, status: section.status === 1 ? 0 : 1 }
-          //       : section
-          //   );
-          // }
-
-          // // Clear loading after toggle
-          // state.statusLoading = {};
-          // state.error = null;
-
           const sectionIndex = state.sections.findIndex(
             (section) => section.section_id === state.statusLoading
           );

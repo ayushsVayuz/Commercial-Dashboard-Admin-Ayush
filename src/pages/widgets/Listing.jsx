@@ -200,6 +200,8 @@ const WidgetsListing = () => {
     fetchSections();
   }, []);
 
+  console.log("widgetsData", widgetsData);  
+
   return (
     <section className="flex flex-col gap-4">
       <MetaTitle title={"Widget | Anarock"} />

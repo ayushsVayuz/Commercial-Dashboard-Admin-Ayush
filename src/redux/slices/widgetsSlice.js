@@ -131,12 +131,25 @@ const widgetsSlice = createSlice({
       .addCase(changeStatusWidget.pending, (state, action) => {
         state.statusLoading = action.meta.arg.widgetId;
       })
-      .addCase(changeStatusWidget.fulfilled, (state) => {
-        state.widgets = state.widgets.map((widgets) =>
-          widgets.widget_id === state.statusLoading
-            ? { ...widgets, is_active: widgets.is_active === 1 ? 0 : 1 }
-            : widgets
-        );
+      .addCase(changeStatusWidget.fulfilled, (state, action) => {
+        const { statusCode } = action.payload;
+
+        console.log("statusCode", action);
+
+        if (statusCode === 200 || statusCode === 201) {
+          const widgetIndex = state.widgets.findIndex(
+            (section) => section.widget_id === state.statusLoading
+          );
+          console.log("widgetIndex", widgetIndex);
+          if (widgetIndex !== -1) {
+            state.widgets[widgetIndex] = {
+              ...state.widgets[widgetIndex],
+              is_active:
+                state.widgets[widgetIndex].is_active === true ? false : true,
+            };
+          }
+        }
+
         state.statusLoading = {};
       })
       .addCase(changeStatusWidget.rejected, (state, action) => {
