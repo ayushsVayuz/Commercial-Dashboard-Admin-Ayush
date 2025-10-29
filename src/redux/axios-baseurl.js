@@ -2,12 +2,11 @@ import axios from "axios";
 
 const client = axios.create(
   {
-    baseURL: "https://staging-reactdashboard.anacity.com/dashboard-api/v1",
+    baseURL: import.meta.env.VITE_BASE_URL,
     // baseURL: "http://localhost:3000/dashboard-api/v1",
-  },
-  {
     withCredentials: true,
-  }
+  },
+  
 );
 
 export default client;
