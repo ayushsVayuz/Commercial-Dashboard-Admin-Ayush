@@ -186,7 +186,7 @@ export const Table = ({
                       Rows per page:
                     </p>
                     <select
-                      className="focus:outline-none text-xs px-2"
+                      className="focus:outline-none text-xs px-2 cursor-pointer"
                       value={selectedValue}
                       onChange={handleChange}
                     >
@@ -211,9 +211,9 @@ export const Table = ({
                     pageRangeDisplayed={5}
                     forcePage={currentPage}
                     onPageChange={handlePageChange}
-                    activeLinkClassName=" px-2"
+                    activeLinkClassName="font-medium text-[#884ea7]"
                     containerClassName={
-                      "pagination my-2 flex justify-center items-center gap-2 text-black dark:text-white"
+                      "pagination my-2 flex justify-center items-center gap-2 text-black dark:text-white cursor-pointer"
                     }
                     activeClassName={"active text-primaryText"}
                   />
