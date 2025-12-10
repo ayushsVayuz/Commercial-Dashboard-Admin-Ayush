@@ -31,6 +31,8 @@ export default function DNDGridLayout({
 
   const effectiveData = value?.length ? value : data;
 
+  console.log("DNDGridLayout rendered with data:",data,  effectiveData);
+
   const layouts = {
     xl: makeLayout(effectiveData),
     lg: makeLayout(effectiveData),

@@ -378,6 +378,8 @@ const SectionAddEdit = () => {
     return false;
   }
 
+  console.log("Data inside section add", selectedWidgets, widgetPositions);
+
   return (
     <section>
       <MetaTitle title={`Section ${isEditMode ? "Edit" : "Add"} | Anarock`} />
@@ -407,6 +409,8 @@ const SectionAddEdit = () => {
                   onChange={(selectedOption) => {
                     field.onChange(selectedOption);
                     setSelectedSection(selectedOption);
+                    setSelectedWidgets([]);
+                    setWidgetPositions([]);
                   }}
                   errorContent={errors?.sectionName?.message}
                 />
