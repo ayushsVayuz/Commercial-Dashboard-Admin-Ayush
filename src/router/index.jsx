@@ -17,6 +17,7 @@ import WidgetDetails from "../pages/widgets/Details";
 import WidgetPreview from "../pages/widgets/Preview";
 import WidgetAddEdit from "../pages/widgets/AddEdit";
 import WidgetCMSAddEdit from "../pages/widget-cms/AddEdit";
+import SectionCMSAddEdit from "../pages/section-cms/AddEdit";
 import ContainersListing from "../pages/containers/Listing";
 import ContainerAddEdit from "../pages/containers/AddEdit";
 import ContainerPreview from "../pages/containers/Preview";
@@ -63,6 +64,14 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <SectionListing />,
+                  },
+                  {
+                    path: "cms",
+                    element: <SectionCMSAddEdit />,
+                  },
+                  {
+                    path: "cms/:id",
+                    element: <SectionCMSAddEdit />,
                   },
                   {
                     path: "add",

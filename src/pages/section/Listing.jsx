@@ -17,7 +17,7 @@ import {
   resetSectionWidgetPosition,
 } from "../../redux/slices/sectionSlice";
 import { Toggle } from "../../components/inputs/toogle";
-import { LuLoaderCircle } from "react-icons/lu";
+import { LuCircuitBoard, LuLoaderCircle } from "react-icons/lu";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { updateSectionOrder } from "../../redux/actions/dashboard-action";
 import toast from "react-hot-toast";
@@ -159,6 +159,12 @@ const SectionListing = () => {
   ];
 
   const actionMenu = [
+    {
+      label: "Container Mapping",
+      url: `/section/cms/`,
+      icon: <LuCircuitBoard className="text-xl" />,
+    },
+
     {
       label: "Edit",
       url: `/section/edit/`,

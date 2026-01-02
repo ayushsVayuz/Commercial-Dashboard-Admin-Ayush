@@ -18,6 +18,8 @@ const initialState = {
   statusLoading: {},
   error: null,
   totalCount: 0,
+  singleSectionLoading: false,
+
 };
 
 const domainSlice = createSlice({
@@ -37,6 +39,9 @@ const domainSlice = createSlice({
     },
     resetSectionWidgetPosition: (state) => {
       state.sectionWidgetPosition = {};
+    },
+    clearSingleSection: (state) => {
+      state.singleSection = {};
     },
   },
   extraReducers: (builder) => {
@@ -73,16 +78,16 @@ const domainSlice = createSlice({
     // Read Single Section
     builder
       .addCase(readSingleSection.pending, (state) => {
-        state.loading = true;
+        state.singleSectionLoading = true;
         state.error = null;
       })
       .addCase(readSingleSection.fulfilled, (state, action) => {
-        state.loading = false;
+        state.singleSectionLoading = false;
         state.singleSection = action.payload.data;
         state.totalPages = action.payload.data.totalPages;
       })
       .addCase(readSingleSection.rejected, (state, action) => {
-        state.loading = false;
+        state.singleSectionLoading = false;
         state.error = action.payload?.message || "Failed to fetch sections";
       });
 
@@ -174,5 +179,6 @@ export const {
   resetSection,
   resetSectionPayload,
   resetSectionWidgetPosition,
+  clearSingleSection
 } = domainSlice.actions;
 export default domainSlice.reducer;
