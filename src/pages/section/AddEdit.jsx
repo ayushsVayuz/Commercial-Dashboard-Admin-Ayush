@@ -303,8 +303,11 @@ const SectionAddEdit = () => {
       // refresh_interval: data?.refreshInterval,
       // response_type: "json",
       // params: data?.params || [],
+      role_ids: [16],
       widgets: widgetPositions,
     };
+    console.log(payload,"payload");
+    
 
     dispatch(sectionPayload(payload));
     if (isEditMode) {

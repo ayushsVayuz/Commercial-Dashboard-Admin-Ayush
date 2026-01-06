@@ -3,6 +3,7 @@ import client from "../axios-baseurl";
 import { getAuthToken, handleError } from "../../utils";
 import { encryptPayload } from "../../utils/encryption";
 import { decryptResponse } from "../../utils/decryption";
+import toast from "react-hot-toast";
 
 // Create a new section
 export const createSection = createAsyncThunk(
@@ -96,6 +97,7 @@ export const readSectionListing = createAsyncThunk(
   }
 );
 
+
 // Get section widgets position
 export const readSectionWidgetsPosition = createAsyncThunk(
   "section/readSectionWidgetsPosition",
@@ -132,6 +134,8 @@ export const readSingleSection = createAsyncThunk(
       });
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData,"decryptedData222");
+      
 
       return decryptedData;
     } catch (error) {
@@ -146,6 +150,8 @@ export const updateSection = createAsyncThunk(
   async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
     const encryptedData = await encryptPayload(updatedData);
+    console.log(updatedData,"122");
+    
     try {
       const response = await client.put(
         `/sections/${sectionId}`,
@@ -158,6 +164,7 @@ export const updateSection = createAsyncThunk(
       );
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData,"decryptedDataaaaupdate");
 
       return decryptedData;
     } catch (error) {
