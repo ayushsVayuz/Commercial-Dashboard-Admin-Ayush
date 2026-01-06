@@ -9,7 +9,6 @@ import { FormWrapper } from "../../components/wrappers/form";
 import {
   readSingleSection,
   updateSection,
-  updateSectionCMS,
 } from "../../redux/actions/section-action";
 import { CardWrapper } from "../../components/wrappers/card";
 import { readContainer } from "../../redux/actions/containers-action";
@@ -59,24 +58,20 @@ const SectionCMSAddEdit = () => {
     dispatch(readSingleSection({ id }));
   }, [id, reset, dispatch]);
 
-  // ---------- Prefill container ----------
   useEffect(() => {
-    console.log(singleSection,"single657890");
-    
-    if (singleSection?.container_id) {
-      // Reset form fields
-      reset({
-        sectionId: "",
-        widgetId: "",
-        containerId: singleSection.container_id,
-      });
+  if (
+    singleSection?.Roles?.length &&
+    roles?.length
+  ) {
+    const preSelectedRoleIds = singleSection.Roles.map(
+      (role) => role.role_id
+    );
 
-      // Pre-select roles
-      const preSelectedRoleIds =
-        singleSection.Roles?.map((role) => role.role_id) || [];
-      setSelectedIds(preSelectedRoleIds);
-    }
-  }, [singleSection, reset]);
+    setSelectedIds(preSelectedRoleIds);
+  }
+}, [singleSection?.Roles, roles]);
+
+
 
   // ---------- Pagination + Search setup ----------
   const [searchParams, setSearchParams] = useSearchParams();
@@ -207,6 +202,8 @@ const SectionCMSAddEdit = () => {
   };
 
   const headers = ["Sr No.", "Name", "Select"];
+  console.log(roles,"roles");
+  
   const dataToPass = roles?.map((role, index) => ({
     srNo: { content: currentPage * rowsPerPage + (index + 1) },
     name: { content: role?.role_name },
@@ -240,7 +237,7 @@ const SectionCMSAddEdit = () => {
       />
       <CardWrapper>
         <h5 className="font-semibold !text-3xl text-[#884EA7] dark:text-white hover:text-[#884EA7]">
-          {singleSection?.name}
+          {singleSection?.section_name}
         </h5>
         {/* <p className="font-medium text-base dark:text-gray-200">
           Section - {singleSection?.section?.name}

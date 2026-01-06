@@ -98,39 +98,6 @@ export const readSectionListing = createAsyncThunk(
 );
 
 
-export const updateSectionCMS = createAsyncThunk(
-  "section/updateSectionCMS",
-  async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
-    console.log("inside action");
-    
-    const token = getAuthToken(getState);
-    console.log(token, "token");
-    console.log(updatedData,"updatedDataupdatedData");
-    
-    const encryptedData = await encryptPayload(updatedData);
-    console.log(encryptedData, "encryptedData");
-    
-    try {
-      const response = await client.put(
-        `/sections/update-section/${sectionId}`,
-        encryptedData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const decryptedData = await decryptResponse(response.data);
-      console.log(decryptedData, "decryptedData");
-
-      return decryptedData;
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-      return handleError(error, rejectWithValue);
-    }
-  }
-);
-
 // Get section widgets position
 export const readSectionWidgetsPosition = createAsyncThunk(
   "section/readSectionWidgetsPosition",
@@ -167,6 +134,8 @@ export const readSingleSection = createAsyncThunk(
       });
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData,"decryptedData222");
+      
 
       return decryptedData;
     } catch (error) {
@@ -195,6 +164,7 @@ export const updateSection = createAsyncThunk(
       );
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData,"decryptedDataaaaupdate");
 
       return decryptedData;
     } catch (error) {

@@ -135,6 +135,7 @@ export const readSingleWidget = createAsyncThunk(
       });
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData,"decryptedData123");
 
       return decryptedData;
     } catch (error) {
