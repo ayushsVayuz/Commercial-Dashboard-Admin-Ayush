@@ -15,6 +15,9 @@ const SectionDetails = () => {
 
   const { singleSection, loading } = useSelector((state) => state.section);
 
+  console.log(singleSection,"singleSectionssssss");
+  
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -26,7 +29,7 @@ const SectionDetails = () => {
     <>
       <section className="flex flex-col">
         <MetaTitle title={"Section Detail | Anarock"} />
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+        <div className="flex sm:flex-row justify-between sm:items-center gap-2">
           <Heading
             sectionLink="/section"
             parent="Section"
@@ -40,7 +43,7 @@ const SectionDetails = () => {
           <div className="w-full md:w-[100%] flex flex-col">
             <CardWrapper>
               <h5 className="font-semibold !text-3xl text-primaryText dark:text-white hover:text-primaryBg">
-                {singleSection?.name}
+                {singleSection?.section_name}
               </h5>
               {/* <p className="font-medium text-base dark:text-gray-200">
                 Section Order - {singleSection?.order_index}

@@ -48,11 +48,10 @@ const SectionAddEdit = () => {
   const { payload, singleSection, sectionWidgetPosition, error, loading } =
     useSelector((state) => state.section);
 
-    console.log(singleSection.Roles,"singleSection111");
+    console.log(singleSection,"singleSection111");
     
-    const role_ids = singleSection.Roles.map(role => role.role_id);
+    const role_ids = singleSection?.Roles?.map(role => role.role_id);
 
-console.log(role_ids,"role_idssss");
 
   const isEditMode = location.pathname.includes("/edit");
 
@@ -98,11 +97,15 @@ console.log(role_ids,"role_idssss");
     const fetchSections = async () => {
       try {
         const res = await dispatch(readSectionListing({}));
+        console.log(res,"resssssss");
+        
         if (res?.payload) {
-          const options = res.payload?.data?.map((s) => ({
+          const options = res?.payload?.data?.map((s) => ({
             label: s.name,
             value: s.section_id,
           }));
+          console.log(options,"optionssss");
+          
           setSectionsOptions(options);
           // options.push({ label: singleSection?.name, value: id });
         }
@@ -176,7 +179,7 @@ console.log(role_ids,"role_idssss");
     if (isEditMode && singleSection) {
       const section = singleSection;
 
-      const selectedOption = { label: section.name, value: section.id };
+      const selectedOption = { label: section.section_name, value: section.section_id };
 
       if (section?.widgets?.length > 0) {
         const mappedWidgets = section?.widgets?.map((w, index) => ({
@@ -187,6 +190,8 @@ console.log(role_ids,"role_idssss");
         setWidgetPositions(mappedWidgets);
         setSelectedWidgets(section.widgets);
       }
+      console.log(selectedOption,"selectedOptionsssss");
+      
 
       reset({
         sectionName: selectedOption || "",
@@ -224,6 +229,8 @@ console.log(role_ids,"role_idssss");
         }));
         setWidgetPositions(mappedWidgets);
       }
+            console.log(section.section_id,"section.section_idssssss");
+
       reset({
         sectionName: section.section_id || "",
         // sectionOrder: section.order_index || "",
