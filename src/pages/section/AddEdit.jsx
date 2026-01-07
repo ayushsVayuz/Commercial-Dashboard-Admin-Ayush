@@ -48,6 +48,12 @@ const SectionAddEdit = () => {
   const { payload, singleSection, sectionWidgetPosition, error, loading } =
     useSelector((state) => state.section);
 
+    console.log(singleSection.Roles,"singleSection111");
+    
+    const role_ids = singleSection.Roles.map(role => role.role_id);
+
+console.log(role_ids,"role_idssss");
+
   const isEditMode = location.pathname.includes("/edit");
 
   const {
@@ -286,6 +292,8 @@ const SectionAddEdit = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data,"dataaaaaaaa");
+    
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
@@ -303,10 +311,10 @@ const SectionAddEdit = () => {
       // refresh_interval: data?.refreshInterval,
       // response_type: "json",
       // params: data?.params || [],
-      role_ids: [16],
+      role_ids: role_ids,
       widgets: widgetPositions,
     };
-    console.log(payload,"payload");
+    console.log(payload,"payloadsss");
     
 
     dispatch(sectionPayload(payload));
