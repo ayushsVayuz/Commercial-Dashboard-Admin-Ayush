@@ -206,7 +206,7 @@ const WidgetsListing = () => {
     <section className="flex flex-col gap-4">
       <MetaTitle title={"Widget | Anarock"} />
 
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+      <div className="flex sm:flex-row justify-between sm:items-center gap-2">
         <Heading
           sectionLink="/widget"
           parent="Widget"
@@ -223,11 +223,12 @@ const WidgetsListing = () => {
         </Button> */}
       </div>
 
-      <div className="flex sm:justify-end items-center gap-2">
-        <Search
-          containerClassName="w-full sm:w-auto mb-2 rounded px"
-          placeholder="Search"
-          label="search"
+      <div className="flex flex-row justify-end">
+        <div className="flex justify-end items-center gap-2 w-fit">
+          <Search
+            containerClassName="w-full sm:w-auto mb-2 rounded px"
+            placeholder="Search"
+            label="search"
           // filter={
           //   <Filter
           //     filterMenu={filterMenu}
@@ -236,13 +237,15 @@ const WidgetsListing = () => {
           //       {
           //         type: "select",
           //         key: "section_id",
-          //         placeholder: "Select Section",
+          //         placeholder: "Select Communities",
           //         options: sectionOptions,
           //       },
           //     ]}
           //   />
           // }
-        />
+          />
+        </div>
+
       </div>
 
       {loading ? (

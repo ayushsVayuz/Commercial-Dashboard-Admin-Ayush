@@ -380,7 +380,7 @@ const SectionListing = () => {
       <style>{modernAnimationStyles}</style>
       <MetaTitle title="Section | Anarock" />
 
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+      <div className="flex  sm:flex-row justify-between sm:items-center gap-2">
         <Heading
           sectionLink="/section"
           parent="Section"
@@ -400,13 +400,18 @@ const SectionListing = () => {
         </Link>
       </div>
 
-      <div className="flex sm:justify-end items-center gap-2">
-        <Search
-          containerClassName="w-full sm:w-auto mb-2 rounded px"
-          placeholder="Search"
-          label="search"
-        />
+      <div className="flex flex-row justify-end">
+        <div className="flex justify-end items-center gap-2 w-fit">
+          <Search
+            containerClassName="w-full sm:w-auto mb-2 rounded px"
+            placeholder="Search"
+            label="search"
+          />
+        </div>
+
       </div>
+
+
 
       {/* {loading ? (
         <TableShimmer />

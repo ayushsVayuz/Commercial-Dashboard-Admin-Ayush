@@ -180,7 +180,7 @@ export const Table = ({
               </div>
 
               {totalPages > 1 && (
-                <div className="px-2 py-4 flex flex-col sm:flex-row justify-start items-center gap-4 bg-white dark:bg-slate-800">
+                <div className="px-2 py-4 flex sm:flex-row justify-start items-center gap-4 bg-white dark:bg-slate-800">
                   <div className="flex items-center">
                     <p className="text-xs text-black dark:text-white">
                       Rows per page:

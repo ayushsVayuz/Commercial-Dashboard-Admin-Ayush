@@ -48,6 +48,11 @@ const SectionAddEdit = () => {
   const { payload, singleSection, sectionWidgetPosition, error, loading } =
     useSelector((state) => state.section);
 
+    console.log(singleSection,"singleSection111");
+    
+    const role_ids = singleSection?.Roles?.map(role => role.role_id);
+
+
   const isEditMode = location.pathname.includes("/edit");
 
   const {
@@ -92,11 +97,15 @@ const SectionAddEdit = () => {
     const fetchSections = async () => {
       try {
         const res = await dispatch(readSectionListing({}));
+        console.log(res,"resssssss");
+        
         if (res?.payload) {
-          const options = res.payload?.data?.map((s) => ({
+          const options = res?.payload?.data?.map((s) => ({
             label: s.name,
             value: s.section_id,
           }));
+          console.log(options,"optionssss");
+          
           setSectionsOptions(options);
           // options.push({ label: singleSection?.name, value: id });
         }
@@ -170,7 +179,7 @@ const SectionAddEdit = () => {
     if (isEditMode && singleSection) {
       const section = singleSection;
 
-      const selectedOption = { label: section.name, value: section.id };
+      const selectedOption = { label: section.section_name, value: section.section_id };
 
       if (section?.widgets?.length > 0) {
         const mappedWidgets = section?.widgets?.map((w, index) => ({
@@ -181,6 +190,8 @@ const SectionAddEdit = () => {
         setWidgetPositions(mappedWidgets);
         setSelectedWidgets(section.widgets);
       }
+      console.log(selectedOption,"selectedOptionsssss");
+      
 
       reset({
         sectionName: selectedOption || "",
@@ -218,6 +229,8 @@ const SectionAddEdit = () => {
         }));
         setWidgetPositions(mappedWidgets);
       }
+            console.log(section.section_id,"section.section_idssssss");
+
       reset({
         sectionName: section.section_id || "",
         // sectionOrder: section.order_index || "",
@@ -286,6 +299,8 @@ const SectionAddEdit = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data,"dataaaaaaaa");
+    
     const payload = {
       dashboard_id: "1689fab9-9c56-426a-bd15-368b9da4ce33",
       section_id: data?.sectionName,
@@ -303,10 +318,10 @@ const SectionAddEdit = () => {
       // refresh_interval: data?.refreshInterval,
       // response_type: "json",
       // params: data?.params || [],
-      role_ids: [16],
+      role_ids: role_ids,
       widgets: widgetPositions,
     };
-    console.log(payload,"payload");
+    console.log(payload,"payloadsss");
     
 
     dispatch(sectionPayload(payload));
