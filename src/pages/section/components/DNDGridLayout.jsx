@@ -9,7 +9,7 @@ export default function DNDGridLayout({
   value,
   onChange,
   data,
-  isResizable = false,
+  isResizable = true,
   isDraggable = true,
   widgetPositions,
   setWidgetPositions,

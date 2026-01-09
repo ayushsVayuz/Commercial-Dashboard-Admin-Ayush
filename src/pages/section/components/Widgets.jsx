@@ -467,19 +467,19 @@ export const AllWidgetMapping = {
   },
   HELPDESK_COMPLAINTS: {
     component: Complaints,
-    minWidth: 3,
+    minWidth: 2.4,
     minHeight: pxToGridUnits(362),
     position: [8, 12, 2, 2],
   },
   HELPDESK_REQUESTBOX: {
     component: RequestBox,
-    minWidth: 1.5,
+    minWidth: 1.8,
     minHeight: pxToGridUnits(362),
     position: [10, 12, 2, 2],
   },
   HELPDESK_COMPLAINTS_BY_LEVEL: {
     component: ComplaintsByLevel,
-    minWidth: 1.5,
+    minWidth: 1.8,
     minHeight: pxToGridUnits(362),
     position: [12, 12, 2, 2],
   },
