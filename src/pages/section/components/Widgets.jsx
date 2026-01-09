@@ -465,11 +465,11 @@ export const AllWidgetMapping = {
       title: "Resolution Rate",
     },
   },
-  HELPDESK_COMPLAINTS: {
-    component: Complaints,
+  HELPDESK_COMPLAINTS_BY_LEVEL: {
+    component: ComplaintsByLevel,
     minWidth: 2.4,
     minHeight: pxToGridUnits(362),
-    position: [8, 12, 2, 2],
+    position: [12, 12, 2, 2],
   },
   HELPDESK_REQUESTBOX: {
     component: RequestBox,
@@ -477,10 +477,10 @@ export const AllWidgetMapping = {
     minHeight: pxToGridUnits(362),
     position: [10, 12, 2, 2],
   },
-  HELPDESK_COMPLAINTS_BY_LEVEL: {
-    component: ComplaintsByLevel,
-    minWidth: 1.8,
+  HELPDESK_COMPLAINTS: {
+    component: Complaints,
+    minWidth: 1.5,
     minHeight: pxToGridUnits(362),
-    position: [12, 12, 2, 2],
+    position: [8, 12, 2, 2],
   },
 };
