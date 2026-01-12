@@ -170,7 +170,7 @@ export const AllWidgetMapping = {
       ],
     },
   },
-  OVERVIEW_INCOME_EXPENDITURE:  {
+  OVERVIEW_INCOME_EXPENDITURE: {
     component: FinanceSummary,
     minWidth: 2,
     minHeight: pxToGridUnits(232),
@@ -468,6 +468,9 @@ export const AllWidgetMapping = {
   HELPDESK_COMPLAINTS_BY_LEVEL: {
     component: ComplaintsByLevel,
     minWidth: 2.4,
+    minHeight: pxToGridUnits(362),
+    position: [12, 12, 2, 2],
+  },
   HELPDESK_COMPLAINTS_BY_LEVEL: {
     component: ComplaintsByLevel,
     minWidth: 2.4,
