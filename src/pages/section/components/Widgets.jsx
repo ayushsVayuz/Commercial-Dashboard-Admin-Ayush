@@ -170,7 +170,7 @@ export const AllWidgetMapping = {
       ],
     },
   },
-  OVERVIEW_INCOME_EXPENDITURE: {
+  OVERVIEW_INCOME_EXPENDITURE:  {
     component: FinanceSummary,
     minWidth: 2,
     minHeight: pxToGridUnits(232),
