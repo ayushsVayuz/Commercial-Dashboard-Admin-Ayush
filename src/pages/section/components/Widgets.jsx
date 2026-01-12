@@ -270,7 +270,7 @@ export const AllWidgetMapping = {
   ENGAGEMENT_NOTICE: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [0, 6, 2, 2],
     data: {
       title: "Notice",
@@ -279,7 +279,7 @@ export const AllWidgetMapping = {
   ENGAGEMENT_POST: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [2, 6, 2, 2],
     data: {
       title: "Post",
@@ -288,7 +288,7 @@ export const AllWidgetMapping = {
   ENGAGEMENT_POLL: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [4, 6, 2, 2],
     data: {
       title: "Poll",
@@ -297,7 +297,7 @@ export const AllWidgetMapping = {
   ENGAGEMENT_SURVEY: {
     component: SingleStats,
     minWidth: 2,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [6, 6, 2, 2],
     data: {
       title: "Survey",
@@ -320,7 +320,7 @@ export const AllWidgetMapping = {
   FACILITIES_TOTAL_BOOKINGS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [0, 8, 2, 2],
     data: {
       title: "Total Bookings",
@@ -329,7 +329,7 @@ export const AllWidgetMapping = {
   FACILITIES_UTILISATION_RATE: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [2, 8, 2, 2],
     data: {
       title: "Utilisation Rate",
@@ -338,7 +338,7 @@ export const AllWidgetMapping = {
   FACILITIES_REVENUE: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [4, 8, 2, 2],
     data: {
       title: "Facilities Revenue",
@@ -347,7 +347,7 @@ export const AllWidgetMapping = {
   FACILITIES_PENDING_DUES: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [6, 8, 2, 2],
     data: {
       title: "Pending Dues",
@@ -370,7 +370,7 @@ export const AllWidgetMapping = {
   GATE_AND_SECURITY_TOTAL_VISITORS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [0, 10, 2, 2],
     data: {
       title: "Total Visitors",
@@ -379,7 +379,7 @@ export const AllWidgetMapping = {
   GATE_AND_SECURITY_ACTIVE_INCIDENTS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [2, 10, 2, 2],
     data: {
       title: "Active Incidents",
@@ -388,7 +388,7 @@ export const AllWidgetMapping = {
   GATE_AND_SECURITY_MISSING_PATROLS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [4, 10, 2, 2],
     data: {
       title: "Missing Patrols",
@@ -397,7 +397,7 @@ export const AllWidgetMapping = {
   GATE_AND_SECURITY_PARKING_USAGE: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [6, 10, 2, 2],
     data: {
       title: "Parking Usage",
@@ -432,7 +432,7 @@ export const AllWidgetMapping = {
   HELPDESK_OPEN_COMPLAINTS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [0, 12, 2, 2],
     data: {
       title: "Complaints",
@@ -441,7 +441,7 @@ export const AllWidgetMapping = {
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [2, 12, 2, 2],
     data: {
       title: "Pending Requests",
@@ -450,7 +450,7 @@ export const AllWidgetMapping = {
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [4, 12, 2, 2],
     data: {
       title: "Avg Response Time",
@@ -459,7 +459,7 @@ export const AllWidgetMapping = {
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(132),
+    minHeight: pxToGridUnits(150),
     position: [6, 12, 2, 2],
     data: {
       title: "Resolution Rate",
