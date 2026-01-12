@@ -11,7 +11,7 @@ export const fetchDashboardDetails = createAsyncThunk(
 
     try {
       const response = await client.get(
-        `/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details`,
+        `/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details?fromAdmin=true`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
