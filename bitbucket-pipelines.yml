@@ -13,10 +13,10 @@ pipelines:
             - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
             - echo "🏗️ Building Docker image..."
-            - docker build -t "$DOCKER_USER/anarock_admin:3.1" .
+            - docker build -t "$DOCKER_USER/anarock_admin:3.2" .
 
             - echo "📤 Pushing Docker image to Docker Hub..."
-            - docker push "$DOCKER_USER/anarock_admin:3.1"
+            - docker push "$DOCKER_USER/anarock_admin:3.2"
 
 definitions:
   services:
