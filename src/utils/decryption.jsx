@@ -1,5 +1,6 @@
 export async function decryptResponse(encryptedResponse) {
   const privateKeyPem = import.meta.env.VITE_PRIVATE_KEY;
+  
 
   if (!privateKeyPem) {
     throw new Error("Private key is not defined. Check your .env file.");
@@ -30,6 +31,8 @@ export async function decryptResponse(encryptedResponse) {
     atob(encryptedResponse.encryptedKey),
     (c) => c.charCodeAt(0)
   );
+  console.log(encryptedAesKey,"encryptedAesKeyyyyy");
+  
   const iv = Uint8Array.from(atob(encryptedResponse.iv), (c) =>
     c.charCodeAt(0)
   );
