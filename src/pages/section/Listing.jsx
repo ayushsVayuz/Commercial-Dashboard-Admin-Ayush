@@ -70,7 +70,11 @@ const SectionListing = () => {
   const { sections, statusLoading, loading, totalCount } = useSelector(
     (state) => state.section
   );
+  console.log(sections, "sections111");
+
   const [localSections, setLocalSections] = useState([]);
+  console.log(localSections, "localsectinsss");
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [rowsPerPage, setRowsPerPage] = useState(
     parseInt(searchParams.get("limit")) || 10
@@ -108,23 +112,12 @@ const SectionListing = () => {
   // }, [sections]);
 
   useEffect(() => {
-    if (sections && sections.length > 0) {
-      // Preserve the order if localSections was reordered
-      if (localSections.length === sections.length) {
-        const updatedLocal = localSections.map((localSection) => {
-          const updatedSection = sections.find(
-            (s) => s.section_id === localSection.section_id
-          );
-          return updatedSection
-            ? { ...localSection, status: updatedSection.status }
-            : localSection;
-        });
-        setLocalSections(updatedLocal);
-      } else {
-        setLocalSections(sections);
-      }
-    }
-  }, [sections]);
+  if (sections) {
+    setLocalSections(sections);
+  }
+}, [sections]);
+
+
 
   // fetch data on change
   useEffect(() => {

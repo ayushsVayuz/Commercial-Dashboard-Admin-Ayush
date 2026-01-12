@@ -120,6 +120,8 @@ const SectionAddEdit = () => {
     const fetchWidgets = async () => {
       try {
         const res = await dispatch(readMappedWidget({}));
+        console.log(res,"widgetressss");
+        
         if (res?.payload) {
           const options = res.payload?.data?.map((w, index) => ({
             widget_name: w.widget_name || w.title,
@@ -396,7 +398,7 @@ const SectionAddEdit = () => {
     return false;
   }
 
-  console.log("Data inside section add", selectedWidgets, widgetPositions);
+  console.log("Data inside section add", selectedWidgets);
 
   return (
     <section>

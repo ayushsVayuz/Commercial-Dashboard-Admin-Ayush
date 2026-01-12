@@ -53,6 +53,7 @@ export const readSection = createAsyncThunk(
       );
 
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData, "decryptedDataaaaaa");
 
       return decryptedData;
     } catch (error) {
@@ -97,7 +98,6 @@ export const readSectionListing = createAsyncThunk(
   }
 );
 
-
 // Get section widgets position
 export const readSectionWidgetsPosition = createAsyncThunk(
   "section/readSectionWidgetsPosition",
@@ -134,8 +134,7 @@ export const readSingleSection = createAsyncThunk(
       });
 
       const decryptedData = await decryptResponse(response.data);
-      console.log(decryptedData,"decryptedData222");
-      
+      console.log(decryptedData, "decryptedData222");
 
       return decryptedData;
     } catch (error) {
@@ -150,8 +149,8 @@ export const updateSection = createAsyncThunk(
   async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
     const encryptedData = await encryptPayload(updatedData);
-    console.log(updatedData,"122");
-    
+    console.log(updatedData, "122");
+
     try {
       const response = await client.put(
         `/sections/${sectionId}`,
@@ -164,7 +163,7 @@ export const updateSection = createAsyncThunk(
       );
 
       const decryptedData = await decryptResponse(response.data);
-      console.log(decryptedData,"decryptedDataaaaupdate");
+      console.log(decryptedData, "decryptedDataaaaupdate");
 
       return decryptedData;
     } catch (error) {
