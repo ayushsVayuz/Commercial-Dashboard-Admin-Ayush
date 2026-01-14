@@ -432,7 +432,7 @@ export const AllWidgetMapping = {
   HELPDESK_OPEN_COMPLAINTS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(150),
+    minHeight: pxToGridUnits(132),
     position: [0, 12, 2, 2],
     data: {
       title: "Complaints",
@@ -441,7 +441,7 @@ export const AllWidgetMapping = {
   HELPDESK_PENDING_REQUESTS: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(150),
+    minHeight: pxToGridUnits(132),
     position: [2, 12, 2, 2],
     data: {
       title: "Pending Requests",
@@ -450,7 +450,7 @@ export const AllWidgetMapping = {
   HELPDESK_AVG_RESPONSE_TIME: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(150),
+    minHeight: pxToGridUnits(132),
     position: [4, 12, 2, 2],
     data: {
       title: "Avg Response Time",
@@ -459,7 +459,7 @@ export const AllWidgetMapping = {
   HELPDESK_RESOLUTION_RATE: {
     component: SingleStats,
     minWidth: 1.5,
-    minHeight: pxToGridUnits(150),
+    minHeight: pxToGridUnits(132),
     position: [6, 12, 2, 2],
     data: {
       title: "Resolution Rate",
