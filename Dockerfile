@@ -2,34 +2,25 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-ENV PORT=4000
-
-# ----------------------
-# 1. Copy root/package.json and install client deps
-# ----------------------
+# Install root deps
 COPY package*.json ./
-RUN npm install --legacy-peer-deps && npm cache clean --force
+RUN npm install --legacy-peer-deps
 
-# ----------------------
-# 2. Copy client code and build
-# ----------------------
+# Copy source
 COPY . .
+
+# Build frontend
 RUN npm run build
 
-# ----------------------
-# 3. Copy server package.json and install server deps
-# ----------------------
+# Install server deps
 WORKDIR /app/server
 COPY server/package*.json ./
-RUN npm install --legacy-peer-deps && npm cache clean --force
+RUN npm install --legacy-peer-deps
 
-# ----------------------
-# 4. Copy server code
-# ----------------------
-COPY server/ ./
+# Back to app root
+WORKDIR /app
 
-# ----------------------
-# 5. Expose and run
-# ----------------------
-EXPOSE ${PORT}
-CMD ["node", "index.js"]
+# Vercel sets PORT automatically
+EXPOSE 3000
+
+CMD ["node", "server/index.js"]

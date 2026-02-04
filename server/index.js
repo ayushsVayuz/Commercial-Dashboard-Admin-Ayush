@@ -1,9 +1,23 @@
 const express = require("express");
 const path = require("path");
-const app = express();
 require("dotenv").config();
-app.use(express.static(path.join(__dirname, "../") + "dist"));
-app.get("/*", function (req, res) {
-  res.sendFile("index.html", { root: "./../dist" });
+
+const app = express();
+
+// Absolute path to dist
+const distPath = path.join(__dirname, "../dist");
+
+// Serve static files
+app.use(express.static(distPath));
+
+// SPA fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
 });
-app.listen(process.env.PORT);
+
+// Port (Vercel injects this)
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
