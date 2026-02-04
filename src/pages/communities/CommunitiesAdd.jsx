@@ -113,14 +113,13 @@ const CommunitiesAdd = () => {
   return (
     <section className="flex flex-col gap-4">
       <MetaTitle title={"Communities | Anarock"} />
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+      <div className="flex flex-row justify-between sm:items-center gap-2">
         <Heading
           sectionLink="/communities"
           parent="Communities"
           mainTitle="Add Communities"
         />
-      </div>
-      <div className="flex sm:justify-end items-center gap-2">
+
         {selectedIds.length > 0 && (
           <Link
             className="w-fit bg-[#884EA7] text-white px-12 py-2 hover:bg-opacity-80 hover:text-white rounded"
@@ -129,8 +128,10 @@ const CommunitiesAdd = () => {
             Map Communities
           </Link>
         )}
+      </div>
+      <div className="flex justify-end items-start gap-2">  
         <Search
-          containerClassName="w-full sm:w-auto mb-2 rounded px"
+          containerClassName="w-fit  sm:w-auto mb-2 rounded px"
           placeholder="Search"
           label="search"
         />
