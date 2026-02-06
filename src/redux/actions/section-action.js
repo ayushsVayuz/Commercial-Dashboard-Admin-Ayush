@@ -19,12 +19,15 @@ export const createSection = createAsyncThunk(
         },
       });
       const decryptedData = await decryptResponse(response.data);
+      console.log(decryptedData, "decryptedData123");
 
       return decryptedData;
     } catch (error) {
+      console.log(error, "errorsssss");
+
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Get section list with query
@@ -38,8 +41,8 @@ export const readSection = createAsyncThunk(
         ?.map(
           (query) =>
             `${encodeURIComponent(query.field)}=${encodeURIComponent(
-              query.value
-            )}`
+              query.value,
+            )}`,
         )
         .join("&");
 
@@ -49,7 +52,7 @@ export const readSection = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -59,7 +62,7 @@ export const readSection = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 // Get section list with id
 export const readSectionListing = createAsyncThunk(
@@ -73,8 +76,8 @@ export const readSectionListing = createAsyncThunk(
         ?.map(
           (query) =>
             `${encodeURIComponent(query.field)}=${encodeURIComponent(
-              query.value
-            )}`
+              query.value,
+            )}`,
         )
         .join("&");
 
@@ -86,7 +89,7 @@ export const readSectionListing = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -95,7 +98,7 @@ export const readSectionListing = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Get section widgets position
@@ -117,7 +120,7 @@ export const readSectionWidgetsPosition = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Get section list with query
@@ -140,7 +143,7 @@ export const readSingleSection = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Update section details
@@ -148,10 +151,13 @@ export const updateSection = createAsyncThunk(
   "section/updateSection",
   async ({ sectionId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
-    const encryptedData = await encryptPayload(updatedData);
     console.log(updatedData, "122");
 
+    const encryptedData = await encryptPayload(updatedData);
+
     try {
+      console.log("beogr");
+
       const response = await client.put(
         `/sections/${sectionId}`,
         encryptedData,
@@ -159,7 +165,7 @@ export const updateSection = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -169,7 +175,7 @@ export const updateSection = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Change status of section
@@ -187,7 +193,7 @@ export const changeStatusSection = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -196,7 +202,7 @@ export const changeStatusSection = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Delete section
@@ -211,7 +217,7 @@ export const deleteSection = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -220,5 +226,5 @@ export const deleteSection = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );

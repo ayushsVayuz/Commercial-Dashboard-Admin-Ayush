@@ -73,7 +73,7 @@ const widgetsSlice = createSlice({
         state.error = null;
       })
       .addCase(readSingleWidget.fulfilled, (state, action) => {
-        state.singleWidgetLoading = false;
+        state.singleWidgetLoading = false;        
         state.singleWidget = action.payload.data;
         state.totalPages = action.payload.total;
       })

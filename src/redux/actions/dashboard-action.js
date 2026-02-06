@@ -11,7 +11,7 @@ export const fetchDashboardDetails = createAsyncThunk(
 
     try {
       const response = await client.get(
-        `/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details?fromAdmin=true`,
+        `/dashboards/1689fab9-9c56-426a-bd15-368b9da4ce33/details?fromAdmin=true&userId=${userId}&communityId=${communityId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -20,6 +20,8 @@ export const fetchDashboardDetails = createAsyncThunk(
       );
 
       const result = await decryptResponse(response?.data);
+      console.log("Decrypted Response:", result);
+      
 
       if (result?.statusCode !== 200) {
         return rejectWithValue(result?.message || "Failed to fetch dashboard");

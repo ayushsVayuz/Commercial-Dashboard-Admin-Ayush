@@ -59,8 +59,9 @@ const WidgetCMSAddEdit = () => {
       widgetId: "",
       containerId: "",
     });
-
+    
     dispatch(readSingleWidget({ id }));
+
   }, [id, reset, dispatch]);
 
   // ---------- Prefill container ----------
@@ -169,6 +170,8 @@ const WidgetCMSAddEdit = () => {
   // };
 
   // ---------- Submit ----------
+  console.log(singleWidget,"singleWidget");
+  
   const onSubmit = async (data) => {
     const payload = {
       container_id: data.containerId,

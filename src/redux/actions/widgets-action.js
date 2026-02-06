@@ -24,7 +24,7 @@ export const createWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 export const updateWidgetCMS = createAsyncThunk(
@@ -32,6 +32,9 @@ export const updateWidgetCMS = createAsyncThunk(
   async ({ widgetId, updatedData }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
     const encryptedData = await encryptPayload(updatedData);
+    console.log(widgetId, "widgteID");
+    console.log(updatedData, "updatedData");
+
     try {
       const response = await client.put(
         `/widgets/update-widget/${widgetId}`,
@@ -40,8 +43,10 @@ export const updateWidgetCMS = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
+      console.log(response, "response123");
+
       const decryptedData = await decryptResponse(response.data);
 
       return decryptedData;
@@ -49,7 +54,7 @@ export const updateWidgetCMS = createAsyncThunk(
       toast.error(error?.response?.data?.message);
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Get widget list with query
@@ -64,8 +69,8 @@ export const readWidget = createAsyncThunk(
         ?.map(
           (query) =>
             `${encodeURIComponent(query.field)}=${encodeURIComponent(
-              query.value
-            )}`
+              query.value,
+            )}`,
         )
         .join("&");
 
@@ -75,7 +80,7 @@ export const readWidget = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -84,7 +89,7 @@ export const readWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 export const readMappedWidget = createAsyncThunk(
@@ -98,8 +103,8 @@ export const readMappedWidget = createAsyncThunk(
         ?.map(
           (query) =>
             `${encodeURIComponent(query.field)}=${encodeURIComponent(
-              query.value
-            )}`
+              query.value,
+            )}`,
         )
         .join("&");
 
@@ -109,7 +114,7 @@ export const readMappedWidget = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -118,7 +123,7 @@ export const readMappedWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Get widget list with query
@@ -133,15 +138,16 @@ export const readSingleWidget = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response, "response 21");
 
       const decryptedData = await decryptResponse(response.data);
-      console.log(decryptedData,"decryptedData123");
+      console.log(decryptedData, "decryptedData123");
 
       return decryptedData;
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Update widget details
@@ -163,7 +169,7 @@ export const updateWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Change status of section
@@ -181,7 +187,7 @@ export const changeStatusWidget = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -190,7 +196,7 @@ export const changeStatusWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );
 
 // Delete widget
@@ -207,7 +213,7 @@ export const deleteWidget = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const decryptedData = await decryptResponse(response.data);
@@ -216,5 +222,5 @@ export const deleteWidget = createAsyncThunk(
     } catch (error) {
       return handleError(error, rejectWithValue);
     }
-  }
+  },
 );

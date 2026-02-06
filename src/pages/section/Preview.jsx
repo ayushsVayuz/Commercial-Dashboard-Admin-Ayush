@@ -49,6 +49,7 @@ const SectionPreview = () => {
         );
       } else {
         res = await dispatch(createSection(updatedPayload));
+        
       }
 
       console.log(res, "response---");
