@@ -51,6 +51,8 @@ export const updateWidgetCMS = createAsyncThunk(
 
       return decryptedData;
     } catch (error) {
+      console.log(error,"error123");
+      
       toast.error(error?.response?.data?.message);
       return handleError(error, rejectWithValue);
     }

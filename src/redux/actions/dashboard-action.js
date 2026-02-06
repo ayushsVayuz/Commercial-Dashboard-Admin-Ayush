@@ -8,6 +8,7 @@ export const fetchDashboardDetails = createAsyncThunk(
   "dashboard/fetchDashboardDetails",
   async ({ userId, communityId }, { rejectWithValue, getState }) => {
     const token = getAuthToken(getState);
+    
 
     try {
       const response = await client.get(
@@ -18,6 +19,7 @@ export const fetchDashboardDetails = createAsyncThunk(
           },
         }
       );
+      console.log("response233", response);
 
       const result = await decryptResponse(response?.data);
       console.log("Decrypted Response:", result);

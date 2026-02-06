@@ -59,7 +59,7 @@ const WidgetCMSAddEdit = () => {
       widgetId: "",
       containerId: "",
     });
-    
+
     dispatch(readSingleWidget({ id }));
 
   }, [id, reset, dispatch]);
@@ -170,9 +170,11 @@ const WidgetCMSAddEdit = () => {
   // };
 
   // ---------- Submit ----------
-  console.log(singleWidget,"singleWidget");
-  
+  console.log(singleWidget, "singleWidget");
+
   const onSubmit = async (data) => {
+    console.log(data, "data12332");
+    
     const payload = {
       container_id: data.containerId,
       role_ids: selectedIds,
@@ -180,7 +182,7 @@ const WidgetCMSAddEdit = () => {
     try {
       const response = await dispatch(
         updateWidgetCMS({
-          widgetId: singleWidget?.widget_id,
+          widgetId: id,
           updatedData: payload,
         })
       ).unwrap();
