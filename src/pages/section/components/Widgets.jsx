@@ -32,6 +32,13 @@ import {
   NoticeBoardStatus,
   SingleStats,
   EngagementStatsGrid,
+  CommercialOccupancy,
+  EmployeeFootfall,
+  FoodBeverages,
+  Amenities,
+  TicketEscalation,
+  TicketStatus,
+  VisitorUpdates
 } from "anarock-widgets";
 
 // import Community from "./widgets/overview/components/Community";
@@ -201,6 +208,85 @@ export const AllWidgetMapping = {
       pendingRequests: 3,
     },
   },
+
+  OVERVIEW_OCCUPANCY: {
+    component: CommercialOccupancy,
+    minWidth: 2,
+    minHeight: pxToGridUnits(128),
+    position: [0,0, 2, 8],
+  },
+
+  OVERVIEW_EMPLOYEE_FOOTFALL: {
+    component: EmployeeFootfall,
+    minWidth: 2,
+    minHeight: pxToGridUnits(238),
+    position: [2, 0, 4, 14],
+  },
+
+
+
+  OVERVIEW_VISITOR_UPDATE: {
+    component: VisitorUpdates,
+    minWidth: 2,
+    minHeight: pxToGridUnits(377),
+    position: [0, 2, 2, 22],
+  },
+
+  OVERVIEW_TICKET_STATUS: {
+    component: TicketStatus,
+    minWidth: 2,
+    minHeight: pxToGridUnits(267),
+    position: [2, 2, 2, 16],
+  },
+
+  OVERVIEW_TICKET_ESCALATION_LEVEL: {
+    component: TicketEscalation,
+    minWidth: 2,
+    minHeight: pxToGridUnits(267),
+    position: [4, 2, 2, 16],
+  },
+
+  OVERVIEW_COMMERCIAL_ENGAGEMENT: {
+    component: Engagement,
+    minWidth: 2,
+    minHeight: pxToGridUnits(324),
+    position: [0, 4, 2, 18],
+  },
+
+
+  OVERVIEW_AMENITIES: {
+    component: Amenities,
+    minWidth: 2,
+    minHeight: pxToGridUnits(324),
+    position: [2, 4, 2, 18],
+  },
+
+  OVERVIEW_FOOD_AND_BEVERAGES: {
+    component: FoodBeverages,
+    minWidth: 2,
+    minHeight: pxToGridUnits(324),
+    position: [4, 4, 2, 18],
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // ============ COMMUNITY ============ //
   COMMUNITY_UNIT_STATUS: {
