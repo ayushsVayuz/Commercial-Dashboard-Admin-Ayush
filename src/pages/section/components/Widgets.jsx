@@ -211,16 +211,16 @@ export const AllWidgetMapping = {
 
   OVERVIEW_OCCUPANCY: {
     component: CommercialOccupancy,
-    minWidth: 2,
+    minWidth: 0,
     minHeight: pxToGridUnits(128),
-    position: [0,0, 2, 8],
+    position: [0,0, 2, 7],
   },
 
   OVERVIEW_EMPLOYEE_FOOTFALL: {
     component: EmployeeFootfall,
     minWidth: 2,
     minHeight: pxToGridUnits(238),
-    position: [2, 0, 4, 14],
+    position: [2, 0, 4, 13],
   },
 
 
@@ -229,28 +229,28 @@ export const AllWidgetMapping = {
     component: VisitorUpdates,
     minWidth: 2,
     minHeight: pxToGridUnits(377),
-    position: [0, 2, 2, 22],
+    position: [0, 7, 2, 20],
   },
 
   OVERVIEW_TICKET_STATUS: {
     component: TicketStatus,
     minWidth: 2,
     minHeight: pxToGridUnits(267),
-    position: [2, 2, 2, 16],
+    position: [2, 13, 2, 14],
   },
 
   OVERVIEW_TICKET_ESCALATION_LEVEL: {
     component: TicketEscalation,
     minWidth: 2,
     minHeight: pxToGridUnits(267),
-    position: [4, 2, 2, 16],
+    position: [4, 13, 2, 14],
   },
 
   OVERVIEW_COMMERCIAL_ENGAGEMENT: {
     component: Engagement,
     minWidth: 2,
     minHeight: pxToGridUnits(324),
-    position: [0, 4, 2, 18],
+    position: [2, 27, 2, 17],
   },
 
 
@@ -258,14 +258,14 @@ export const AllWidgetMapping = {
     component: Amenities,
     minWidth: 2,
     minHeight: pxToGridUnits(324),
-    position: [2, 4, 2, 18],
+    position: [2, 27, 2, 17],
   },
 
   OVERVIEW_FOOD_AND_BEVERAGES: {
     component: FoodBeverages,
     minWidth: 2,
     minHeight: pxToGridUnits(324),
-    position: [4, 4, 2, 18],
+    position: [4, 27, 2, 17],
   },
 
 
