@@ -79,7 +79,8 @@
   --breadcrumb-icon-shadow: 1px 1px 0px var(--shape-border);
   --page-body-padding: 0 18px 0 18px;
   --header-size: 136px;
-  --body-font: "Outfit", sans-serif;
+  --body-font: "Outfit" !important;
+  /* --anarock-font: "!Outfit", sans-serif; */
   --font-ICO: IcoFont;
   --heading_1: 30px;
   --heading_2: 26px;
