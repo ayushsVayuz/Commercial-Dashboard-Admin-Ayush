@@ -251,6 +251,13 @@ export const AllWidgetMapping = {
     minWidth: 2,
     minHeight: pxToGridUnits(324),
     position: [2, 27, 2, 17],
+    data: {
+      widget: "commercial",
+      total_notices: 15,
+      total_topics: 30,
+      total_polls: 12,
+      total_surveys: 8,
+    },
   },
 
 

@@ -16,7 +16,7 @@
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.4",
     "@reduxjs/toolkit": "^2.2.6",
-    "anarock-widgets": "^1.0.146",
+    "anarock-widgets": "^1.0.152",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
