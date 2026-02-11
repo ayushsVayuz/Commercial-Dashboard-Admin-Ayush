@@ -209,19 +209,27 @@ export default function DNDGridLayout({
   };
 
   // ---------- Render ----------
-  const renderWidget = (item) => {
-    const WidgetComponent = AllWidgetMapping[item.container_id]?.component;
+ const renderWidget = (item) => {
+  const mapping = AllWidgetMapping[item.container_id] || {};
+  const WidgetComponent = mapping.component;
 
-    if (!WidgetComponent) return renderPlaceholderCard(item);
+  if (!WidgetComponent) return renderPlaceholderCard(item);
 
-    return (
-      <WidgetComponent
-        data={item.data || {}}
-        config={item.config || {}}
-        {...(item.props || {})}
-      />
-    );
+  // 🔥 THIS IS THE MISSING PIECE
+  const mergedData = {
+    ...(mapping.data || {}),
+    ...(item.data || {}),
   };
+
+  return (
+    <WidgetComponent
+      data={mergedData}
+      config={item.config || {}}
+      {...(item.props || {})}
+    />
+  );
+};
+
 
   const renderPlaceholderCard = (item) => (
     <div

@@ -213,7 +213,7 @@ export const AllWidgetMapping = {
     component: CommercialOccupancy,
     minWidth: 0,
     minHeight: pxToGridUnits(128),
-    position: [0,0, 2, 7],
+    position: [0, 0, 2, 7],
   },
 
   OVERVIEW_EMPLOYEE_FOOTFALL: {
@@ -253,11 +253,8 @@ export const AllWidgetMapping = {
     position: [2, 27, 2, 17],
     data: {
       widget: "commercial",
-      total_notices: 15,
-      total_topics: 30,
-      total_polls: 12,
-      total_surveys: 8,
-    },
+    }
+
   },
 
 
